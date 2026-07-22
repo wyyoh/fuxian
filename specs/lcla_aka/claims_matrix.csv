@@ -1,0 +1,17 @@
+﻿claim_id,claim,required_evidence,class,status,notes
+LCLA-R1-STATIC,静态密钥验证式成立,backend-specific tests,executable,pending,constructed需标注
+LCLA-R1-PREIMAGE,A s2=u2,real backend test,executable,pending,constructed不计
+LCLA-R1-M1,mA1=mB1,property test,executable,pending,
+LCLA-R1-M2,mA2=mB2,property test,executable,pending,
+LCLA-R1-SK,skA=skB,1000 sessions,executable,pending,
+LCLA-R1-RECIPIENT,非目标接收者拒绝,multi-entity test,executable,pending,
+LCLA-R1-ID,Bob 恢复 IDA,roundtrip test,executable,pending,
+LCLA-R1-TRANSCRIPT,前两轮不含明文身份,schema inspection,executable/structural,pending,非完整匿名性证明
+LCLA-R2-T4,复现 Table IV,raw op benchmark CSV,empirical,pending,
+LCLA-R2-T5,复现 Table V,raw protocol benchmark CSV,empirical,pending,
+LCLA-R2-F4,复现 Figure 4,generated plot,empirical,pending,
+LCLA-R2-F5F6,复现 Figure 5/6,formula+plot evidence,empirical,pending,
+LCLA-R3-MBR,mBR 安全,proof audit only,formal/non-executable,pending,
+LCLA-R3-LWE,会话安全归约到 LWE,proof audit only,formal/non-executable,pending,
+LCLA-R3-MAL-KGC,恶意 KGC 安全,proof audit only,formal/non-executable,pending,
+LCLA-R3-ANON,身份匿名性,proof/model audit,formal/non-executable,pending,结构测试不足以证明

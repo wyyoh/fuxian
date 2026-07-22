@@ -1,0 +1,48 @@
+profiles:
+  paper_correctness:
+    family: paper_literal
+    m: 256
+    n: 5
+    q: 16777215
+    beta: 3.192
+    q_must_be_prime: false
+    backend: constructed_or_real
+    note: "对应正确性证明段落；满足 m >= 2n log2(q) 的近似口径"
+
+  paper_performance:
+    family: paper_literal
+    m: 256
+    n: 6
+    q: 16777215
+    beta: 3.192
+    q_must_be_prime: false
+    backend: frodo_probe_or_constructed
+    note: "对应性能章节；与 m >= 2n log2(q) 条件冲突"
+
+  audited_preserve_keylen:
+    family: audited
+    m: 256
+    n: 5
+    q: 16777259
+    beta: 3.192
+    q_must_be_prime: true
+    backend: real_trapdoor_preferred
+
+  audited_preserve_dimension:
+    family: audited
+    m: 288
+    n: 6
+    q: 16777259
+    beta: 3.192
+    q_must_be_prime: true
+    backend: real_trapdoor_preferred
+    note: "保留 n=6，并使 m >= 2n log2(q) 近似成立"
+
+  toy:
+    family: toy
+    m: 32
+    n: 2
+    q: 127
+    beta: 1.0
+    q_must_be_prime: true
+    backend: toy

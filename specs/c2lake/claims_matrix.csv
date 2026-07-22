@@ -1,0 +1,15 @@
+﻿claim_id,claim,required_evidence,class,status,notes
+C2-R1-SETUP,Setup 输出维度与域正确,shape/range tests,executable,pending,
+C2-R1-PARTIAL,部分私钥验证式成立,100 seeds property test,executable,pending,
+C2-R1-AUTH-I,Bob 验证 Alice 消息,positive/negative protocol tests,executable,pending,
+C2-R1-AUTH-J,Alice 验证 Bob 消息,positive/negative protocol tests,executable,pending,
+C2-R1-K1,双方 K1 相等,property test,executable,pending,
+C2-R1-K2,双方 K2 相等,property test,executable,pending,
+C2-R1-K3,双方 K3 相等,property test,executable,pending,
+C2-R1-SK,双方 SK 相等,1000 sessions,executable,pending,
+C2-R1-REPLAY,过期时间戳被拒绝,boundary tests,executable,pending,
+C2-R2-T7,复现 Table 7,raw benchmark CSV,empirical,pending,
+C2-R2-F4,复现 Figure 4 趋势,generated figure,empirical,pending,
+C2-R3-ECK,eCK 安全,paper proof audit only,formal/non-executable,pending,不得由测试宣称
+C2-R3-ISIS,MA 归约到 ISIS,proof audit only,formal/non-executable,pending,
+C2-R3-CBIISIS,AKA 归约到 CBi-ISIS,proof audit only,formal/non-executable,pending,

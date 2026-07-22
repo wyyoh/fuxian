@@ -1,0 +1,31 @@
+﻿symbol,role,shape,domain,visibility,generation,notes,source
+n,A row dimension,scalar,Z+,public,profile,paper 5 or 6,"p7,p10"
+m,A column/session bit dimension,scalar,Z+,public,profile,paper 256,"p7,p10"
+q,modulus,scalar,Z+,public,profile,paper claims prime but uses composite,"p7,p10"
+beta,Gaussian parameter,scalar,R+,public,profile,3.192 in performance,p10
+A,public matrix,n×m,Z_q,public,TrapGen/backend,shared parameter,p5
+tK,KGC trapdoor,backend-specific,-,secret,TrapGen,not necessarily a vector in real API,p5
+s1,entity secret share,m,Z_q,secret,random/small by backend,retained by entity,p5
+f,static LWE error,n,Z_q centered,secret,chi_beta,used in pk binding,p5
+u1,entity public share,n,Z_q,public,A s1+2f,sent to KGC,p5
+pk_full,identity-derived public vector,n,Z_q,public,H1(ID),distinct from tuple components,p5
+u2,KGC public target,n,Z_q,public,pk_full-u1,A s2=u2,p5
+s2,KGC share,m,Z_q,public in literal,SamplePre,sent publicly,p5
+s,combined static secret,m,Z_q,secret/derived,s1+s2,"s2 public, s1 secret",p5
+X_A,ephemeral secret matrix,n×m,Z_q centered,secret,chi_beta,transpose used,p6
+E_A,ephemeral error matrix,m×m,Z_q centered,secret,chi_beta,p6
+C_A,ephemeral public matrix,m×m,Z_q,public,X_A^T A+2E_A,broadcast,p6
+e_A,reconciliation error,m,Z_q centered,secret,chi_beta/random,p6
+n_A,Alice intermediate,m,Z_q,secret,X_A^T pk_B+2e_A,not sent,p6
+delta_A,hint vector,m,bits,public,S(n_A),broadcast,p6
+m1,first shared bit vector,m,bits,secret,Mod2,not sent,p6
+h_A,first MAC,m bits/bytes,bits,public,H2 domain A,broadcast,p6
+X_B,ephemeral secret matrix,n×m,Z_q centered,secret,chi_beta,p6
+E_B,ephemeral error matrix,m×m,Z_q centered,secret,chi_beta,p6
+C_B,ephemeral public matrix,m×m,Z_q,public,X_B^T A+2E_B,broadcast,p6
+h_B,second MAC,m bits/bytes,bits,public,H2 domain B,broadcast,p6
+e_B,Alice second error,m,Z_q centered,secret,chi_beta/random,p6
+delta_B,second hint,m,bits,public,S(n_B'),broadcast,p6
+m2,second shared bit vector,m,bits,secret,Mod2,not sent,"p6,p7"
+T_A,masked Alice identity,len(ID_A),bytes,public,ID xor mask,broadcast,p6
+SK,session key,m bits or KDF bytes,bits/bytes,secret,H2 session domain,"p6,p7"

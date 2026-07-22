@@ -1,0 +1,172 @@
+profiles:
+  paper_literal_m32:
+    family: paper_literal
+    m: 32
+    q: 1024
+    n: 640
+    beta: 25.298221281347
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m32:
+    family: audited_prime
+    m: 32
+    q: 1031
+    n: 640
+    beta: 25.298221281347
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m48:
+    family: paper_literal
+    m: 48
+    q: 2304
+    n: 1073
+    beta: 32.746187566470
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m48:
+    family: audited_prime
+    m: 48
+    q: 2309
+    n: 1073
+    beta: 32.746187566470
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m64:
+    family: paper_literal
+    m: 64
+    q: 4096
+    n: 1536
+    beta: 39.191835884531
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m64:
+    family: audited_prime
+    m: 64
+    q: 4099
+    n: 1536
+    beta: 39.191835884531
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m80:
+    family: paper_literal
+    m: 80
+    q: 6400
+    n: 2024
+    beta: 44.977961162818
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m80:
+    family: audited_prime
+    m: 80
+    q: 6421
+    n: 2024
+    beta: 44.977961162818
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m96:
+    family: paper_literal
+    m: 96
+    q: 9216
+    n: 2529
+    beta: 50.285441235778
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m96:
+    family: audited_prime
+    m: 96
+    q: 9221
+    n: 2529
+    beta: 50.285441235778
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m112:
+    family: paper_literal
+    m: 112
+    q: 12544
+    n: 3050
+    beta: 55.224043722656
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m112:
+    family: audited_prime
+    m: 112
+    q: 12547
+    n: 3050
+    beta: 55.224043722656
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m128:
+    family: paper_literal
+    m: 128
+    q: 16384
+    n: 3584
+    beta: 59.866518188383
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m128:
+    family: audited_prime
+    m: 128
+    q: 16411
+    n: 3584
+    beta: 59.866518188383
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m160:
+    family: paper_literal
+    m: 160
+    q: 25600
+    n: 4687
+    beta: 68.454612559914
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m160:
+    family: audited_prime
+    m: 160
+    q: 25601
+    n: 4687
+    beta: 68.454612559914
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  paper_literal_m256:
+    family: paper_literal
+    m: 256
+    q: 65536
+    n: 8192
+    beta: 90.509667991878
+    matrix_shape: square_n
+    q_must_be_prime: false
+    secret_sampling: literal
+  audited_prime_m256:
+    family: audited_prime
+    m: 256
+    q: 65537
+    n: 8192
+    beta: 90.509667991878
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret
+  toy:
+    family: toy
+    m: 8
+    q: 257
+    n: 16
+    beta: 3
+    matrix_shape: square_n
+    q_must_be_prime: true
+    secret_sampling: small_secret

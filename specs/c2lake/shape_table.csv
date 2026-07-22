@@ -1,0 +1,26 @@
+﻿symbol,role,shape,domain,visibility,generation,notes,source
+m,security parameter,scalar,Z+,public,profile,-,paper p7
+q,modulus,scalar,Z+,public,profile,prime claimed; literal q=m^2,"p7,p20"
+n,vector dimension,scalar,Z+,public,profile,ceil(4m log2m) for benchmark,"p7,p20"
+beta,norm bound,scalar,R+,public,profile,sampling bound,p7
+M,system matrix,n×n,Z_q,public,random matrix,rank statement unresolved,p7
+d,KGC master secret,n,Z_q,secret,bounded/uniform by profile,norm<=beta in paper,p7
+P,KGC master public,n,Z_q,public,d^T M,row vector represented as 1-D,p7
+d_i1,user secret value,n,Z_q,secret,uniform literal / small audited,paper gives no norm bound,p7
+P_i1,user public share,n,Z_q,public,d_i1^T M,transmitted,p7
+r_i,KGC randomness,n,Z_q,secret temporary,uniform literal / small audited,paper gives no bound,p8
+P_i0,KGC public share,n,Z_q,public,r_i^T M,transmitted,p8
+h1_i,hash scalar,scalar,Z_q*,public derived,H1,domain separated,p8
+d_i0,partial private key,n,Z_q,secret,r_i+h1_i d,secure channel in paper1,p8
+x_i,ephemeral secret,n,Z_q,secret,bounded,norm<=beta,p9
+y_i,ephemeral secret,n,Z_q,secret,bounded,norm<=beta,p9
+z_i,ephemeral secret,n,Z_q,secret,bounded,norm<=beta,p9
+X_i,ephemeral public,n,Z_q,public,x_i^T M,transmitted,p9
+Y_i,ephemeral public,n,Z_q,public,M y_i,transmitted,p9
+Z_i,ephemeral public,n,Z_q,public,M z_i,transmitted,p9
+h2_i,auth hash scalar,scalar,Z_q*,public derived,H2,includes timestamp,p9
+S_i,implicit signature,n,Z_q,public,x_i+h2_i(d_i0+d_i1),transmitted,p9
+K1,shared component,scalar,Z_q,secret derived,bilinear product,not transmitted,p9
+K2,shared component,scalar,Z_q,secret derived,bilinear product,not transmitted,p9
+K3,shared component,scalar,Z_q,secret derived,static/ephemeral mix,not transmitted,p9
+SK,session key,scalar or bytes,Z_q* / bytes,secret,H3/KDF,profile dependent,p9
