@@ -117,3 +117,72 @@ jobs:
         with:
           name: T010-evidence
           path: artifacts/processed/T010/c2lake_core_validation.json
+      - name: 生成 C2LAKE security audit
+        run: |
+          python scripts/audit_c2lake_security_claims.py \
+            --repo-root . \
+            --report-output artifacts/processed/C2LAKE/security_audit.md
+      - name: 生成 C2LAKE cost model
+        run: |
+          python scripts/reproduce_c2lake_cost_tables.py \
+            --repo-root . \
+            --report-output artifacts/processed/C2LAKE/cost_tables.md
+      - name: 运行 C2LAKE smoke benchmark
+        run: |
+          python scripts/reproduce_c2lake_table7.py \
+            --repo-root . \
+            --mode smoke \
+            --warmup 0 \
+            --repetitions 1 \
+            --resume \
+            --report-output artifacts/processed/C2LAKE/c2lake_benchmark_report.md
+      - name: 生成 C2LAKE smoke figure
+        run: |
+          python scripts/reproduce_c2lake_figure4.py \
+            --repo-root . \
+            --figure-output artifacts/processed/C2LAKE/figure4_reproduced.png
+      - name: 生成 C2LAKE full evidence
+        run: |
+          python scripts/validate_c2lake_full.py \
+            --repo-root . \
+            --mode smoke \
+            --report-output artifacts/processed/C2LAKE/c2lake_full_validation.md
+      - name: 校验 C2LAKE full evidence
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          evidence = json.loads(
+              Path("artifacts/processed/C2LAKE/full_validation.json").read_text()
+          )
+          head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          assert evidence["result"] == "pass"
+          assert evidence["protocol_correctness"] is True
+          assert evidence["K1_consistency"] is True
+          assert evidence["K2_consistency"] is True
+          assert evidence["K3_consistency"] is True
+          assert evidence["session_key_consistency"] is True
+          assert evidence["failed_protocol_cases"] == 0
+          assert evidence["eck_formally_verified"] is False
+          assert evidence["rom_reduction_verified"] is False
+          assert evidence["git_commit"] == head
+          assert evidence["git_dirty"] is False
+          PY
+      - name: 上传 C2LAKE full evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: C2LAKE-full-evidence
+          path: |
+            artifacts/processed/C2LAKE/security_audit.json
+            artifacts/processed/C2LAKE/security_audit.md
+            artifacts/processed/C2LAKE/cost_tables.json
+            artifacts/processed/C2LAKE/cost_tables.csv
+            artifacts/processed/C2LAKE/cost_tables.md
+            artifacts/processed/C2LAKE/table7_reproduced.csv
+            artifacts/processed/C2LAKE/table7_comparison.csv
+            artifacts/processed/C2LAKE/c2lake_benchmark_report.md
+            artifacts/processed/C2LAKE/figure4_reproduced.png
+            artifacts/processed/C2LAKE/full_validation.json
+            artifacts/processed/C2LAKE/c2lake_full_validation.md
