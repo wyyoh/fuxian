@@ -42,7 +42,7 @@
     "cbi_isis_hardness_verified": false,
     "paper_security_proof_reproduced": false
   },
-  "git_commit": "ac459e0ac38e97b002693d9fe271e308ff8ff47c",
+  "git_commit": "ee631b2cfbdf241e65c147cbde2c8378a8b9b7dc",
   "paper": {
     "doi": "10.1002/cpe.7983",
     "sha256": "27502f8185258222a465750c124d1702b5a0bd387d8618f8f159b62258802e41",
