@@ -135,6 +135,9 @@ jobs:
             --warmup 0 \
             --repetitions 1 \
             --resume \
+            --raw-output artifacts/processed/C2LAKE/ci_benchmark_raw.csv \
+            --table-output artifacts/processed/C2LAKE/ci_table7_reproduced.csv \
+            --comparison-output artifacts/processed/C2LAKE/ci_table7_comparison.csv \
             --report-output artifacts/processed/C2LAKE/c2lake_benchmark_report.md
       - name: 生成 C2LAKE smoke figure
         run: |
@@ -182,6 +185,9 @@ jobs:
             artifacts/processed/C2LAKE/cost_tables.md
             artifacts/processed/C2LAKE/table7_reproduced.csv
             artifacts/processed/C2LAKE/table7_comparison.csv
+            artifacts/processed/C2LAKE/ci_benchmark_raw.csv
+            artifacts/processed/C2LAKE/ci_table7_reproduced.csv
+            artifacts/processed/C2LAKE/ci_table7_comparison.csv
             artifacts/processed/C2LAKE/c2lake_benchmark_report.md
             artifacts/processed/C2LAKE/figure4_reproduced.png
             artifacts/processed/C2LAKE/full_validation.json
