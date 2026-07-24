@@ -15,6 +15,7 @@ from lattice_aka_repro.c2lake_core import (
     C2LakeUserSecret,
     bounded_ternary_vector,
     centered_norm,
+    dot_mod,
     encode_zq_array,
     extract_partial_private_key,
     matrix_times_vector,
@@ -58,6 +59,35 @@ def test_partial_key_validation_passes_for_100_seeds(profile: str) -> None:
         )
         assert key_pair.public_key.shape == (public_params.n,)
         assert key_pair.private_key.shape == (public_params.n,)
+
+
+@pytest.mark.parametrize("identity", ["", b"", None, 42, object()])
+def test_empty_and_invalid_identity_returns_stable_error(identity: object) -> None:
+    public_params, _ = setup("toy", seed=70, backend="safe")
+
+    with pytest.raises(C2LakeCoreError) as error_info:
+        set_secret_value(public_params, identity, seed=71)
+    assert error_info.value.code == "IDENTITY_ERROR"
+
+
+def test_unicode_and_bytes_identity_are_normalized() -> None:
+    public_params, master_secret = setup("toy", seed=72, backend="safe")
+    unicode_identity = "用户@example.test/🚀"
+    user_secret = set_secret_value(public_params, unicode_identity, seed=73)
+    partial_key = extract_partial_private_key(
+        public_params,
+        master_secret,
+        unicode_identity,
+        user_secret.p_i1,
+        seed=74,
+    )
+    assert user_secret.identity == unicode_identity.encode("utf-8")
+    assert verify_partial_key(public_params, unicode_identity, user_secret, partial_key)
+
+    identity_bytes = b"alice@example.test"
+    bytes_user = set_secret_value(public_params, identity_bytes, seed=75)
+    assert bytes_user.identity == identity_bytes
+    assert bytes_user.identity is not identity_bytes
 
 
 def test_bounded_ternary_vectors_have_centered_norm_within_beta() -> None:
@@ -164,6 +194,32 @@ def test_safe_and_fast_backends_match_for_toy() -> None:
             backend="fast",
         ),
     )
+
+
+def test_matrix_orientation_known_answer_for_safe_and_fast_backends() -> None:
+    q = 17
+    matrix = np.array(
+        [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+        ],
+        dtype=np.int64,
+    )
+    vector = np.array([2, 3, 5], dtype=np.int64)
+    expected_vector_times_matrix = np.array([15, 8, 1], dtype=np.int64)
+    expected_matrix_times_vector = np.array([6, 2, 15], dtype=np.int64)
+
+    assert not np.array_equal(expected_vector_times_matrix, expected_matrix_times_vector)
+    for backend in ("safe", "fast"):
+        assert np.array_equal(
+            vector_times_matrix(vector, matrix, q=q, backend=backend),
+            expected_vector_times_matrix,
+        )
+        assert np.array_equal(
+            matrix_times_vector(matrix, vector, q=q, backend=backend),
+            expected_matrix_times_vector,
+        )
 
 
 @pytest.mark.parametrize("tamper", ["identity", "d_i0", "p_i0", "p_i1", "P"])
@@ -321,6 +377,57 @@ def test_fast_backend_rejects_unsafe_int64_accumulator() -> None:
     with pytest.raises(C2LakeCoreError) as error_info:
         vector_times_matrix(vector, matrix, q=q, backend="fast")
     assert error_info.value.code == "BACKEND_OVERFLOW_UNSAFE"
+
+
+def test_safe_backend_uses_python_int_fallback_when_int64_accumulator_is_unsafe() -> None:
+    q = 5_000_000_000
+    vector = np.array([q - 1, q - 2, q - 3], dtype=np.int64)
+    other = np.array([q - 10, q - 11, q - 12], dtype=np.int64)
+    matrix = np.array(
+        [
+            [q - 1, q - 2, q - 3],
+            [q - 4, q - 5, q - 6],
+            [q - 7, q - 8, q - 9],
+        ],
+        dtype=np.int64,
+    )
+
+    expected_vector_times_matrix = np.array(
+        [
+            sum(int(vector[row]) * int(matrix[row, column]) for row in range(3)) % q
+            for column in range(3)
+        ],
+        dtype=np.int64,
+    )
+    expected_matrix_times_vector = np.array(
+        [
+            sum(int(matrix[row, column]) * int(other[column]) for column in range(3)) % q
+            for row in range(3)
+        ],
+        dtype=np.int64,
+    )
+    expected_dot = (
+        sum(int(left) * int(right) for left, right in zip(vector, other, strict=True)) % q
+    )
+
+    for operation in (
+        lambda: vector_times_matrix(vector, matrix, q=q, backend="fast"),
+        lambda: matrix_times_vector(matrix, other, q=q, backend="fast"),
+        lambda: dot_mod(vector, other, q=q, backend="fast"),
+    ):
+        with pytest.raises(C2LakeCoreError) as error_info:
+            operation()
+        assert error_info.value.code == "BACKEND_OVERFLOW_UNSAFE"
+
+    assert np.array_equal(
+        vector_times_matrix(vector, matrix, q=q, backend="safe"),
+        expected_vector_times_matrix,
+    )
+    assert np.array_equal(
+        matrix_times_vector(matrix, other, q=q, backend="safe"),
+        expected_matrix_times_vector,
+    )
+    assert dot_mod(vector, other, q=q, backend="safe") == expected_dot
 
 
 def test_hash_encoding_is_deterministic_and_sensitive_to_inputs() -> None:

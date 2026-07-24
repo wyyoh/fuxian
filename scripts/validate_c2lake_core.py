@@ -110,6 +110,15 @@ def validate_c2lake_core(
                     "reason": "篡改后验证未失败",
                 }
             )
+    independent_formula_check = _independent_formula_check(specs_dir)
+    if not independent_formula_check["passed"]:
+        failed_case_details.append(
+            {
+                "case": "independent_formula_check",
+                "reason": "独立 Python-int 部分私钥等式 oracle 未全部通过",
+                "details": independent_formula_check.get("failures", []),
+            }
+        )
 
     failed_cases = len(failed_case_details)
     result = "pass" if failed_cases == 0 else "fail"
@@ -132,6 +141,7 @@ def validate_c2lake_core(
         "safe_fast_consistency": safe_fast_consistency,
         "bounded_norm_checks": bounded_norm_checks,
         "negative_test_matrix": negative_test_matrix,
+        "independent_formula_check": independent_formula_check,
         "paper_manifest_sha256": manifest["sha256"],
         "paper_manifest": manifest,
         "protocol_key_agreement_implemented": False,
@@ -353,6 +363,76 @@ def _negative_test_matrix(specs_dir: Path) -> dict[str, bool]:
     }
 
 
+def _independent_formula_check(specs_dir: Path) -> dict[str, object]:
+    profile_results: dict[str, bool] = {}
+    failures: list[dict[str, object]] = []
+    identity = "alice@example.test"
+    for index, profile in enumerate(_PROFILES):
+        try:
+            public_params, master_secret = setup(
+                profile,
+                seed=70_000 + index,
+                backend="safe",
+                specs_dir=specs_dir,
+            )
+            user_secret = set_secret_value(public_params, identity, seed=71_000 + index)
+            partial_key = extract_partial_private_key(
+                public_params,
+                master_secret,
+                identity,
+                user_secret.p_i1,
+                seed=72_000 + index,
+            )
+            lhs = _python_int_vector_times_matrix(
+                partial_key.d_i0,
+                public_params.matrix,
+                q=public_params.q,
+            )
+            h1_i = public_params.hash_suite.h1(
+                identity,
+                partial_key.p_i0,
+                user_secret.p_i1,
+                public_params.public_key,
+                q=public_params.q,
+            )
+            rhs = [
+                (int(partial_key.p_i0[column]) + h1_i * int(public_params.public_key[column]))
+                % public_params.q
+                for column in range(public_params.n)
+            ]
+            passed = lhs == rhs
+            profile_results[profile] = passed
+            if not passed:
+                failures.append(
+                    {
+                        "profile": profile,
+                        "reason": "lhs != rhs",
+                        "first_lhs": lhs[:5],
+                        "first_rhs": rhs[:5],
+                    }
+                )
+        except Exception as error:
+            profile_results[profile] = False
+            failures.append({"profile": profile, "reason": str(error)})
+    return {
+        "passed": all(profile_results.values()),
+        "profiles": profile_results,
+        "failures": failures,
+    }
+
+
+def _python_int_vector_times_matrix(
+    vector: npt.NDArray[np.int64],
+    matrix: npt.NDArray[np.int64],
+    *,
+    q: int,
+) -> list[int]:
+    return [
+        sum(int(vector[row]) * int(matrix[row, column]) for row in range(vector.shape[0])) % q
+        for column in range(matrix.shape[1])
+    ]
+
+
 def _read_manifest(path: Path) -> dict[str, object]:
     raw: object = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
@@ -401,6 +481,8 @@ def _render_report(payload: dict[str, object]) -> str:
     negative_matrix = cast(dict[str, bool], payload["negative_test_matrix"])
     safe_fast = cast(dict[str, object], payload["safe_fast_consistency"])
     bounded = cast(dict[str, object], payload["bounded_norm_checks"])
+    independent = cast(dict[str, object], payload["independent_formula_check"])
+    independent_profiles = cast(dict[str, bool], independent["profiles"])
     lines = [
         "# C2LAKE Core Validation Report",
         "",
@@ -434,6 +516,19 @@ def _render_report(payload: dict[str, object]) -> str:
             f"- passed: {bounded['passed']}",
             f"- checked_vectors: {bounded['checked_vectors']}",
             f"- max_norm: {bounded['max_norm']}",
+            "",
+            "## Independent Formula Check",
+            "",
+            f"- passed: {independent['passed']}",
+            "",
+            "| profile | passed |",
+            "| --- | --- |",
+        ]
+    )
+    for profile in sorted(independent_profiles):
+        lines.append(f"| {profile} | {independent_profiles[profile]} |")
+    lines.extend(
+        [
             "",
             "## Negative Test Matrix",
             "",

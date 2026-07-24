@@ -28,6 +28,16 @@
 - checked_vectors: 104
 - max_norm: 21.37755832643195
 
+## Independent Formula Check
+
+- passed: True
+
+| profile | passed |
+| --- | --- |
+| audited_prime_m32 | True |
+| paper_literal_m32 | True |
+| toy | True |
+
 ## Negative Test Matrix
 
 | tampered field | verification failed |

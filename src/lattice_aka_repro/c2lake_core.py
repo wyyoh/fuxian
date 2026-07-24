@@ -62,7 +62,7 @@ class C2LakeHashSuite:
 
     def h1(
         self,
-        identity: bytes | str,
+        identity: object,
         p_i0: npt.ArrayLike,
         p_i1: npt.ArrayLike,
         public_key: npt.ArrayLike,
@@ -76,7 +76,7 @@ class C2LakeHashSuite:
 
     def h2(
         self,
-        identity: bytes | str,
+        identity: object,
         p_i0: npt.ArrayLike,
         p_i1: npt.ArrayLike,
         x_i: npt.ArrayLike,
@@ -131,7 +131,7 @@ class C2LakeHashSuite:
 
     def encode_h1(
         self,
-        identity: bytes | str,
+        identity: object,
         p_i0: npt.ArrayLike,
         p_i1: npt.ArrayLike,
         public_key: npt.ArrayLike,
@@ -152,7 +152,7 @@ class C2LakeHashSuite:
 
     def encode_h2(
         self,
-        identity: bytes | str,
+        identity: object,
         p_i0: npt.ArrayLike,
         p_i1: npt.ArrayLike,
         x_i: npt.ArrayLike,
@@ -479,7 +479,7 @@ def setup(
 
 def set_secret_value(
     public_params: C2LakePublicParameters,
-    identity: bytes | str,
+    identity: object,
     *,
     seed: int,
 ) -> C2LakeUserSecret:
@@ -507,7 +507,7 @@ def set_secret_value(
 def extract_partial_private_key(
     public_params: C2LakePublicParameters,
     master_secret: C2LakeMasterSecret,
-    identity: bytes | str,
+    identity: object,
     p_i1: npt.ArrayLike,
     *,
     seed: int,
@@ -549,7 +549,7 @@ def extract_partial_private_key(
 
 def verify_partial_key(
     public_params: C2LakePublicParameters,
-    identity: bytes | str,
+    identity: object,
     user_secret: C2LakeUserSecret,
     partial_key: C2LakePartialPrivateKey,
 ) -> bool:
@@ -586,7 +586,7 @@ def verify_partial_key(
 
 def verify_and_assemble_key(
     public_params: C2LakePublicParameters,
-    identity: bytes | str,
+    identity: object,
     user_secret: C2LakeUserSecret,
     partial_key: C2LakePartialPrivateKey,
 ) -> C2LakeKeyPair:
@@ -1024,11 +1024,11 @@ def _ensure_record_context(
         raise C2LakeCoreError("BACKEND_ERROR", f"{name} backend 与上下文不一致")
 
 
-def _normalize_identity(identity: bytes | str) -> bytes:
-    if isinstance(identity, str):
+def _normalize_identity(identity: object) -> bytes:
+    if isinstance(identity, str) and identity:
         return identity.encode("utf-8")
     if isinstance(identity, bytes) and identity:
-        return bytes(identity)
+        return bytes(bytearray(identity))
     raise C2LakeCoreError("IDENTITY_ERROR", "identity 必须是非空 bytes 或 str")
 
 
@@ -1041,7 +1041,7 @@ def _encode_bytes(type_tag: str, payload: bytes) -> bytes:
     return _encode_field(type_tag, payload)
 
 
-def _encode_identity(identity: bytes | str) -> bytes:
+def _encode_identity(identity: object) -> bytes:
     return _encode_field("identity", _normalize_identity(identity))
 
 
