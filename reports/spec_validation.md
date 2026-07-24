@@ -26,7 +26,7 @@
 | --- | --- | --- |
 | c2lake_n_equals_ceil_4m_log2m | pass | C2LAKE 非 toy benchmark profiles 未发现 n 关系错误。 |
 | c2lake_paper_literal_q_m_squared_composite | warning | C2LAKE paper_literal q=m² 的合数情况记录为 9 个 expected warning，未拒绝。 |
-| audited_q_prime | pass | 所有 q_must_be_prime=true 的 audited/toy profiles 均通过素数检查。 |
+| audited_q_prime | pass | 所有 audited/audited_prime profiles 均设置 q_must_be_prime=true，且 q 实际为素数。 |
 | lcla_paper_performance_dimension_relation | warning | LCLA paper_performance 的 m=256,n=6 违反 m >= 2*n*log2(q)，已记录为 expected warning。 |
 | shape_symbol_uniqueness | pass | 两个 shape_table 均未发现重复 symbol。 |
 | claims_class_allowed | pass | claims class 均属于允许集合或允许的组合标记。 |

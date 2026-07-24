@@ -334,6 +334,18 @@ def _read_csv_rows(
                 return []
             rows: CsvRows = []
             for row_number, raw_row in enumerate(reader, start=2):
+                if None in raw_row:
+                    _add_issue(
+                        issues,
+                        check=check,
+                        code="CSV_ROW_WIDTH_INVALID",
+                        severity="unexpected_error",
+                        protocol=protocol,
+                        source=str(path),
+                        subject=f"row {row_number}",
+                        message="CSV 行包含超出 header 的额外列",
+                        details={"row": row_number, "expected_columns": len(expected_headers)},
+                    )
                 row = {header: (raw_row.get(header) or "").strip() for header in expected_headers}
                 _validate_required_csv_fields(
                     protocol,
@@ -385,7 +397,7 @@ def _validate_required_csv_fields(
 
 def _required_csv_fields(filename: str) -> tuple[str, ...]:
     if filename == "shape_table.csv":
-        return ("symbol", "role", "shape", "domain", "visibility", "generation")
+        return ("symbol", "role", "shape", "domain", "visibility", "generation", "source")
     return ("claim_id", "claim", "required_evidence", "class", "status")
 
 
@@ -755,6 +767,32 @@ def _validate_prime_requirements(
 ) -> None:
     for record in records:
         prime = _is_prime(record.q)
+        if record.family in {"audited", "audited_prime"}:
+            if not record.q_must_be_prime:
+                _add_issue(
+                    issues,
+                    check="prime_checks",
+                    code="AUDITED_Q_MUST_BE_PRIME_FLAG_FALSE",
+                    severity="unexpected_error",
+                    protocol=protocol,
+                    source=f"specs/{protocol}/parameter_profiles.yaml",
+                    subject=record.name,
+                    message="audited/audited_prime profile 必须设置 q_must_be_prime=true",
+                    details={"family": record.family, "q_must_be_prime": record.q_must_be_prime},
+                )
+            if not prime:
+                _add_issue(
+                    issues,
+                    check="prime_checks",
+                    code=f"{protocol.upper()}_AUDITED_Q_NOT_PRIME",
+                    severity="unexpected_error",
+                    protocol=protocol,
+                    source=f"specs/{protocol}/parameter_profiles.yaml",
+                    subject=record.name,
+                    message="audited/audited_prime profile 必须使用实际素数 q",
+                    details={"q": record.q, "family": record.family},
+                )
+            continue
         if record.q_must_be_prime and not prime:
             _add_issue(
                 issues,
@@ -919,6 +957,7 @@ def _required_findings(result: SpecValidationResult) -> list[dict[str, object]]:
     audited_prime_error_codes = {
         "C2LAKE_AUDITED_Q_NOT_PRIME",
         "LCLA_AKA_AUDITED_Q_NOT_PRIME",
+        "AUDITED_Q_MUST_BE_PRIME_FLAG_FALSE",
     }
     return [
         {
@@ -937,7 +976,9 @@ def _required_findings(result: SpecValidationResult) -> list[dict[str, object]]:
         {
             "name": "audited_q_prime",
             "status": "fail" if error_codes.intersection(audited_prime_error_codes) else "pass",
-            "summary": "所有 q_must_be_prime=true 的 audited/toy profiles 均通过素数检查。",
+            "summary": (
+                "所有 audited/audited_prime profiles 均设置 q_must_be_prime=true，且 q 实际为素数。"
+            ),
         },
         {
             "name": "lcla_paper_performance_dimension_relation",

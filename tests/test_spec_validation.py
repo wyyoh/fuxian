@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import json
 import shutil
 from collections import Counter
@@ -57,6 +58,30 @@ def test_audited_nonprime_q_is_unexpected_error(tmp_path: Path) -> None:
     assert _has_error(result, "C2LAKE_AUDITED_Q_NOT_PRIME", "audited_prime_m32")
 
 
+def test_audited_prime_flag_false_is_unexpected_error(tmp_path: Path) -> None:
+    specs_dir = _copy_specs(tmp_path)
+    profile_path = specs_dir / "c2lake" / "parameter_profiles.yaml"
+    document = _read_profile_yaml(profile_path)
+    document["profiles"]["audited_prime_m32"]["q_must_be_prime"] = False
+    _write_profile_yaml(profile_path, document)
+
+    result = validate_specs(specs_dir=specs_dir, repo_root=_REPO_ROOT)
+
+    assert _has_error(result, "AUDITED_Q_MUST_BE_PRIME_FLAG_FALSE", "audited_prime_m32")
+
+
+def test_lcla_audited_flag_false_is_unexpected_error(tmp_path: Path) -> None:
+    specs_dir = _copy_specs(tmp_path)
+    profile_path = specs_dir / "lcla_aka" / "parameter_profiles.yaml"
+    document = _read_profile_yaml(profile_path)
+    document["profiles"]["audited_preserve_keylen"]["q_must_be_prime"] = False
+    _write_profile_yaml(profile_path, document)
+
+    result = validate_specs(specs_dir=specs_dir, repo_root=_REPO_ROOT)
+
+    assert _has_error(result, "AUDITED_Q_MUST_BE_PRIME_FLAG_FALSE", "audited_preserve_keylen")
+
+
 def test_duplicate_shape_symbol_is_unexpected_error(tmp_path: Path) -> None:
     specs_dir = _copy_specs(tmp_path)
     shape_path = specs_dir / "lcla_aka" / "shape_table.csv"
@@ -67,6 +92,16 @@ def test_duplicate_shape_symbol_is_unexpected_error(tmp_path: Path) -> None:
     result = validate_specs(specs_dir=specs_dir, repo_root=_REPO_ROOT)
 
     assert _has_error(result, "SHAPE_SYMBOL_DUPLICATE", "n")
+
+
+def test_shape_source_is_required(tmp_path: Path) -> None:
+    specs_dir = _copy_specs(tmp_path)
+    shape_path = specs_dir / "lcla_aka" / "shape_table.csv"
+    _clear_shape_source(shape_path, "E_A")
+
+    result = validate_specs(specs_dir=specs_dir, repo_root=_REPO_ROOT)
+
+    assert _has_error(result, "CSV_REQUIRED_FIELD_EMPTY", "row 16")
 
 
 def test_invalid_claim_class_is_unexpected_error(tmp_path: Path) -> None:
@@ -92,6 +127,30 @@ def test_invalid_lcla_backend_is_unexpected_error(tmp_path: Path) -> None:
     result = validate_specs(specs_dir=specs_dir, repo_root=_REPO_ROOT)
 
     assert _has_error(result, "PROFILE_BACKEND_INVALID", "toy")
+
+
+def test_invalid_profile_family_is_unexpected_error(tmp_path: Path) -> None:
+    specs_dir = _copy_specs(tmp_path)
+    profile_path = specs_dir / "lcla_aka" / "parameter_profiles.yaml"
+    document = _read_profile_yaml(profile_path)
+    document["profiles"]["toy"]["family"] = "invalid_family"
+    _write_profile_yaml(profile_path, document)
+
+    result = validate_specs(specs_dir=specs_dir, repo_root=_REPO_ROOT)
+
+    assert _has_error(result, "PROFILE_FAMILY_INVALID", "toy")
+
+
+def test_invalid_numeric_profile_field_type_is_unexpected_error(tmp_path: Path) -> None:
+    specs_dir = _copy_specs(tmp_path)
+    profile_path = specs_dir / "c2lake" / "parameter_profiles.yaml"
+    document = _read_profile_yaml(profile_path)
+    document["profiles"]["toy"]["m"] = "8"
+    _write_profile_yaml(profile_path, document)
+
+    result = validate_specs(specs_dir=specs_dir, repo_root=_REPO_ROOT)
+
+    assert _has_error(result, "PROFILE_FIELD_TYPE_INVALID", "toy")
 
 
 def test_validation_outputs_are_written(tmp_path: Path) -> None:
@@ -124,6 +183,24 @@ def _read_profile_yaml(path: Path) -> dict[str, dict[str, dict[str, object]]]:
 
 def _write_profile_yaml(path: Path, document: dict[str, dict[str, dict[str, object]]]) -> None:
     path.write_text(yaml.safe_dump(document, allow_unicode=True, sort_keys=False), encoding="utf-8")
+
+
+def _clear_shape_source(path: Path, symbol: str) -> None:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = reader.fieldnames
+        assert fieldnames is not None
+        rows = [{field: row.get(field) or "" for field in fieldnames} for row in reader]
+    matched = False
+    for row in rows:
+        if row["symbol"] == symbol:
+            row["source"] = ""
+            matched = True
+    assert matched
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def _has_error(result: SpecValidationResult, code: str, subject: str) -> bool:

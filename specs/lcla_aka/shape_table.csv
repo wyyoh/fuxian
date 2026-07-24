@@ -13,19 +13,19 @@ u2,KGC public target,n,Z_q,public,pk_full-u1,A s2=u2,p5
 s2,KGC share,m,Z_q,public in literal,SamplePre,sent publicly,p5
 s,combined static secret,m,Z_q,secret/derived,s1+s2,"s2 public, s1 secret",p5
 X_A,ephemeral secret matrix,n×m,Z_q centered,secret,chi_beta,transpose used,p6
-E_A,ephemeral error matrix,m×m,Z_q centered,secret,chi_beta,p6
+E_A,ephemeral error matrix,m×m,Z_q centered,secret,chi_beta,ephemeral error matrix,p6
 C_A,ephemeral public matrix,m×m,Z_q,public,X_A^T A+2E_A,broadcast,p6
-e_A,reconciliation error,m,Z_q centered,secret,chi_beta/random,p6
+e_A,reconciliation error,m,Z_q centered,secret,chi_beta/random,reconciliation error,p6
 n_A,Alice intermediate,m,Z_q,secret,X_A^T pk_B+2e_A,not sent,p6
 delta_A,hint vector,m,bits,public,S(n_A),broadcast,p6
 m1,first shared bit vector,m,bits,secret,Mod2,not sent,p6
 h_A,first MAC,m bits/bytes,bits,public,H2 domain A,broadcast,p6
-X_B,ephemeral secret matrix,n×m,Z_q centered,secret,chi_beta,p6
-E_B,ephemeral error matrix,m×m,Z_q centered,secret,chi_beta,p6
+X_B,ephemeral secret matrix,n×m,Z_q centered,secret,chi_beta,Bob ephemeral secret matrix,p6
+E_B,ephemeral error matrix,m×m,Z_q centered,secret,chi_beta,Bob ephemeral error matrix,p6
 C_B,ephemeral public matrix,m×m,Z_q,public,X_B^T A+2E_B,broadcast,p6
 h_B,second MAC,m bits/bytes,bits,public,H2 domain B,broadcast,p6
-e_B,Alice second error,m,Z_q centered,secret,chi_beta/random,p6
+e_B,Alice second error,m,Z_q centered,secret,chi_beta/random,second reconciliation error,p6
 delta_B,second hint,m,bits,public,S(n_B'),broadcast,p6
 m2,second shared bit vector,m,bits,secret,Mod2,not sent,"p6,p7"
 T_A,masked Alice identity,len(ID_A),bytes,public,ID xor mask,broadcast,p6
-SK,session key,m bits or KDF bytes,bits/bytes,secret,H2 session domain,"p6,p7"
+SK,session key,m bits or KDF bytes,bits/bytes,secret,H2 session domain,derived session key,"p6,p7"
