@@ -92,3 +92,28 @@ jobs:
         with:
           name: T002-evidence
           path: artifacts/processed/T002/spec_validation.json
+      - name: 生成 T010 evidence
+        run: python scripts/validate_c2lake_core.py --repo-root .
+      - name: 校验 T010 evidence
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          evidence = json.loads(
+              Path("artifacts/processed/T010/c2lake_core_validation.json").read_text()
+          )
+          head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          assert evidence["result"] == "pass"
+          assert evidence["failed_cases"] == 0
+          assert evidence["protocol_key_agreement_implemented"] is False
+          assert evidence["security_proof_verified"] is False
+          assert evidence["git_commit"] == head
+          assert evidence["git_dirty"] is False
+          PY
+      - name: 上传 T010 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: T010-evidence
+          path: artifacts/processed/T010/c2lake_core_validation.json
