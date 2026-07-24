@@ -28,8 +28,16 @@ dev = [
 where = ["src"]
 
 [tool.setuptools.data-files]
-"share/lattice_aka_repro/specs/c2lake" = ["specs/c2lake/parameter_profiles.yaml"]
-"share/lattice_aka_repro/specs/lcla_aka" = ["specs/lcla_aka/parameter_profiles.yaml"]
+"share/lattice_aka_repro/specs/c2lake" = [
+  "specs/c2lake/claims_matrix.csv",
+  "specs/c2lake/parameter_profiles.yaml",
+  "specs/c2lake/shape_table.csv",
+]
+"share/lattice_aka_repro/specs/lcla_aka" = [
+  "specs/lcla_aka/claims_matrix.csv",
+  "specs/lcla_aka/parameter_profiles.yaml",
+  "specs/lcla_aka/shape_table.csv",
+]
 
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers"
