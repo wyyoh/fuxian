@@ -38,3 +38,32 @@ jobs:
           /tmp/lattice-wheel-smoke/bin/python -m pip install dist/*.whl
           cd /tmp
           /tmp/lattice-wheel-smoke/bin/python -I -c 'from lattice_aka_repro import load_profile; assert load_profile("c2lake", "toy")["q"] == 257; assert load_profile("lcla_aka", "toy")["backend"] == "toy"'
+      - name: 生成 T001 evidence 元数据
+        run: |
+          test -z "$(git status --porcelain=v1)"
+          python scripts/capture_environment.py \
+            --task-id T001 \
+            --profile not_applicable \
+            --backend python \
+            --seed 0 \
+            --warmup 0 \
+            --repetitions 1 \
+            --repo-root . \
+            --output artifacts/processed/T001/environment.json
+      - name: 校验 T001 evidence 元数据
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          metadata = json.loads(Path("artifacts/processed/T001/environment.json").read_text())
+          head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          assert metadata["git_commit"] == head
+          assert metadata["git_dirty"] is False
+          PY
+      - name: 上传 T001 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: T001-evidence
+          path: artifacts/processed/T001/environment.json
