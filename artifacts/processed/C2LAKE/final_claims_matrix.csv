@@ -1,0 +1,16 @@
+claim_id,claim,status,executable_evidence,formal_verification_status,notes
+correctness,协议正确性与双方会话密钥一致,executable_checked,core/protocol tests and independent Python-int oracle,not_formally_verified,可执行正确性不等同安全证明
+mutual_authentication,双向认证,executable_checked,S_i/S_j verification and tamper rejection,not_formally_verified,攻击模拟覆盖公开字段篡改
+session_key_agreement,会话密钥协商一致,executable_checked,K1/K2/K3 and H3/KDF consistency,not_formally_verified,canonical transcript 固定顺序
+replay_resistance,重放窗口抵抗,executable_checked,timestamp boundary and replay tests,not_formally_verified,无全局 replay cache
+impersonation_resistance,仿冒攻击抵抗,paper_proof_only,limited tamper simulation,not_formally_verified,未形式化 eCK 对手
+man_in_the_middle_resistance,中间人攻击抵抗,paper_proof_only,single-field tamper simulation,not_formally_verified,未形式化网络对手
+known_key_security,known-key security,paper_proof_only,session independence checks,not_formally_verified,不同 seed 差异不构成证明
+unknown_key_share_resistance,unknown key-share resistance,paper_proof_only,identity participates in H1/H2/transcript,not_formally_verified,未形式化 UKS 定义
+no_key_control,no key control,paper_proof_only,dual ephemeral seed influence observed,not_formally_verified,未验证密钥分布不可控
+perfect_forward_secrecy,perfect forward secrecy,paper_proof_only,no executable leakage game,not_formally_verified,仅记录论文主张
+known_session_key_security,known session key security,paper_proof_only,no multi-session leakage oracle,not_formally_verified,仅记录论文主张
+type_i_adversary_proof,Type I adversary proof,not_formally_verified,paper proof audit only,not_formally_verified,未验证 ROM/eCK 证明
+type_ii_adversary_proof,Type II adversary proof,not_formally_verified,paper proof audit only,not_formally_verified,未验证 ROM/eCK 证明
+isis_reduction,ISIS reduction,not_formally_verified,no ISIS solver or reduction checker,not_formally_verified,不声称困难性验证
+cbi_isis_reduction,CBi-ISIS reduction,not_formally_verified,no CBi-ISIS solver or reduction checker,not_formally_verified,不声称困难性验证
