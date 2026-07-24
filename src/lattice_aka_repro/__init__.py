@@ -8,12 +8,26 @@ from lattice_aka_repro.evidence import (
 )
 from lattice_aka_repro.profiles import load_profile
 from lattice_aka_repro.randomness import seeded_rng
+from lattice_aka_repro.spec_validation import (
+    SpecValidationResult,
+    ValidationCheck,
+    ValidationIssue,
+    render_report,
+    validate_specs,
+    write_validation_outputs,
+)
 
 __all__ = [
     "RunMetadata",
+    "SpecValidationResult",
+    "ValidationCheck",
+    "ValidationIssue",
     "collect_run_metadata",
     "ensure_artifact_dirs",
     "load_profile",
+    "render_report",
     "seeded_rng",
+    "validate_specs",
     "write_metadata_json",
+    "write_validation_outputs",
 ]

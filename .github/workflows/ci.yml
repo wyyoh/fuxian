@@ -67,3 +67,28 @@ jobs:
         with:
           name: T001-evidence
           path: artifacts/processed/T001/environment.json
+      - name: 生成 T002 evidence
+        run: python scripts/validate_specs.py --repo-root .
+      - name: 校验 T002 evidence
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          metadata = json.loads(Path("artifacts/processed/T002/spec_validation.json").read_text())
+          head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          assert metadata["result"] == "pass"
+          assert metadata["summary"]["unexpected_error_count"] == 0
+          assert metadata["metadata"]["git_commit"] == head
+          assert metadata["metadata"]["git_dirty"] is False
+          assert not subprocess.check_output(
+              ["git", "status", "--porcelain=v1"],
+              text=True,
+          ).strip()
+          PY
+      - name: 上传 T002 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: T002-evidence
+          path: artifacts/processed/T002/spec_validation.json
