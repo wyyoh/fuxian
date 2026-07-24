@@ -77,6 +77,8 @@
 
 论文 Table 7 参考值保存于 `specs/c2lake/paper_table7_reference.csv`。复现实验输出 raw CSV、统计 CSV 和论文值比较 CSV。Key_Agreement 原论文计时边界不明，因此比较表同时列出 `initiator_total`、`responder_total` 和 `full_handshake`。
 
+本地 exact 尝试完成了 `m=32,48,64,80,96,112,128,160` 的 `paper_literal` 与 `audited_prime` profile。`m=256` 的 `paper_literal_m256` 与 `audited_prime_m256` 在默认单 profile timeout 下未完成，raw CSV 中保留 `timeout` 失败行。
+
 ## 16. Figure 4
 
 `scripts/reproduce_c2lake_figure4.py` 从 CSV 自动生成 `artifacts/figures/C2LAKE/figure4_reproduced.png`。图不手填数据。
@@ -101,6 +103,8 @@ raw benchmark CSV 每行记录 Python、NumPy、CPU、OS、git commit、timestam
 ## 20. 无法复现的部分
 
 未形式化复现 eCK 安全证明、ROM 安全归约、ISIS/CBi-ISIS 困难性或其他对比方案的实际运行性能。
+
+性能实验方面，`m=256` 的 exact 参数在当前环境未完成；报告中标为 timeout，不用 toy 或较小参数替代。
 
 ## 21. 后续优化建议
 

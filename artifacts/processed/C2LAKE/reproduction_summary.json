@@ -1,0 +1,69 @@
+{
+  "benchmark": {
+    "completed_profiles": [
+      "audited_prime_m112",
+      "audited_prime_m128",
+      "audited_prime_m160",
+      "audited_prime_m32",
+      "audited_prime_m48",
+      "audited_prime_m64",
+      "audited_prime_m80",
+      "audited_prime_m96",
+      "paper_literal_m112",
+      "paper_literal_m128",
+      "paper_literal_m160",
+      "paper_literal_m32",
+      "paper_literal_m48",
+      "paper_literal_m64",
+      "paper_literal_m80",
+      "paper_literal_m96"
+    ],
+    "incomplete_profiles": [
+      {
+        "profile": "audited_prime_m256",
+        "reason": "timeout",
+        "failed_repetitions": 100
+      },
+      {
+        "profile": "paper_literal_m256",
+        "reason": "timeout",
+        "failed_repetitions": 100
+      }
+    ],
+    "mode": "exact",
+    "raw_rows": 16200,
+    "successful_raw_rows": 14400,
+    "failed_raw_rows": 1800
+  },
+  "claims": {
+    "eck_formally_verified": false,
+    "rom_reduction_verified": false,
+    "isis_hardness_verified": false,
+    "cbi_isis_hardness_verified": false,
+    "paper_security_proof_reproduced": false
+  },
+  "git_commit": "ac459e0ac38e97b002693d9fe271e308ff8ff47c",
+  "paper": {
+    "doi": "10.1002/cpe.7983",
+    "sha256": "27502f8185258222a465750c124d1702b5a0bd387d8618f8f159b62258802e41",
+    "title": "Provably secure lightweight certificateless lattice-based authenticated key exchange scheme for IIoT"
+  },
+  "protocol": {
+    "full_pytest_success_sessions": 1200,
+    "k1_consistency": true,
+    "k2_consistency": true,
+    "k3_consistency": true,
+    "protocol_correctness": true,
+    "session_key_consistency": true,
+    "smoke_validation_sessions": {
+      "audited_prime_m32": 5,
+      "paper_literal_m32": 5,
+      "toy": 50
+    }
+  },
+  "result": "pass_with_resource_limited_benchmark",
+  "test_summary": {
+    "pytest_count": 92,
+    "quality_gates_passed": true
+  }
+}
