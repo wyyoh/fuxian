@@ -1,0 +1,101 @@
+actual_identity_bytes,actual_identity_compact_message_bits,actual_identity_compact_message_bytes,availability,bits_per_zq,canonical_hash_encoding_bytes,element_count,element_kind,family,gaussian_samples,h1,id_mask,item,m,mac_a,mac_b,mathematical_ideal_bits,mathematical_ideal_bytes,matrix_multiply,matrix_vector,mod2,n,network_packets,network_rounds,network_wire_encoding_defined,note,numpy_reference_bytes,paper_compact_message_bits,paper_compact_message_bytes,paper_identity_bits,phase,profile,q,scalar_multiply,section,session_kdf,signal_s,transmitted_fields,vector_add_sub,xor
+18,14608,1826,,7,2817,,,toy,,,,,32,,,,,,,,2,3,3,False,,,14496,1812,32,,toy,127,,communication,,,7,,
+18,3146896,393362,,24,394185,,,paper_literal,,,,,256,,,,,,,,5,3,3,False,,,3147008,393376,256,,paper_correctness,16777215,,communication,,,7,,
+18,3146896,393362,,24,394185,,,paper_literal,,,,,256,,,,,,,,6,3,3,False,,,3147008,393376,256,,paper_performance,16777215,,communication,,,7,,
+18,3277968,409746,,25,525295,,,audited,,,,,256,,,,,,,,5,3,3,False,,,3278080,409760,256,,audited_preserve_keylen,16777259,,communication,,,7,,
+18,4148496,518562,,25,664593,,,audited,,,,,288,,,,,,,,6,3,3,False,,,4148640,518580,288,,audited_preserve_dimension,16777259,,communication,,,7,,
+,,,available,,,64,zq,toy,,,,A,,,,448,56,,,,,,,,公共矩阵 n×m,512,,,,,toy,,,storage,,,,,
+,,,unavailable,,,0,opaque,toy,,,,trapdoor,,,,,,,,,,,,,官方 FrodoKEM 不提供论文要求的 TrapGen/SamplePre，无法量化真实 trapdoor。,,,,,,toy,,,storage,,,,,
+,,,constructed_only,,,96,zq,toy,,,,static_private_s1_s2_s,,,,672,84,,,,,,,,含公开 s2 与组合 s,768,,,,,toy,,,storage,,,,,
+,,,constructed_only,,,2,zq,toy,,,,static_error_f,,,,14,2,,,,,,,,constructed relation 的 f,16,,,,,toy,,,storage,,,,,
+,,,constructed_only,,,6,zq,toy,,,,static_public_pk_u1_u2,,,,42,6,,,,,,,,三个 n 维向量,48,,,,,toy,,,storage,,,,,
+,,,available,,,1120,zq,toy,,,,alice_ephemeral_X_E_e,,,,7840,980,,,,,,,,X_A、E_A、e_A,8960,,,,,toy,,,storage,,,,,
+,,,available,,,1088,zq,toy,,,,bob_ephemeral_X_E,,,,7616,952,,,,,,,,X_B、E_B,8704,,,,,toy,,,storage,,,,,
+,,,available,,,2048,zq,toy,,,,transcript_matrices,,,,14336,1792,,,,,,,,C_A、C_B,16384,,,,,toy,,,storage,,,,,
+,,,available,,,128,bit,toy,,,,transcript_bits,,,,128,16,,,,,,,,delta_A、h_A、h_B、delta_B,1024,,,,,toy,,,storage,,,,,
+,,,available,,,64,bit,toy,,,,session_shared_bits,,,,64,8,,,,,,,,m1、m2,512,,,,,toy,,,storage,,,,,
+,,,available,,,1280,zq,paper_literal,,,,A,,,,30720,3840,,,,,,,,公共矩阵 n×m,10240,,,,,paper_correctness,,,storage,,,,,
+,,,unavailable,,,0,opaque,paper_literal,,,,trapdoor,,,,,,,,,,,,,官方 FrodoKEM 不提供论文要求的 TrapGen/SamplePre，无法量化真实 trapdoor。,,,,,,paper_correctness,,,storage,,,,,
+,,,constructed_only,,,768,zq,paper_literal,,,,static_private_s1_s2_s,,,,18432,2304,,,,,,,,含公开 s2 与组合 s,6144,,,,,paper_correctness,,,storage,,,,,
+,,,constructed_only,,,5,zq,paper_literal,,,,static_error_f,,,,120,15,,,,,,,,constructed relation 的 f,40,,,,,paper_correctness,,,storage,,,,,
+,,,constructed_only,,,15,zq,paper_literal,,,,static_public_pk_u1_u2,,,,360,45,,,,,,,,三个 n 维向量,120,,,,,paper_correctness,,,storage,,,,,
+,,,available,,,67072,zq,paper_literal,,,,alice_ephemeral_X_E_e,,,,1609728,201216,,,,,,,,X_A、E_A、e_A,536576,,,,,paper_correctness,,,storage,,,,,
+,,,available,,,66816,zq,paper_literal,,,,bob_ephemeral_X_E,,,,1603584,200448,,,,,,,,X_B、E_B,534528,,,,,paper_correctness,,,storage,,,,,
+,,,available,,,131072,zq,paper_literal,,,,transcript_matrices,,,,3145728,393216,,,,,,,,C_A、C_B,1048576,,,,,paper_correctness,,,storage,,,,,
+,,,available,,,1024,bit,paper_literal,,,,transcript_bits,,,,1024,128,,,,,,,,delta_A、h_A、h_B、delta_B,8192,,,,,paper_correctness,,,storage,,,,,
+,,,available,,,512,bit,paper_literal,,,,session_shared_bits,,,,512,64,,,,,,,,m1、m2,4096,,,,,paper_correctness,,,storage,,,,,
+,,,available,,,1536,zq,paper_literal,,,,A,,,,36864,4608,,,,,,,,公共矩阵 n×m,12288,,,,,paper_performance,,,storage,,,,,
+,,,unavailable,,,0,opaque,paper_literal,,,,trapdoor,,,,,,,,,,,,,官方 FrodoKEM 不提供论文要求的 TrapGen/SamplePre，无法量化真实 trapdoor。,,,,,,paper_performance,,,storage,,,,,
+,,,constructed_only,,,768,zq,paper_literal,,,,static_private_s1_s2_s,,,,18432,2304,,,,,,,,含公开 s2 与组合 s,6144,,,,,paper_performance,,,storage,,,,,
+,,,constructed_only,,,6,zq,paper_literal,,,,static_error_f,,,,144,18,,,,,,,,constructed relation 的 f,48,,,,,paper_performance,,,storage,,,,,
+,,,constructed_only,,,18,zq,paper_literal,,,,static_public_pk_u1_u2,,,,432,54,,,,,,,,三个 n 维向量,144,,,,,paper_performance,,,storage,,,,,
+,,,available,,,67328,zq,paper_literal,,,,alice_ephemeral_X_E_e,,,,1615872,201984,,,,,,,,X_A、E_A、e_A,538624,,,,,paper_performance,,,storage,,,,,
+,,,available,,,67072,zq,paper_literal,,,,bob_ephemeral_X_E,,,,1609728,201216,,,,,,,,X_B、E_B,536576,,,,,paper_performance,,,storage,,,,,
+,,,available,,,131072,zq,paper_literal,,,,transcript_matrices,,,,3145728,393216,,,,,,,,C_A、C_B,1048576,,,,,paper_performance,,,storage,,,,,
+,,,available,,,1024,bit,paper_literal,,,,transcript_bits,,,,1024,128,,,,,,,,delta_A、h_A、h_B、delta_B,8192,,,,,paper_performance,,,storage,,,,,
+,,,available,,,512,bit,paper_literal,,,,session_shared_bits,,,,512,64,,,,,,,,m1、m2,4096,,,,,paper_performance,,,storage,,,,,
+,,,available,,,1280,zq,audited,,,,A,,,,32000,4000,,,,,,,,公共矩阵 n×m,10240,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,unavailable,,,0,opaque,audited,,,,trapdoor,,,,,,,,,,,,,官方 FrodoKEM 不提供论文要求的 TrapGen/SamplePre，无法量化真实 trapdoor。,,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,constructed_only,,,768,zq,audited,,,,static_private_s1_s2_s,,,,19200,2400,,,,,,,,含公开 s2 与组合 s,6144,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,constructed_only,,,5,zq,audited,,,,static_error_f,,,,125,16,,,,,,,,constructed relation 的 f,40,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,constructed_only,,,15,zq,audited,,,,static_public_pk_u1_u2,,,,375,47,,,,,,,,三个 n 维向量,120,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,available,,,67072,zq,audited,,,,alice_ephemeral_X_E_e,,,,1676800,209600,,,,,,,,X_A、E_A、e_A,536576,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,available,,,66816,zq,audited,,,,bob_ephemeral_X_E,,,,1670400,208800,,,,,,,,X_B、E_B,534528,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,available,,,131072,zq,audited,,,,transcript_matrices,,,,3276800,409600,,,,,,,,C_A、C_B,1048576,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,available,,,1024,bit,audited,,,,transcript_bits,,,,1024,128,,,,,,,,delta_A、h_A、h_B、delta_B,8192,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,available,,,512,bit,audited,,,,session_shared_bits,,,,512,64,,,,,,,,m1、m2,4096,,,,,audited_preserve_keylen,,,storage,,,,,
+,,,available,,,1728,zq,audited,,,,A,,,,43200,5400,,,,,,,,公共矩阵 n×m,13824,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,unavailable,,,0,opaque,audited,,,,trapdoor,,,,,,,,,,,,,官方 FrodoKEM 不提供论文要求的 TrapGen/SamplePre，无法量化真实 trapdoor。,,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,constructed_only,,,864,zq,audited,,,,static_private_s1_s2_s,,,,21600,2700,,,,,,,,含公开 s2 与组合 s,6912,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,constructed_only,,,6,zq,audited,,,,static_error_f,,,,150,19,,,,,,,,constructed relation 的 f,48,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,constructed_only,,,18,zq,audited,,,,static_public_pk_u1_u2,,,,450,57,,,,,,,,三个 n 维向量,144,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,available,,,84960,zq,audited,,,,alice_ephemeral_X_E_e,,,,2124000,265500,,,,,,,,X_A、E_A、e_A,679680,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,available,,,84672,zq,audited,,,,bob_ephemeral_X_E,,,,2116800,264600,,,,,,,,X_B、E_B,677376,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,available,,,165888,zq,audited,,,,transcript_matrices,,,,4147200,518400,,,,,,,,C_A、C_B,1327104,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,available,,,1152,bit,audited,,,,transcript_bits,,,,1152,144,,,,,,,,delta_A、h_A、h_B、delta_B,9216,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,available,,,576,bit,audited,,,,session_shared_bits,,,,576,72,,,,,,,,m1、m2,4608,,,,,audited_preserve_dimension,,,storage,,,,,
+,,,,,,,,toy,0,0,0,,,0,0,,,0,0,0,,,,,,,,,,setup,toy,,0,operations,0,0,,0,0
+,,,,,,,,toy,3,0,0,,,0,0,,,0,2,0,,,,,,,,,,entity_key_generation,toy,,2,operations,0,0,,2,0
+,,,,,,,,toy,0,1,0,,,0,0,,,0,1,0,,,,,,,,,,kgc_key_generation,toy,,0,operations,0,0,,1,0
+,,,,,,,,toy,0,1,0,,,0,0,,,0,2,0,,,,,,,,,,entity_verify_and_assemble,toy,,1,operations,0,0,,3,0
+,,,,,,,,toy,3,1,0,,,1,0,,,1,1,1,,,,,,,,,,alice_create,toy,,2,operations,0,1,,2,0
+,,,,,,,,toy,2,0,0,,,1,1,,,1,1,1,,,,,,,,,,bob_verify_and_reply,toy,,1,operations,0,0,,1,0
+,,,,,,,,toy,1,0,1,,,0,1,,,0,1,1,,,,,,,,,,alice_verify_and_finish,toy,,1,operations,1,1,,1,1
+,,,,,,,,toy,0,1,1,,,0,0,,,0,1,1,,,,,,,,,,bob_finish,toy,,0,operations,1,0,,0,1
+,,,,,,,,toy,6,2,2,,,2,2,,,2,4,4,,,,,,,,,,full_handshake,toy,,4,operations,2,2,,4,2
+,,,,,,,,paper_literal,0,0,0,,,0,0,,,0,0,0,,,,,,,,,,setup,paper_correctness,,0,operations,0,0,,0,0
+,,,,,,,,paper_literal,3,0,0,,,0,0,,,0,2,0,,,,,,,,,,entity_key_generation,paper_correctness,,2,operations,0,0,,2,0
+,,,,,,,,paper_literal,0,1,0,,,0,0,,,0,1,0,,,,,,,,,,kgc_key_generation,paper_correctness,,0,operations,0,0,,1,0
+,,,,,,,,paper_literal,0,1,0,,,0,0,,,0,2,0,,,,,,,,,,entity_verify_and_assemble,paper_correctness,,1,operations,0,0,,3,0
+,,,,,,,,paper_literal,3,1,0,,,1,0,,,1,1,1,,,,,,,,,,alice_create,paper_correctness,,2,operations,0,1,,2,0
+,,,,,,,,paper_literal,2,0,0,,,1,1,,,1,1,1,,,,,,,,,,bob_verify_and_reply,paper_correctness,,1,operations,0,0,,1,0
+,,,,,,,,paper_literal,1,0,1,,,0,1,,,0,1,1,,,,,,,,,,alice_verify_and_finish,paper_correctness,,1,operations,1,1,,1,1
+,,,,,,,,paper_literal,0,1,1,,,0,0,,,0,1,1,,,,,,,,,,bob_finish,paper_correctness,,0,operations,1,0,,0,1
+,,,,,,,,paper_literal,6,2,2,,,2,2,,,2,4,4,,,,,,,,,,full_handshake,paper_correctness,,4,operations,2,2,,4,2
+,,,,,,,,paper_literal,0,0,0,,,0,0,,,0,0,0,,,,,,,,,,setup,paper_performance,,0,operations,0,0,,0,0
+,,,,,,,,paper_literal,3,0,0,,,0,0,,,0,2,0,,,,,,,,,,entity_key_generation,paper_performance,,2,operations,0,0,,2,0
+,,,,,,,,paper_literal,0,1,0,,,0,0,,,0,1,0,,,,,,,,,,kgc_key_generation,paper_performance,,0,operations,0,0,,1,0
+,,,,,,,,paper_literal,0,1,0,,,0,0,,,0,2,0,,,,,,,,,,entity_verify_and_assemble,paper_performance,,1,operations,0,0,,3,0
+,,,,,,,,paper_literal,3,1,0,,,1,0,,,1,1,1,,,,,,,,,,alice_create,paper_performance,,2,operations,0,1,,2,0
+,,,,,,,,paper_literal,2,0,0,,,1,1,,,1,1,1,,,,,,,,,,bob_verify_and_reply,paper_performance,,1,operations,0,0,,1,0
+,,,,,,,,paper_literal,1,0,1,,,0,1,,,0,1,1,,,,,,,,,,alice_verify_and_finish,paper_performance,,1,operations,1,1,,1,1
+,,,,,,,,paper_literal,0,1,1,,,0,0,,,0,1,1,,,,,,,,,,bob_finish,paper_performance,,0,operations,1,0,,0,1
+,,,,,,,,paper_literal,6,2,2,,,2,2,,,2,4,4,,,,,,,,,,full_handshake,paper_performance,,4,operations,2,2,,4,2
+,,,,,,,,audited,0,0,0,,,0,0,,,0,0,0,,,,,,,,,,setup,audited_preserve_keylen,,0,operations,0,0,,0,0
+,,,,,,,,audited,3,0,0,,,0,0,,,0,2,0,,,,,,,,,,entity_key_generation,audited_preserve_keylen,,2,operations,0,0,,2,0
+,,,,,,,,audited,0,1,0,,,0,0,,,0,1,0,,,,,,,,,,kgc_key_generation,audited_preserve_keylen,,0,operations,0,0,,1,0
+,,,,,,,,audited,0,1,0,,,0,0,,,0,2,0,,,,,,,,,,entity_verify_and_assemble,audited_preserve_keylen,,1,operations,0,0,,3,0
+,,,,,,,,audited,3,1,0,,,1,0,,,1,1,1,,,,,,,,,,alice_create,audited_preserve_keylen,,2,operations,0,1,,2,0
+,,,,,,,,audited,2,0,0,,,1,1,,,1,1,1,,,,,,,,,,bob_verify_and_reply,audited_preserve_keylen,,1,operations,0,0,,1,0
+,,,,,,,,audited,1,0,1,,,0,1,,,0,1,1,,,,,,,,,,alice_verify_and_finish,audited_preserve_keylen,,1,operations,1,1,,1,1
+,,,,,,,,audited,0,1,1,,,0,0,,,0,1,1,,,,,,,,,,bob_finish,audited_preserve_keylen,,0,operations,1,0,,0,1
+,,,,,,,,audited,6,2,2,,,2,2,,,2,4,4,,,,,,,,,,full_handshake,audited_preserve_keylen,,4,operations,2,2,,4,2
+,,,,,,,,audited,0,0,0,,,0,0,,,0,0,0,,,,,,,,,,setup,audited_preserve_dimension,,0,operations,0,0,,0,0
+,,,,,,,,audited,3,0,0,,,0,0,,,0,2,0,,,,,,,,,,entity_key_generation,audited_preserve_dimension,,2,operations,0,0,,2,0
+,,,,,,,,audited,0,1,0,,,0,0,,,0,1,0,,,,,,,,,,kgc_key_generation,audited_preserve_dimension,,0,operations,0,0,,1,0
+,,,,,,,,audited,0,1,0,,,0,0,,,0,2,0,,,,,,,,,,entity_verify_and_assemble,audited_preserve_dimension,,1,operations,0,0,,3,0
+,,,,,,,,audited,3,1,0,,,1,0,,,1,1,1,,,,,,,,,,alice_create,audited_preserve_dimension,,2,operations,0,1,,2,0
+,,,,,,,,audited,2,0,0,,,1,1,,,1,1,1,,,,,,,,,,bob_verify_and_reply,audited_preserve_dimension,,1,operations,0,0,,1,0
+,,,,,,,,audited,1,0,1,,,0,1,,,0,1,1,,,,,,,,,,alice_verify_and_finish,audited_preserve_dimension,,1,operations,1,1,,1,1
+,,,,,,,,audited,0,1,1,,,0,0,,,0,1,1,,,,,,,,,,bob_finish,audited_preserve_dimension,,0,operations,1,0,,0,1
+,,,,,,,,audited,6,2,2,,,2,2,,,2,4,4,,,,,,,,,,full_handshake,audited_preserve_dimension,,4,operations,2,2,,4,2
