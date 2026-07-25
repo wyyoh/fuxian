@@ -23,7 +23,7 @@ def normalize_identity(identity: str | bytes) -> bytes:
     if isinstance(identity, str):
         encoded = identity.encode("utf-8")
     elif isinstance(identity, bytes):
-        encoded = bytes(identity)
+        encoded = memoryview(identity).tobytes()
     else:
         raise LCLAError("IDENTITY_ERROR", "identity 必须为非空 str 或 bytes")
     if not encoded:
