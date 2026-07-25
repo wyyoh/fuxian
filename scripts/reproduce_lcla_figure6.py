@@ -203,7 +203,7 @@ def _panels_at_max_initiators(
 def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=_FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=_FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

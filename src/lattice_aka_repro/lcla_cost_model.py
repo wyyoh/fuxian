@@ -342,7 +342,7 @@ def write_cost_outputs(
     rows = _flatten_cost_rows(payload)
     fieldnames = sorted({key for row in rows for key in row})
     with csv_output.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     report_output.write_text(render_cost_report(payload), encoding="utf-8")

@@ -387,7 +387,11 @@ def append_rows(output: Path, rows: list[LCLABenchmarkRow], *, resume: bool) -> 
                 )
     write_header = not output.exists()
     with output.open("a", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(asdict(rows[0]).keys()))
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=list(asdict(rows[0]).keys()),
+            lineterminator="\n",
+        )
         if write_header:
             writer.writeheader()
         for row in rows:
