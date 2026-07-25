@@ -159,6 +159,21 @@ def vector_sub_mod(left: npt.ArrayLike, right: npt.ArrayLike, *, q: int) -> IntA
     )
 
 
+def matrix_add_mod(left: npt.ArrayLike, right: npt.ArrayLike, *, q: int) -> IntArray:
+    """同 shape 矩阵逐元素加法并立即 mod q。"""
+
+    _validate_q_backend(q, "safe")
+    left_array = _integer_array(left, ndim=2, name="left")
+    right_array = _integer_array(right, ndim=2, name="right")
+    if left_array.shape != right_array.shape:
+        raise LCLAError("SHAPE_ERROR", "矩阵 shape 不一致")
+    flat = np.asarray(
+        [(int(a) + int(b)) % q for a, b in zip(left_array.flat, right_array.flat, strict=True)],
+        dtype=np.int64,
+    )
+    return flat.reshape(left_array.shape)
+
+
 def scalar_multiply_mod(scalar: int, value: npt.ArrayLike, *, q: int) -> IntArray:
     """标量乘数组并立即 mod q，使用 Python int 避免溢出。"""
 
