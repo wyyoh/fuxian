@@ -1,0 +1,135 @@
+{
+  "K1_consistency": true,
+  "K2_consistency": true,
+  "K3_consistency": true,
+  "algorithmic_workflow_reproduced": true,
+  "benchmark_class": "auditable_python_reference_implementation",
+  "benchmark_status": "partial",
+  "cbi_isis_hardness_verified": false,
+  "completed_benchmark_profiles": [
+    "audited_prime_m112",
+    "audited_prime_m128",
+    "audited_prime_m160",
+    "audited_prime_m32",
+    "audited_prime_m48",
+    "audited_prime_m64",
+    "audited_prime_m80",
+    "audited_prime_m96",
+    "paper_literal_m112",
+    "paper_literal_m128",
+    "paper_literal_m160",
+    "paper_literal_m32",
+    "paper_literal_m48",
+    "paper_literal_m64",
+    "paper_literal_m80",
+    "paper_literal_m96"
+  ],
+  "core_validation": {
+    "failed_cases": 0,
+    "result": "pass"
+  },
+  "cost_model_status": {
+    "communication_rows": 19,
+    "operation_rows": 133,
+    "result": "pass",
+    "storage_rows": 133
+  },
+  "eck_formally_verified": false,
+  "executable_validation_passed": true,
+  "failed_protocol_cases": 0,
+  "failure_reasons": [],
+  "formal_security_verified": false,
+  "git_commit": "e8b3cad289119fb89cef5804812955c14ea8826f",
+  "git_dirty": true,
+  "incomplete_benchmark_profiles": [
+    "audited_prime_m256",
+    "paper_literal_m256"
+  ],
+  "independent_formula_check": {
+    "failures": [],
+    "passed": true,
+    "profiles": {
+      "audited_prime_m32": true,
+      "paper_literal_m32": true,
+      "toy": true
+    }
+  },
+  "isis_hardness_verified": false,
+  "m256_completed": false,
+  "negative_test_matrix": {
+    "request:ID_i": true,
+    "request:P_i0": true,
+    "request:P_i1": true,
+    "request:S_i": true,
+    "request:T_i": true,
+    "request:X_i": true,
+    "request:Y_i": true,
+    "request:Z_i": true,
+    "response:ID_j": true,
+    "response:P_j0": true,
+    "response:P_j1": true,
+    "response:S_j": true,
+    "response:T_j": true,
+    "response:X_j": true,
+    "response:Y_j": true,
+    "response:Z_j": true
+  },
+  "paper_sha256": "27502f8185258222a465750c124d1702b5a0bd387d8618f8f159b62258802e41",
+  "profile_session_counts": {
+    "audited_prime_m32": 5,
+    "paper_literal_m32": 5,
+    "toy": 50
+  },
+  "protocol_correctness": true,
+  "raw_benchmark_summary": {
+    "actual_measured_failure_rows": 0,
+    "actual_measured_success_rows": 14400,
+    "placeholder_rows": 1800,
+    "profile_level_timeouts": 2,
+    "timed_out_profiles": [
+      "audited_prime_m256",
+      "paper_literal_m256"
+    ]
+  },
+  "reference_implementation_benchmark_completed": "partial",
+  "replay_test_matrix": {
+    "expired_request_replay_rejected": true,
+    "expired_response_replay_rejected": true,
+    "in_window_replay_prevention": false,
+    "in_window_request_second_submit_accepted": true
+  },
+  "result": "pass_with_partial_benchmark_and_unverified_formal_security",
+  "rom_reduction_verified": false,
+  "schema_version": 1,
+  "security_claims_executable": [
+    "correctness",
+    "mutual_authentication",
+    "session_key_agreement",
+    "timestamp_freshness_enforcement",
+    "expired_replay_rejection"
+  ],
+  "security_claims_paper_only": [
+    "general_replay_resistance",
+    "in_window_replay_prevention",
+    "impersonation_resistance",
+    "man_in_the_middle_resistance",
+    "known_key_security",
+    "unknown_key_share_resistance",
+    "no_key_control",
+    "perfect_forward_secrecy",
+    "known_session_key_security",
+    "type_i_adversary_proof",
+    "type_ii_adversary_proof",
+    "isis_reduction",
+    "cbi_isis_reduction"
+  ],
+  "session_key_consistency": true,
+  "strict_original_implementation_timing_reproduced": false,
+  "timestamp_test_matrix": {
+    "future_boundary": true,
+    "future_over_skew": true,
+    "just_over_max_age": true,
+    "max_age_boundary": true,
+    "normal": true
+  }
+}

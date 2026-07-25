@@ -1,0 +1,265 @@
+{
+  "claims": [
+    {
+      "claim": "协议正确性与双方会话密钥一致",
+      "evidence": [
+        "核心部分私钥验证式 property tests",
+        "完整握手 K1/K2/K3 与 session key 一致性测试",
+        "独立 Python-int oracle 检查代数恒等式"
+      ],
+      "formally_verified": false,
+      "id": "correctness",
+      "status": "executable_checked"
+    },
+    {
+      "claim": "双向认证",
+      "evidence": [
+        "Alice/Bob S 验证式正向测试",
+        "公开 transcript 单字段篡改拒绝测试"
+      ],
+      "formally_verified": false,
+      "id": "mutual_authentication",
+      "status": "executable_checked"
+    },
+    {
+      "claim": "会话密钥协商一致",
+      "evidence": [
+        "H3 canonical transcript 顺序固定",
+        "literal scalar 与 audited KDF 输出一致性测试"
+      ],
+      "formally_verified": false,
+      "id": "session_key_agreement",
+      "status": "executable_checked"
+    },
+    {
+      "claim": "时间戳新鲜度窗口检查",
+      "evidence": [
+        "显式时间戳窗口边界测试",
+        "过旧消息和未来消息拒绝测试"
+      ],
+      "formally_verified": false,
+      "id": "timestamp_freshness_enforcement",
+      "status": "executable_checked"
+    },
+    {
+      "claim": "过期 request/response 重放拒绝",
+      "evidence": [
+        "旧 request/response 超出时间窗口后被 MESSAGE_EXPIRED 拒绝"
+      ],
+      "formally_verified": false,
+      "id": "expired_replay_rejection",
+      "status": "executable_checked"
+    },
+    {
+      "claim": "一般重放攻击抵抗",
+      "evidence": [
+        "当前代码仅检查时间戳 freshness 和 expired replay",
+        "无 replay cache，因此不把完整 replay resistance 标为 executable_checked"
+      ],
+      "formally_verified": false,
+      "id": "general_replay_resistance",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "有效时间窗口内重复提交防护",
+      "evidence": [
+        "同一合法 request 在有效窗口内连续提交两次会被当前无状态实现接受",
+        "若需要完整 replay prevention，需要 nonce/session-id cache 或状态化去重机制"
+      ],
+      "formally_verified": false,
+      "id": "in_window_replay_prevention",
+      "implemented": false,
+      "status": "not_formally_verified"
+    },
+    {
+      "claim": "仿冒攻击抵抗",
+      "evidence": [
+        "代码仅模拟身份和公钥分量篡改拒绝",
+        "无 eCK 对手模型形式化"
+      ],
+      "formally_verified": false,
+      "id": "impersonation_resistance",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "中间人攻击抵抗",
+      "evidence": [
+        "代码仅覆盖公开消息单字段篡改拒绝",
+        "无完整网络对手/随机预言机模型验证"
+      ],
+      "formally_verified": false,
+      "id": "man_in_the_middle_resistance",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "known-key security",
+      "evidence": [
+        "不同 seed 产生不同 transcript/session key 的可执行检查",
+        "不等同于论文安全证明"
+      ],
+      "formally_verified": false,
+      "id": "known_key_security",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "unknown key-share resistance",
+      "evidence": [
+        "identity 参与 H1/H2 与 transcript 编码",
+        "未形式化验证 UKS 安全定义"
+      ],
+      "formally_verified": false,
+      "id": "unknown_key_share_resistance",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "no key control",
+      "evidence": [
+        "代码可观察双方 ephemeral seed 影响会话密钥",
+        "未验证任意一方无法控制最终密钥分布"
+      ],
+      "formally_verified": false,
+      "id": "no_key_control",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "perfect forward secrecy",
+      "evidence": [
+        "代码不实现长期密钥泄露后的安全游戏",
+        "仅记录论文证明主张"
+      ],
+      "formally_verified": false,
+      "id": "perfect_forward_secrecy",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "known session key security",
+      "evidence": [
+        "代码不实现多会话泄露 oracle",
+        "仅记录论文证明主张"
+      ],
+      "formally_verified": false,
+      "id": "known_session_key_security",
+      "status": "paper_proof_only"
+    },
+    {
+      "claim": "Type I adversary proof",
+      "evidence": [
+        "论文证明审计，不做形式化 ROM/eCK 证明"
+      ],
+      "formally_verified": false,
+      "id": "type_i_adversary_proof",
+      "status": "not_formally_verified"
+    },
+    {
+      "claim": "Type II adversary proof",
+      "evidence": [
+        "论文证明审计，不做形式化 ROM/eCK 证明"
+      ],
+      "formally_verified": false,
+      "id": "type_ii_adversary_proof",
+      "status": "not_formally_verified"
+    },
+    {
+      "claim": "ISIS reduction",
+      "evidence": [
+        "未实现 ISIS 求解器或归约验证"
+      ],
+      "formally_verified": false,
+      "id": "isis_reduction",
+      "status": "not_formally_verified"
+    },
+    {
+      "claim": "CBi-ISIS reduction",
+      "evidence": [
+        "未实现 CBi-ISIS 求解器或归约验证"
+      ],
+      "formally_verified": false,
+      "id": "cbi_isis_reduction",
+      "status": "not_formally_verified"
+    }
+  ],
+  "errors": [],
+  "explicit_boundaries": {
+    "cbi_isis_hardness_verified": false,
+    "correctness_executable_checked": true,
+    "eck_formally_verified": false,
+    "expired_replay_rejection": true,
+    "forking_lemma_formally_verified": false,
+    "general_replay_resistance_executable_checked": false,
+    "in_window_replay_prevention": false,
+    "isis_hardness_verified": false,
+    "paper_security_proof_reproduced": false,
+    "rom_reduction_verified": false,
+    "tamper_and_replay_are_attack_simulations": true,
+    "timestamp_freshness_enforcement": true
+  },
+  "git_commit": "e8b3cad289119fb89cef5804812955c14ea8826f",
+  "git_dirty": true,
+  "known_issues": [
+    {
+      "id": "matrix_dimension_conflict",
+      "issue": "论文前置 M 维度/秩表述与协议中 d^T M、x^T M、M y 同时成立的需求冲突。"
+    },
+    {
+      "id": "q_prime_vs_m_squared",
+      "issue": "论文声称 q 为素数，但 Table 7 使用 q=m²，其中多个 q 为合数。"
+    },
+    {
+      "id": "h2_h3_local_field_typos",
+      "issue": "H2/H3 列表中存在局部字段下标或字段名排版疑点，需要按 canonical transcript 固定实现。"
+    },
+    {
+      "id": "theorem_1_sk_label_typo",
+      "issue": "Theorem 1 最后一行存在 SK 标签笔误。"
+    },
+    {
+      "id": "short_vector_bound_unclear",
+      "issue": "部分安全证明依赖的短向量采样界未完整给出，literal/audited 需分开。"
+    },
+    {
+      "id": "key_agreement_timing_boundary_unspecified",
+      "issue": "Table 7 的 Key_Agreement 计时边界未说明，复现实验需并列报告 initiator/responder/full_handshake。"
+    }
+  ],
+  "paper": {
+    "doi": "10.1002/cpe.7983",
+    "security_section": "Section 6",
+    "title": "Provably secure lightweight certificateless lattice-based authenticated key exchange scheme for IIoT"
+  },
+  "paper_sha256": "27502f8185258222a465750c124d1702b5a0bd387d8618f8f159b62258802e41",
+  "result": "pass",
+  "schema_version": 1,
+  "summary": {
+    "claim_count": 18,
+    "executable_claims": [
+      "correctness",
+      "mutual_authentication",
+      "session_key_agreement",
+      "timestamp_freshness_enforcement",
+      "expired_replay_rejection"
+    ],
+    "known_issue_count": 6,
+    "paper_only_claims": [
+      "general_replay_resistance",
+      "in_window_replay_prevention",
+      "impersonation_resistance",
+      "man_in_the_middle_resistance",
+      "known_key_security",
+      "unknown_key_share_resistance",
+      "no_key_control",
+      "perfect_forward_secrecy",
+      "known_session_key_security",
+      "type_i_adversary_proof",
+      "type_ii_adversary_proof",
+      "isis_reduction",
+      "cbi_isis_reduction"
+    ],
+    "status_counts": {
+      "algebraically_checked": 0,
+      "executable_checked": 5,
+      "not_formally_verified": 5,
+      "out_of_scope": 0,
+      "paper_proof_only": 8
+    }
+  }
+}
