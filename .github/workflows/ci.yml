@@ -204,3 +204,131 @@ jobs:
             artifacts/processed/C2LAKE/figure4_reproduced.png
             artifacts/processed/C2LAKE/full_validation.json
             artifacts/processed/C2LAKE/c2lake_full_validation.md
+      - name: 生成 LCLA-AKA security audit
+        run: |
+          python scripts/audit_lcla_security_claims.py \
+            --repo-root . \
+            --json-output artifacts/processed/LCLA_AKA/ci_security_audit.json \
+            --report-output artifacts/processed/LCLA_AKA/ci_security_audit.md
+      - name: 生成 LCLA-AKA cost model
+        run: |
+          python scripts/reproduce_lcla_cost_tables.py \
+            --repo-root . \
+            --json-output artifacts/processed/LCLA_AKA/ci_cost_tables.json \
+            --csv-output artifacts/processed/LCLA_AKA/ci_cost_tables.csv \
+            --report-output artifacts/processed/LCLA_AKA/ci_cost_tables.md
+      - name: 运行 LCLA-AKA Table IV smoke
+        run: |
+          python scripts/reproduce_lcla_table_iv.py \
+            --repo-root . \
+            --mode smoke \
+            --warmup 0 \
+            --repetitions 1 \
+            --resume \
+            --raw-output artifacts/processed/LCLA_AKA/ci_benchmark_raw.csv \
+            --summary-output artifacts/processed/LCLA_AKA/ci_table_iv_reproduced.csv \
+            --comparison-output artifacts/processed/LCLA_AKA/ci_table_iv_comparison.csv \
+            --json-output artifacts/processed/LCLA_AKA/ci_table_iv_summary.json \
+            --report-output artifacts/processed/LCLA_AKA/ci_table_iv_report.md
+      - name: 运行 LCLA-AKA Table V smoke
+        run: |
+          python scripts/reproduce_lcla_table_v.py \
+            --repo-root . \
+            --mode smoke \
+            --repetitions 1 \
+            --resume \
+            --raw-input artifacts/processed/LCLA_AKA/ci_benchmark_raw.csv \
+            --table-iv-input artifacts/processed/LCLA_AKA/ci_table_iv_reproduced.csv \
+            --table-output artifacts/processed/LCLA_AKA/ci_table_v_reproduced.csv \
+            --phase-output artifacts/processed/LCLA_AKA/ci_table_v_protocol_phases.csv \
+            --json-output artifacts/processed/LCLA_AKA/ci_table_v_summary.json \
+            --report-output artifacts/processed/LCLA_AKA/ci_benchmark_report.md
+      - name: 生成 LCLA-AKA Figure 4–6 smoke
+        run: |
+          python scripts/reproduce_lcla_figure4.py \
+            --repo-root . \
+            --table-input artifacts/processed/LCLA_AKA/ci_table_v_reproduced.csv \
+            --data-output artifacts/processed/LCLA_AKA/ci_figure4_data.csv \
+            --trend-output artifacts/processed/LCLA_AKA/ci_figure4_trend_summary.csv \
+            --json-output artifacts/processed/LCLA_AKA/ci_figure4_summary.json \
+            --figure-output artifacts/processed/LCLA_AKA/ci_figure4_reproduced.png
+          python scripts/reproduce_lcla_figure5.py \
+            --repo-root . \
+            --data-output artifacts/processed/LCLA_AKA/ci_figure5_data.csv \
+            --formula-output artifacts/processed/LCLA_AKA/ci_figure5_formulas.json \
+            --figure-output artifacts/processed/LCLA_AKA/ci_figure5_reproduced.png
+          python scripts/reproduce_lcla_figure6.py \
+            --repo-root . \
+            --data-output artifacts/processed/LCLA_AKA/ci_figure6_data.csv \
+            --formula-output artifacts/processed/LCLA_AKA/ci_figure6_formulas.json \
+            --figure-output artifacts/processed/LCLA_AKA/ci_figure6_reproduced.png
+      - name: 生成 LCLA-AKA full evidence
+        run: |
+          python scripts/validate_lcla_full.py \
+            --repo-root . \
+            --mode smoke \
+            --report-output artifacts/processed/LCLA_AKA/lcla_aka_full_validation.md
+      - name: 校验 LCLA-AKA full evidence
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          evidence = json.loads(
+              Path("artifacts/processed/LCLA_AKA/full_validation.json").read_text()
+          )
+          head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          assert evidence["result"] == (
+              "pass_with_partial_backend_and_partial_performance_unverified_formal_security"
+          )
+          assert evidence["executable_validation_passed"] is True
+          assert evidence["protocol_correctness"] is True
+          assert evidence["failed_protocol_cases"] == 0
+          assert evidence["reconciliation_status"] is True
+          assert evidence["m1_consistency"] is True
+          assert evidence["m2_consistency"] is True
+          assert evidence["session_key_consistency"] is True
+          assert evidence["identity_recovery"] is True
+          assert evidence["formal_security_verified"] is False
+          assert evidence["mbr_formally_verified"] is False
+          assert evidence["quantum_security_verified"] is False
+          assert evidence["git_commit"] == head
+          assert evidence["git_dirty"] is False
+          PY
+      - name: 上传 LCLA-AKA full evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: LCLA-AKA-full-evidence
+          path: |
+            artifacts/processed/LCLA_AKA/dependency_capabilities.json
+            artifacts/processed/LCLA_AKA/security_audit.json
+            artifacts/processed/LCLA_AKA/ci_security_audit.json
+            artifacts/processed/LCLA_AKA/ci_security_audit.md
+            artifacts/processed/LCLA_AKA/cost_tables.json
+            artifacts/processed/LCLA_AKA/cost_tables.csv
+            artifacts/processed/LCLA_AKA/ci_cost_tables.json
+            artifacts/processed/LCLA_AKA/ci_cost_tables.csv
+            artifacts/processed/LCLA_AKA/ci_cost_tables.md
+            artifacts/processed/LCLA_AKA/ci_benchmark_raw.csv
+            artifacts/processed/LCLA_AKA/ci_table_iv_reproduced.csv
+            artifacts/processed/LCLA_AKA/ci_table_iv_comparison.csv
+            artifacts/processed/LCLA_AKA/ci_table_iv_summary.json
+            artifacts/processed/LCLA_AKA/ci_table_v_reproduced.csv
+            artifacts/processed/LCLA_AKA/ci_table_v_protocol_phases.csv
+            artifacts/processed/LCLA_AKA/ci_table_v_summary.json
+            artifacts/processed/LCLA_AKA/ci_benchmark_report.md
+            artifacts/processed/LCLA_AKA/ci_figure4_data.csv
+            artifacts/processed/LCLA_AKA/ci_figure4_trend_summary.csv
+            artifacts/processed/LCLA_AKA/ci_figure4_summary.json
+            artifacts/processed/LCLA_AKA/ci_figure4_reproduced.png
+            artifacts/processed/LCLA_AKA/ci_figure5_data.csv
+            artifacts/processed/LCLA_AKA/ci_figure5_formulas.json
+            artifacts/processed/LCLA_AKA/ci_figure5_reproduced.png
+            artifacts/processed/LCLA_AKA/ci_figure6_data.csv
+            artifacts/processed/LCLA_AKA/ci_figure6_formulas.json
+            artifacts/processed/LCLA_AKA/ci_figure6_reproduced.png
+            artifacts/processed/LCLA_AKA/final_claims_matrix.csv
+            artifacts/processed/LCLA_AKA/reproduction_summary.json
+            artifacts/processed/LCLA_AKA/full_validation.json
+            artifacts/processed/LCLA_AKA/lcla_aka_full_validation.md
