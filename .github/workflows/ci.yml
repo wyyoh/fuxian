@@ -121,11 +121,14 @@ jobs:
         run: |
           python scripts/audit_c2lake_security_claims.py \
             --repo-root . \
+            --json-output artifacts/processed/C2LAKE/ci_security_audit.json \
             --report-output artifacts/processed/C2LAKE/security_audit.md
       - name: 生成 C2LAKE cost model
         run: |
           python scripts/reproduce_c2lake_cost_tables.py \
             --repo-root . \
+            --json-output artifacts/processed/C2LAKE/ci_cost_tables.json \
+            --csv-output artifacts/processed/C2LAKE/ci_cost_tables.csv \
             --report-output artifacts/processed/C2LAKE/cost_tables.md
       - name: 运行 C2LAKE smoke benchmark
         run: |
@@ -183,9 +186,12 @@ jobs:
           name: C2LAKE-full-evidence
           path: |
             artifacts/processed/C2LAKE/security_audit.json
+            artifacts/processed/C2LAKE/ci_security_audit.json
             artifacts/processed/C2LAKE/security_audit.md
             artifacts/processed/C2LAKE/cost_tables.json
             artifacts/processed/C2LAKE/cost_tables.csv
+            artifacts/processed/C2LAKE/ci_cost_tables.json
+            artifacts/processed/C2LAKE/ci_cost_tables.csv
             artifacts/processed/C2LAKE/cost_tables.md
             artifacts/processed/C2LAKE/table7_reproduced.csv
             artifacts/processed/C2LAKE/table7_comparison.csv
