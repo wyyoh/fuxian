@@ -153,6 +153,7 @@ jobs:
           python scripts/validate_c2lake_full.py \
             --repo-root . \
             --mode smoke \
+            --json-output artifacts/processed/C2LAKE/ci_full_validation.json \
             --report-output artifacts/processed/C2LAKE/c2lake_full_validation.md
       - name: 校验 C2LAKE full evidence
         run: |
@@ -162,7 +163,7 @@ jobs:
           from pathlib import Path
 
           evidence = json.loads(
-              Path("artifacts/processed/C2LAKE/full_validation.json").read_text()
+              Path("artifacts/processed/C2LAKE/ci_full_validation.json").read_text()
           )
           head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
           assert evidence["result"] == "pass_with_partial_benchmark_and_unverified_formal_security"
@@ -203,6 +204,7 @@ jobs:
             artifacts/processed/C2LAKE/c2lake_benchmark_report.md
             artifacts/processed/C2LAKE/figure4_reproduced.png
             artifacts/processed/C2LAKE/full_validation.json
+            artifacts/processed/C2LAKE/ci_full_validation.json
             artifacts/processed/C2LAKE/c2lake_full_validation.md
       - name: 生成 LCLA-AKA security audit
         run: |
@@ -267,6 +269,7 @@ jobs:
           python scripts/validate_lcla_full.py \
             --repo-root . \
             --mode smoke \
+            --json-output artifacts/processed/LCLA_AKA/ci_full_validation.json \
             --report-output artifacts/processed/LCLA_AKA/lcla_aka_full_validation.md
       - name: 校验 LCLA-AKA full evidence
         run: |
@@ -276,7 +279,7 @@ jobs:
           from pathlib import Path
 
           evidence = json.loads(
-              Path("artifacts/processed/LCLA_AKA/full_validation.json").read_text()
+              Path("artifacts/processed/LCLA_AKA/ci_full_validation.json").read_text()
           )
           head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
           assert evidence["result"] == (
@@ -331,4 +334,5 @@ jobs:
             artifacts/processed/LCLA_AKA/final_claims_matrix.csv
             artifacts/processed/LCLA_AKA/reproduction_summary.json
             artifacts/processed/LCLA_AKA/full_validation.json
+            artifacts/processed/LCLA_AKA/ci_full_validation.json
             artifacts/processed/LCLA_AKA/lcla_aka_full_validation.md
