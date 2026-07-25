@@ -73,11 +73,16 @@
   },
   "performance": {
     "benchmark_class": "auditable_python_reference_implementation",
-    "table_iv_status": "reference_smoke_complete_exact_pending",
-    "table_v_status": "reconstructed_and_reference_phase_measured",
+    "table_iv_status": "numpy_reference_exact_1000_complete",
+    "table_v_status": "reconstructed_and_100_phase_sessions_per_profile_measured",
     "figure4_status": "reconstructed",
     "figure5_status": "reconstructed",
     "figure6_status": "partial_example_fitted",
+    "exact_reference_benchmark_completed": true,
+    "exact_measured_success_rows": 49200,
+    "exact_measured_failure_rows": 0,
+    "dependency_unavailable_placeholder_rows": 9,
+    "exact_raw_sha256": "ce1a13356801436787e02b323972542ee1e96c7b903473118747f6d2bcd4e841",
     "strict_original_operation_timing_reproduced": false
   },
   "formal_boundaries": {

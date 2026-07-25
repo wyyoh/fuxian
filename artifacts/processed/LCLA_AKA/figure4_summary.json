@@ -1,5 +1,5 @@
 {
-  "audited_curve_available": false,
+  "audited_curve_available": true,
   "formula_status": "reconstructed",
   "numpy_reference_curve_available": true,
   "paper_frodo_native_curve_available": false,

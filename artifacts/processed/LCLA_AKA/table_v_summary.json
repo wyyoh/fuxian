@@ -1,6 +1,6 @@
 {
-  "actually_measured_protocol_rows": 1,
-  "mode": "smoke",
+  "actually_measured_protocol_rows": 3,
+  "mode": "exact",
   "paper_reported_rows": 4,
   "paper_table_iv_rounding_discrepancy": {
     "paper_table_v_Num_A_ms": 4.255,
@@ -9,7 +9,7 @@
     "table_iv_weighted_Num_B_ms": 4.178
   },
   "phase_measurement_includes_reference_validation_overhead": true,
-  "protocol_repetitions_requested": 2,
+  "protocol_repetitions_requested": 100,
   "reconstructed_rows": 1,
   "result": "table_v_reconstructed_with_non_equivalent_reference_measurements",
   "schema_version": 1,

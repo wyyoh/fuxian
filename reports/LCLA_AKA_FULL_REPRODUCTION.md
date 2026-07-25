@@ -197,7 +197,10 @@ LCLA 约 400/400/`10^7` 的示例，没有曲面公式。提交图使用明确�
 ## 18. 性能实现范围
 
 `benchmark_class=auditable_python_reference_implementation`。
-已完成 reference smoke 与可恢复 exact 管线；严格 Frodo 原始计时未复现。
+已完成 reference smoke 与 exact：Table IV 对三个 profile 的 15 个 operation
+各执行 1000 次；Table V 每个 profile 测量 100 个接受会话的四个 phase。
+exact raw 共 49,200 个 measured-success、0 个 measured-failure 和 9 个
+dependency-unavailable placeholder。严格 Frodo 原始计时未复现。
 绝对偏差不能只归因于 CPU/OS，还来自 API 语义、校验、编码、SHAKE、数组表示与
 Python overhead。
 

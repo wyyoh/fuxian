@@ -19,9 +19,12 @@
 | Ding et al. [35] | paper_reference | paper_reported_reference | 2.873 | 2.495 | 5.368 | 2.49 |
 | LCLA-AKA | paper_reference | paper_reported_reference | 4.255 | 4.233 | 8.448 | 1.025 |
 | LCLA-AKA | paper_performance | reconstructed_from_table_iv | 4.21 | 4.178 | 8.388 | 0.989 |
-| LCLA-AKA | paper_performance | numpy_reference_reconstructed_from_operations | 121.493736 | 119.528263 | 241.021999 | 21.128289 |
-| LCLA-AKA | paper_performance | actually_measured_protocol_phases | 147.4389315 | 145.43500799999998 | 292.8739395 |  |
-| LCLA-AKA | toy | numpy_reference_reconstructed_from_operations | 2.8429794999999998 | 2.3775355 | 5.220515 | 0.43916449999999996 |
+| LCLA-AKA | audited_preserve_dimension | numpy_reference_reconstructed_from_operations | 163.336596144 | 160.947832882 | 324.284429026 | 28.444950499999997 |
+| LCLA-AKA | audited_preserve_dimension | actually_measured_protocol_phases | 193.89032500000002 | 189.93774672 | 383.82807172 |  |
+| LCLA-AKA | audited_preserve_keylen | numpy_reference_reconstructed_from_operations | 130.11938105 | 127.95839825399999 | 258.077779304 | 22.597201785 |
+| LCLA-AKA | audited_preserve_keylen | actually_measured_protocol_phases | 152.36033856 | 149.51417848 | 301.87451704 |  |
+| LCLA-AKA | paper_performance | numpy_reference_reconstructed_from_operations | 129.298146642 | 127.16908814800001 | 256.46723479 | 22.383537059000002 |
+| LCLA-AKA | paper_performance | actually_measured_protocol_phases | 151.55440486999998 | 148.97988362 | 300.53428849 |  |
 
 由 Table IV 三位小数逐项乘 Num_A/Num_B 后得到 4.210/4.178 ms，
 与 Table V 的 4.255/4.233 ms 不一致；可能来自未显示的小数、额外开销或排版。
