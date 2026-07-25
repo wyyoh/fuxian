@@ -1,0 +1,22 @@
+schema_version: 1
+paper_reference:
+  citation_number: 39
+  title: "Frodo: Take off the ring! Practical, quantum-secure key exchange from LWE"
+  year: 2016
+official_project_page: "https://www.microsoft.com/en-us/research/project/post-quantum-cryptography/tools/"
+official_repository:
+  url: "https://github.com/microsoft/PQCrypto-LWEKE"
+  probed_commit: "7a4e7219d06305e16aef734213001cd8fefbcc14"
+  tag_observed: "v1.0"
+  license: "MIT; bundled files include documented public-domain, CC0 and BSD-3-Clause components"
+build_probe:
+  operating_system: "Linux"
+  compiler: "gcc 13.3.0"
+  build_system: "GNU Make 4.3"
+  command: "make -C FrodoKEM OPT_LEVEL=REFERENCE -j1"
+  result: "success"
+  parallel_build_note: "The probed Makefile has an ordering race for KAT archives under -j2; serial build succeeds."
+integration:
+  frodo_native_backend_enabled: false
+  reason: "The library implements fixed-parameter FrodoKEM, not the paper's arbitrary-parameter TrapGen/SamplePre interface."
+  third_party_source_vendored: false

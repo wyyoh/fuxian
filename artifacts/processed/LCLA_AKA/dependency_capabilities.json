@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "dependency": {
+    "name": "Microsoft PQCrypto-LWEKE / FrodoKEM",
+    "repository_url": "https://github.com/microsoft/PQCrypto-LWEKE",
+    "commit": "7a4e7219d06305e16aef734213001cd8fefbcc14",
+    "license": "MIT with documented bundled-file exceptions",
+    "build_system": "GNU Make",
+    "supported_compilers": [
+      "GCC",
+      "Clang",
+      "Microsoft Visual Studio"
+    ],
+    "last_known_environment": "Linux, Windows, macOS; x64/x86/ARM/PowerPC/s390x",
+    "build_probe": {
+      "attempted": true,
+      "compiler": "gcc 13.3.0",
+      "command": "make -C FrodoKEM OPT_LEVEL=REFERENCE -j1",
+      "result": "success"
+    }
+  },
+  "capabilities": [
+    {
+      "capability": "modular matrix multiplication",
+      "status": "native",
+      "evidence": "FrodoKEM/src/frodo_macrify_reference.c and optimized variants",
+      "source": "official repository",
+      "adaptation_needed": "Yes; APIs and dimensions are FrodoKEM-specific."
+    },
+    {
+      "capability": "vector/matrix generation",
+      "status": "native",
+      "evidence": "AES128/SHAKE128 matrix-A generation and secret/error matrix sampling",
+      "source": "official repository README and source",
+      "adaptation_needed": "Yes; output shapes and distributions are fixed by FrodoKEM variants."
+    },
+    {
+      "capability": "discrete Gaussian sampling",
+      "status": "adaptable",
+      "evidence": "FrodoKEM provides fixed CDF noise sampling, not the paper's arbitrary beta sampler.",
+      "source": "FrodoKEM/src/noise.c",
+      "adaptation_needed": "A separate auditable sampler is required for beta=3.192."
+    },
+    {
+      "capability": "arbitrary n,m,q",
+      "status": "unsupported_parameter",
+      "evidence": "Public APIs expose FrodoKEM-640/976/1344 parameter sets.",
+      "source": "official repository README and api_frodo*.h",
+      "adaptation_needed": "Substantial redesign; not used as the LCLA backend."
+    },
+    {
+      "capability": "reconciliation S",
+      "status": "absent",
+      "evidence": "No Definition-5 signal function is exposed.",
+      "source": "full official source search",
+      "adaptation_needed": "Implemented independently in the NumPy reference backend."
+    },
+    {
+      "capability": "robust extractor Mod2",
+      "status": "absent",
+      "evidence": "No paper-compatible Mod2 extractor is exposed.",
+      "source": "full official source search",
+      "adaptation_needed": "Implemented independently from Definition 5."
+    },
+    {
+      "capability": "TrapGen",
+      "status": "absent",
+      "evidence": "No TrapGen symbol or documented GPV trapdoor generator exists.",
+      "source": "full official source search",
+      "adaptation_needed": "Real trapdoor backend remains unavailable."
+    },
+    {
+      "capability": "SamplePre",
+      "status": "absent",
+      "evidence": "No SamplePre symbol or arbitrary-target preimage sampler exists.",
+      "source": "full official source search",
+      "adaptation_needed": "Constructed-relation backend is used with an explicit evidence downgrade."
+    },
+    {
+      "capability": "SHA/hash support",
+      "status": "native",
+      "evidence": "SHAKE128 and SHAKE256 implementations are bundled.",
+      "source": "common/sha3/fips202.c",
+      "adaptation_needed": "LCLA domain-separated encodings remain project-owned."
+    },
+    {
+      "capability": "XOR/bit-vector support",
+      "status": "adaptable",
+      "evidence": "FrodoKEM implements byte/word operations but no LCLA identity-mask API.",
+      "source": "official source",
+      "adaptation_needed": "Identity-length-aware masking remains project-owned."
+    },
+    {
+      "capability": "operation-level timing",
+      "status": "adaptable",
+      "evidence": "Test binaries contain benchmark timing support for KEM operations.",
+      "source": "FrodoKEM/tests/ds_benchmark.h",
+      "adaptation_needed": "Operations do not map one-to-one to LCLA Table IV."
+    },
+    {
+      "capability": "thread control",
+      "status": "unknown",
+      "evidence": "No stable public thread-control API was identified.",
+      "source": "official source inspection",
+      "adaptation_needed": "Reference benchmark pins common BLAS thread environment variables."
+    }
+  ],
+  "paper_frodo_backend_identified": true,
+  "paper_frodo_backend_built": true,
+  "frodo_native_lcla_backend_available": false,
+  "real_trapdoor_backend_status": "unavailable",
+  "sample_pre_status": "unavailable",
+  "strict_original_operation_timing_reproduced": false
+}
