@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "result": "pass_with_partial_backend_and_partial_performance_unverified_formal_security",
+  "executable_validation_passed": true,
+  "benchmark_status": "partial",
+  "backend_status": "constructed_relation_available_real_trapdoor_unavailable",
+  "formal_security_verified": false,
+  "paper": {
+    "title": "Quantum-Safe Lattice-Based Certificateless Anonymous Authenticated Key Agreement for Internet of Things",
+    "doi": "10.1109/JIOT.2023.3323275",
+    "sha256": "5412a2962dbbbc3314cbe513d70946c0e238ba60c5debd9dfae6b7f5411bebe3"
+  },
+  "dependency": {
+    "paper_frodo_backend_identified": true,
+    "paper_frodo_backend_built_serially": true,
+    "frodo_native_lcla_backend_available": false,
+    "trapgen_available": false,
+    "samplepre_available": false,
+    "real_trapdoor_static_keygen_reproduced": false,
+    "programmed_h1_used": true
+  },
+  "protocol_attempts": {
+    "toy": {
+      "attempted": 1000,
+      "accepted": 7,
+      "not_intended_receiver": 922,
+      "reconciliation_failure": 71
+    },
+    "paper_correctness": {
+      "attempted": 100,
+      "accepted": 40,
+      "not_intended_receiver": 31,
+      "reconciliation_failure": 29
+    },
+    "paper_performance": {
+      "attempted": 100,
+      "accepted": 77,
+      "not_intended_receiver": 12,
+      "reconciliation_failure": 11
+    },
+    "audited_preserve_keylen": {
+      "attempted": 100,
+      "accepted": 40,
+      "not_intended_receiver": 31,
+      "reconciliation_failure": 29
+    },
+    "audited_preserve_dimension": {
+      "attempted": 100,
+      "accepted": 79,
+      "not_intended_receiver": 16,
+      "reconciliation_failure": 5
+    },
+    "total": {
+      "attempted": 1400,
+      "accepted": 243,
+      "not_intended_receiver": 1012,
+      "reconciliation_failure": 145
+    }
+  },
+  "accepted_session_properties": {
+    "static_relation_correctness": true,
+    "m1_consistency": true,
+    "m2_consistency": true,
+    "session_key_consistency": true,
+    "identity_recovery": true,
+    "audited_32_byte_key_consistency": true
+  },
+  "structural_anonymity": {
+    "plaintext_identity_round1": false,
+    "plaintext_identity_round2": false,
+    "identity_masked_round3": true,
+    "passive_transcript_anonymity_formally_verified": false
+  },
+  "performance": {
+    "benchmark_class": "auditable_python_reference_implementation",
+    "table_iv_status": "reference_smoke_complete_exact_pending",
+    "table_v_status": "reconstructed_and_reference_phase_measured",
+    "figure4_status": "reconstructed",
+    "figure5_status": "reconstructed",
+    "figure6_status": "partial_example_fitted",
+    "strict_original_operation_timing_reproduced": false
+  },
+  "formal_boundaries": {
+    "anonymity_formally_verified": false,
+    "mbr_formally_verified": false,
+    "lwe_reduction_verified": false,
+    "isis_hardness_verified": false,
+    "quantum_security_verified": false,
+    "paper_security_proof_reproduced": false
+  }
+}
