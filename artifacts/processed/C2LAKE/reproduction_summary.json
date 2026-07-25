@@ -1,5 +1,9 @@
 {
   "benchmark": {
+    "actual_measured_failure_rows": 0,
+    "actual_measured_success_rows": 14400,
+    "algorithmic_workflow_reproduced": true,
+    "benchmark_class": "auditable_python_reference_implementation",
     "completed_profiles": [
       "audited_prime_m112",
       "audited_prime_m128",
@@ -20,29 +24,44 @@
     ],
     "incomplete_profiles": [
       {
+        "actual_execution_attempted": false,
+        "measurement_kind": "profile_timeout_placeholder",
         "profile": "audited_prime_m256",
-        "reason": "timeout",
-        "failed_repetitions": 100
+        "reason": "timeout"
       },
       {
+        "actual_execution_attempted": false,
+        "measurement_kind": "profile_timeout_placeholder",
         "profile": "paper_literal_m256",
-        "reason": "timeout",
-        "failed_repetitions": 100
+        "reason": "timeout"
       }
     ],
+    "m256_completed": false,
     "mode": "exact",
-    "raw_rows": 16200,
-    "successful_raw_rows": 14400,
-    "failed_raw_rows": 1800
+    "placeholder_rows": 1800,
+    "profile_level_timeouts": 2,
+    "reference_implementation_benchmark_completed": "partial",
+    "strict_original_implementation_timing_reproduced": false,
+    "timed_out_profiles": [
+      "audited_prime_m256",
+      "paper_literal_m256"
+    ]
   },
+  "benchmark_status": "partial",
   "claims": {
-    "eck_formally_verified": false,
-    "rom_reduction_verified": false,
-    "isis_hardness_verified": false,
     "cbi_isis_hardness_verified": false,
-    "paper_security_proof_reproduced": false
+    "eck_formally_verified": false,
+    "expired_replay_rejection": "executable_checked",
+    "general_replay_resistance": "paper_proof_only",
+    "in_window_replay_prevention": false,
+    "isis_hardness_verified": false,
+    "paper_security_proof_reproduced": false,
+    "rom_reduction_verified": false,
+    "timestamp_freshness_enforcement": "executable_checked"
   },
-  "git_commit": "ee631b2cfbdf241e65c147cbde2c8378a8b9b7dc",
+  "executable_validation_passed": true,
+  "formal_security_verified": false,
+  "git_commit": "d0e8c9f870f74176bf76bc70115bf3260f41553e",
   "paper": {
     "doi": "10.1002/cpe.7983",
     "sha256": "27502f8185258222a465750c124d1702b5a0bd387d8618f8f159b62258802e41",
@@ -50,6 +69,7 @@
   },
   "protocol": {
     "full_pytest_success_sessions": 1200,
+    "in_window_replay_prevention": false,
     "k1_consistency": true,
     "k2_consistency": true,
     "k3_consistency": true,
@@ -61,9 +81,9 @@
       "toy": 50
     }
   },
-  "result": "pass_with_resource_limited_benchmark",
+  "result": "pass_with_partial_benchmark_and_unverified_formal_security",
   "test_summary": {
-    "pytest_count": 92,
+    "pytest_count": 99,
     "quality_gates_passed": true
   }
 }

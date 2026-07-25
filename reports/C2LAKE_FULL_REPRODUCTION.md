@@ -1,4 +1,4 @@
-# C2LAKE Full Reproduction Report
+# C2LAKE Algorithm Reproduction and Partial Performance Replication
 
 ## 1. 论文基本信息
 
@@ -57,13 +57,28 @@
 
 时间单位统一为整数秒。测试覆盖正常时间、最大年龄边界、超过最大年龄、最大未来偏移边界、超过未来偏移、旧 request replay、旧 response replay。
 
+安全主张边界已拆分：
+
+- `timestamp_freshness_enforcement`: executable_checked
+- `expired_replay_rejection`: executable_checked
+- `general_replay_resistance`: paper_proof_only
+- `in_window_replay_prevention`: false
+
+当前实现没有 replay cache。同一个仍处于有效时间窗口的合法 request 连续提交两次时，当前无状态 responder 会接受第二次提交。时间戳可以限制陈旧消息，但不能单独阻止有效窗口内的重复提交；若需要完整 replay prevention，需要 nonce/session-id cache 或状态化去重机制。
+
 ## 11. 安全主张证据边界
 
-代码只能验证可执行性质：正确性、消息篡改拒绝、重放窗口和会话一致性。eCK、ROM、forking lemma、ISIS/CBi-ISIS 归约未形式化验证。
+代码只能验证可执行性质：正确性、消息篡改拒绝、timestamp freshness、expired replay rejection 和会话一致性。general replay resistance、eCK、ROM、forking lemma、ISIS/CBi-ISIS 归约未形式化验证。
 
 ## 12. 理论通信成本
 
-成本模型分别报告论文忽略 ID/T 的口径与实现长度前缀序列化口径。所有 Zq 元素位长使用 `ceil(log2(q))`，避免混淆 `log m`、`log2 m`、`log²m`、`log³m`。
+成本模型分别报告：
+
+- `paper_compact_message_bytes`：按 Zq 元素最小位长估算，沿用论文忽略 ID/T 的紧凑口径。
+- `canonical_hash_encoding_bytes`：当前 SHAKE 输入的长度前缀编码长度。
+- `network_wire_encoding_defined=false`：当前项目未实现专用网络 wire serializer。
+
+canonical hash encoding 不应解释为实际通信开销，也不能直接用于否定或验证论文通信效率主张。所有 Zq 元素位长使用 `ceil(log2(q))`，避免混淆 `log m`、`log2 m`、`log²m`、`log³m`。
 
 ## 13. 理论存储成本
 
@@ -77,7 +92,17 @@
 
 论文 Table 7 参考值保存于 `specs/c2lake/paper_table7_reference.csv`。复现实验输出 raw CSV、统计 CSV 和论文值比较 CSV。Key_Agreement 原论文计时边界不明，因此比较表同时列出 `initiator_total`、`responder_total` 和 `full_handshake`。
 
-本地 exact 尝试完成了 `m=32,48,64,80,96,112,128,160` 的 `paper_literal` 与 `audited_prime` profile。`m=256` 的 `paper_literal_m256` 与 `audited_prime_m256` 在默认单 profile timeout 下未完成，raw CSV 中保留 `timeout` 失败行。
+本地 exact 尝试完成了 `m=32,48,64,80,96,112,128,160` 的 `paper_literal` 与 `audited_prime` profile。`m=256` 的 `paper_literal_m256` 与 `audited_prime_m256` 在默认单 profile timeout 下未完成。
+
+raw CSV 语义已显式区分：
+
+- `actual_measured_success_rows=14400`
+- `actual_measured_failure_rows=0`
+- `placeholder_rows=1800`
+- `profile_level_timeouts=2`
+- `timed_out_profiles=paper_literal_m256,audited_prime_m256`
+
+m=256 行是 `measurement_kind=profile_timeout_placeholder`，`actual_execution_attempted=false`，`timeout_scope=profile_subprocess`；不能描述为 1800 个实际失败实验。
 
 ## 16. Figure 4
 
@@ -85,7 +110,18 @@
 
 ## 17. 论文值与复现值偏差
 
-偏差由 `artifacts/processed/C2LAKE/table7_comparison.csv` 计算，包含 `absolute_error_ms`、`relative_error_percent` 和 `trend_match`。硬件、Python/NumPy 版本、BLAS 与操作系统差异会影响绝对时间。
+偏差由 `artifacts/processed/C2LAKE/table7_comparison.csv` 计算，包含 `absolute_error_ms` 与 `relative_error_percent`。逐参数行不再使用 `trend_match`。
+
+趋势统计单独输出到 `artifacts/processed/C2LAKE/table7_trend_summary.csv`，按 `family, phase, timing_boundary` 跨多个 m 点计算。Spearman rho 只表示趋势相关，不表示绝对时间复现成功；incomplete m=256 不进入相关系数。
+
+benchmark_class 为 `auditable_python_reference_implementation`。当前相对论文实现包含额外开销：dataclass validation、array copy/read-only conversion、shape/dtype/domain validation、canonical hash encoding、SHAKE256 processing、transcript hashing、optional audited KDF、Python object/function overhead。因此结论拆分为：
+
+- `algorithmic_workflow_reproduced=true`
+- `reference_implementation_benchmark_completed=partial`
+- `strict_original_implementation_timing_reproduced=false`
+- `m256_completed=false`
+
+绝对时间偏差不能只归因为硬件和系统环境。
 
 ## 18. 硬件和软件环境
 
@@ -116,4 +152,12 @@ raw benchmark CSV 每行记录 Python、NumPy、CPU、OS、git commit、timestam
 
 已复现：协议可执行性、部分私钥验证、双向认证验证式、K1/K2/K3 一致性、会话密钥一致性、消息篡改拒绝、时间戳和重放窗口、理论成本重算，以及已完成的性能实验。
 
-未验证：eCK 形式安全、ROM 安全归约、ISIS/CBi-ISIS 困难性、Type I/II 证明的形式化正确性，以及论文其他对比方案的实际运行性能。
+未验证：eCK 形式安全、ROM 安全归约、ISIS/CBi-ISIS 困难性、Type I/II 证明的形式化正确性、general replay resistance 的可执行完整防护，以及论文其他对比方案的实际运行性能。
+
+machine result：`pass_with_partial_benchmark_and_unverified_formal_security`。
+
+结构化状态：
+
+- `executable_validation_passed=true`
+- `benchmark_status=partial`
+- `formal_security_verified=false`
