@@ -1,0 +1,190 @@
+{
+  "anonymity_formally_verified": false,
+  "claim_count": 19,
+  "claims": [
+    {
+      "evidence": "Accepted sessions check m1, m2, identity and key equality; literal reconciliation failures are retained.",
+      "id": "correctness",
+      "limitation": "Definition 5/Lemma 3 has an executable modular-wrap counterexample, so universal correctness is not established.",
+      "status": "executable_checked"
+    },
+    {
+      "evidence": "Constructed backend independently checks u1, u2, A*s2 and A*(s1+s2)+2f.",
+      "id": "static_key_binding",
+      "limitation": "The static-key distribution and GPV trapdoor path are not reproduced.",
+      "status": "algebraically_checked"
+    },
+    {
+      "evidence": "Twenty-candidate attack simulation rejects non-target recipients before response generation.",
+      "id": "intended_recipient_filtering",
+      "limitation": "This is filtering evidence, not a formal anonymity result.",
+      "status": "executable_checked"
+    },
+    {
+      "evidence": "h_A and h_B tamper simulations reject altered first/second-round packets.",
+      "id": "mutual_authentication",
+      "limitation": "Only the implemented model and constructed backend are checked.",
+      "status": "executable_checked"
+    },
+    {
+      "evidence": "All accepted sessions explicitly compare m1, m2 and both session-key outputs.",
+      "id": "session_key_agreement",
+      "limitation": "Some literal sessions reject because reconciliation disagrees.",
+      "status": "executable_checked"
+    },
+    {
+      "evidence": "Rounds 1 and 2 contain no identity fields; T_A masks Alice identity in round 3.",
+      "id": "identity_anonymity",
+      "limitation": "Passive-transcript anonymity and unlinkability are not formally verified.",
+      "status": "structural_checked"
+    },
+    {
+      "evidence": "The paper argues identity-to-pk binding.",
+      "id": "public_key_replacement_resistance",
+      "limitation": "No formal Type-I game is implemented.",
+      "status": "paper_proof_only"
+    },
+    {
+      "evidence": "Constructed backend uses programmed H1 and no TrapGen/SamplePre.",
+      "id": "malicious_KGC_resistance",
+      "limitation": "Constructed relations cannot support this claim.",
+      "status": "backend_not_reproduced"
+    },
+    {
+      "evidence": "Paper informal analysis only.",
+      "id": "known_key_security",
+      "limitation": "No formal game implemented.",
+      "status": "paper_proof_only"
+    },
+    {
+      "evidence": "Paper informal analysis only.",
+      "id": "no_key_control",
+      "limitation": "No formal game implemented.",
+      "status": "paper_proof_only"
+    },
+    {
+      "evidence": "Paper informal analysis only.",
+      "id": "KCI_resistance",
+      "limitation": "No formal game implemented.",
+      "status": "paper_proof_only"
+    },
+    {
+      "evidence": "Paper informal analysis only.",
+      "id": "UKS_resistance",
+      "limitation": "No formal game implemented.",
+      "status": "paper_proof_only"
+    },
+    {
+      "evidence": "Paper informal analysis only.",
+      "id": "perfect_forward_secrecy",
+      "limitation": "No compromise experiment implemented.",
+      "status": "paper_proof_only"
+    },
+    {
+      "evidence": "Proof text audited.",
+      "id": "Type_I_adversary",
+      "limitation": "Game and reduction are not mechanized.",
+      "status": "not_formally_verified"
+    },
+    {
+      "evidence": "Proof text audited.",
+      "id": "Type_II_adversary",
+      "limitation": "Game and reduction are not mechanized.",
+      "status": "not_formally_verified"
+    },
+    {
+      "evidence": "Game0-Game5 narrative audited.",
+      "id": "mBR_security",
+      "limitation": "Matching sessions, oracle programming and game hops are not formalized.",
+      "status": "not_formally_verified"
+    },
+    {
+      "evidence": "Reduction claim identified.",
+      "id": "LWE_reduction",
+      "limitation": "LWE hardness and reduction tightness are not verified by code.",
+      "status": "not_formally_verified"
+    },
+    {
+      "evidence": "No real TrapGen/SamplePre backend is available.",
+      "id": "ISIS_security",
+      "limitation": "Constructed preimages provide algebraic relations only.",
+      "status": "backend_not_reproduced"
+    },
+    {
+      "evidence": "Underlying assumptions are catalogued.",
+      "id": "quantum_security",
+      "limitation": "No quantum-security proof is reproduced.",
+      "status": "not_formally_verified"
+    }
+  ],
+  "formal_security_verified": false,
+  "isis_hardness_verified": false,
+  "known_ambiguities": [
+    {
+      "id": "LCLA-D01",
+      "summary": "论文称 q 为素数，但 paper profile 的 q=2^24-1 是合数。"
+    },
+    {
+      "id": "LCLA-D02",
+      "summary": "正确性证明使用 n=5，性能章节使用 n=6。"
+    },
+    {
+      "id": "LCLA-D03",
+      "summary": "paper_performance 不满足 m>=2*n*log2(q)。"
+    },
+    {
+      "id": "LCLA-D04",
+      "summary": "tK 在文字中类似普通向量，但 GPV trapdoor 通常不是普通短向量。"
+    },
+    {
+      "id": "LCLA-D05",
+      "summary": "pk 同时指完整向量与 public_components=(u1,u2)。"
+    },
+    {
+      "id": "LCLA-D06",
+      "summary": "s2 被称为 partial private key，但论文又经公开信道传输。"
+    },
+    {
+      "id": "LCLA-D07",
+      "summary": "H2 同时承担 MAC、身份掩码与 KDF，论文未规定域分离。"
+    },
+    {
+      "id": "LCLA-D08",
+      "summary": "身份 XOR 掩码的输出长度没有定义。"
+    },
+    {
+      "id": "LCLA-D09",
+      "summary": "S 中随机 b 的具体实现与传递口径不清。"
+    },
+    {
+      "id": "LCLA-D10",
+      "summary": "论文未说明 Frodo 库如何提供 TrapGen/SamplePre。"
+    },
+    {
+      "id": "LCLA-D11",
+      "summary": "Definition 5 与 Lemma 3 在模回绕边界存在可执行反例。"
+    },
+    {
+      "id": "LCLA-D12",
+      "summary": "mBR matching-session 文字不自然，Game0–Game5 未机械化。"
+    },
+    {
+      "id": "LCLA-D13",
+      "summary": "PFS、KCI、UKS、NKC 的非形式论证较简略。"
+    }
+  ],
+  "lwe_reduction_verified": false,
+  "mbr_formally_verified": false,
+  "paper_security_proof_reproduced": false,
+  "quantum_security_verified": false,
+  "result": "audit_complete_with_unverified_formal_security",
+  "schema_version": 1,
+  "status_counts": {
+    "algebraically_checked": 1,
+    "backend_not_reproduced": 2,
+    "executable_checked": 4,
+    "not_formally_verified": 5,
+    "paper_proof_only": 6,
+    "structural_checked": 1
+  }
+}

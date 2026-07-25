@@ -37,7 +37,9 @@ where = ["src"]
 ]
 "share/lattice_aka_repro/specs/lcla_aka" = [
   "specs/lcla_aka/claims_matrix.csv",
+  "specs/lcla_aka/dependency_lock.yaml",
   "specs/lcla_aka/parameter_profiles.yaml",
+  "specs/lcla_aka/proof_obligations.yaml",
   "specs/lcla_aka/shape_table.csv",
 ]
 

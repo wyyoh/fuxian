@@ -1,0 +1,122 @@
+schema_version: 1
+paper_section: 5
+allowed_statuses:
+  - executable_checked
+  - algebraically_checked
+  - structural_checked
+  - paper_proof_only
+  - not_formally_verified
+  - backend_not_reproduced
+  - out_of_scope
+claims:
+  - id: correctness
+    status: executable_checked
+    evidence: "Accepted sessions check m1, m2, identity and key equality; literal reconciliation failures are retained."
+    limitation: "Definition 5/Lemma 3 has an executable modular-wrap counterexample, so universal correctness is not established."
+  - id: static_key_binding
+    status: algebraically_checked
+    evidence: "Constructed backend independently checks u1, u2, A*s2 and A*(s1+s2)+2f."
+    limitation: "The static-key distribution and GPV trapdoor path are not reproduced."
+  - id: intended_recipient_filtering
+    status: executable_checked
+    evidence: "Twenty-candidate attack simulation rejects non-target recipients before response generation."
+    limitation: "This is filtering evidence, not a formal anonymity result."
+  - id: mutual_authentication
+    status: executable_checked
+    evidence: "h_A and h_B tamper simulations reject altered first/second-round packets."
+    limitation: "Only the implemented model and constructed backend are checked."
+  - id: session_key_agreement
+    status: executable_checked
+    evidence: "All accepted sessions explicitly compare m1, m2 and both session-key outputs."
+    limitation: "Some literal sessions reject because reconciliation disagrees."
+  - id: identity_anonymity
+    status: structural_checked
+    evidence: "Rounds 1 and 2 contain no identity fields; T_A masks Alice identity in round 3."
+    limitation: "Passive-transcript anonymity and unlinkability are not formally verified."
+  - id: public_key_replacement_resistance
+    status: paper_proof_only
+    evidence: "The paper argues identity-to-pk binding."
+    limitation: "No formal Type-I game is implemented."
+  - id: malicious_KGC_resistance
+    status: backend_not_reproduced
+    evidence: "Constructed backend uses programmed H1 and no TrapGen/SamplePre."
+    limitation: "Constructed relations cannot support this claim."
+  - id: known_key_security
+    status: paper_proof_only
+    evidence: "Paper informal analysis only."
+    limitation: "No formal game implemented."
+  - id: no_key_control
+    status: paper_proof_only
+    evidence: "Paper informal analysis only."
+    limitation: "No formal game implemented."
+  - id: KCI_resistance
+    status: paper_proof_only
+    evidence: "Paper informal analysis only."
+    limitation: "No formal game implemented."
+  - id: UKS_resistance
+    status: paper_proof_only
+    evidence: "Paper informal analysis only."
+    limitation: "No formal game implemented."
+  - id: perfect_forward_secrecy
+    status: paper_proof_only
+    evidence: "Paper informal analysis only."
+    limitation: "No compromise experiment implemented."
+  - id: Type_I_adversary
+    status: not_formally_verified
+    evidence: "Proof text audited."
+    limitation: "Game and reduction are not mechanized."
+  - id: Type_II_adversary
+    status: not_formally_verified
+    evidence: "Proof text audited."
+    limitation: "Game and reduction are not mechanized."
+  - id: mBR_security
+    status: not_formally_verified
+    evidence: "Game0-Game5 narrative audited."
+    limitation: "Matching sessions, oracle programming and game hops are not formalized."
+  - id: LWE_reduction
+    status: not_formally_verified
+    evidence: "Reduction claim identified."
+    limitation: "LWE hardness and reduction tightness are not verified by code."
+  - id: ISIS_security
+    status: backend_not_reproduced
+    evidence: "No real TrapGen/SamplePre backend is available."
+    limitation: "Constructed preimages provide algebraic relations only."
+  - id: quantum_security
+    status: not_formally_verified
+    evidence: "Underlying assumptions are catalogued."
+    limitation: "No quantum-security proof is reproduced."
+machine_flags:
+  mbr_formally_verified: false
+  lwe_reduction_verified: false
+  isis_hardness_verified: false
+  anonymity_formally_verified: false
+  quantum_security_verified: false
+  paper_security_proof_reproduced: false
+  formal_security_verified: false
+known_ambiguities:
+  - id: LCLA-D01
+    summary: "论文称 q 为素数，但 paper profile 的 q=2^24-1 是合数。"
+  - id: LCLA-D02
+    summary: "正确性证明使用 n=5，性能章节使用 n=6。"
+  - id: LCLA-D03
+    summary: "paper_performance 不满足 m>=2*n*log2(q)。"
+  - id: LCLA-D04
+    summary: "tK 在文字中类似普通向量，但 GPV trapdoor 通常不是普通短向量。"
+  - id: LCLA-D05
+    summary: "pk 同时指完整向量与 public_components=(u1,u2)。"
+  - id: LCLA-D06
+    summary: "s2 被称为 partial private key，但论文又经公开信道传输。"
+  - id: LCLA-D07
+    summary: "H2 同时承担 MAC、身份掩码与 KDF，论文未规定域分离。"
+  - id: LCLA-D08
+    summary: "身份 XOR 掩码的输出长度没有定义。"
+  - id: LCLA-D09
+    summary: "S 中随机 b 的具体实现与传递口径不清。"
+  - id: LCLA-D10
+    summary: "论文未说明 Frodo 库如何提供 TrapGen/SamplePre。"
+  - id: LCLA-D11
+    summary: "Definition 5 与 Lemma 3 在模回绕边界存在可执行反例。"
+  - id: LCLA-D12
+    summary: "mBR matching-session 文字不自然，Game0–Game5 未机械化。"
+  - id: LCLA-D13
+    summary: "PFS、KCI、UKS、NKC 的非形式论证较简略。"
