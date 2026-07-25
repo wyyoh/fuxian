@@ -25,16 +25,17 @@ class CommunicationCost:
     q: int
     n: int
     bits_per_zq: int
-    one_message_paper_bits: int
-    one_message_paper_bytes: int
-    full_exchange_paper_bits: int
-    full_exchange_paper_bytes: int
-    one_message_serialized_bits: int
-    one_message_serialized_bytes: int
-    full_exchange_serialized_bits: int
-    full_exchange_serialized_bytes: int
+    one_message_paper_compact_bits: int
+    one_message_paper_compact_bytes: int
+    full_exchange_paper_compact_bits: int
+    full_exchange_paper_compact_bytes: int
+    one_message_canonical_hash_encoding_bits: int
+    one_message_canonical_hash_encoding_bytes: int
+    full_exchange_canonical_hash_encoding_bits: int
+    full_exchange_canonical_hash_encoding_bytes: int
     identity_bytes: int
     timestamp_bytes: int
+    network_wire_encoding_defined: bool
 
 
 @dataclass(frozen=True, slots=True)
@@ -94,7 +95,12 @@ def build_cost_tables(*, specs_dir: Path) -> dict[str, object]:
         "source": "derived_from_c2lake_field_definitions",
         "notes": [
             "C2LAKE 成本由字段定义和冻结 profile 推导。",
-            "论文忽略 ID/T 的通信口径与实现长度前缀序列化口径分开报告。",
+            "paper_compact_message_bytes 按 Zq 元素最小位长估算，沿用论文忽略 ID/T 的紧凑口径。",
+            (
+                "canonical_hash_encoding_bytes 是当前 SHAKE 输入的长度前缀编码长度，"
+                "不是网络 wire serializer。"
+            ),
+            "当前项目未实现专用网络 wire serializer，network_wire_encoding_defined=false。",
             "其他论文方案只可作为 paper_reported_reference，不在此 JSON 中独立复现。",
             "log 符号统一按 log2(q) 的比特长度实现，不混用 log m、log2 m、log²m、log³m。",
         ],
@@ -110,15 +116,17 @@ def communication_cost(
 ) -> CommunicationCost:
     bits_per_zq = _bits_per_zq(profile.q)
     vector_count_per_message = 6
-    one_message_paper_bits = vector_count_per_message * profile.n * bits_per_zq
-    one_message_paper_bytes = _ceil_bytes(one_message_paper_bits)
+    one_message_paper_compact_bits = vector_count_per_message * profile.n * bits_per_zq
+    one_message_paper_compact_bytes = _ceil_bytes(one_message_paper_compact_bits)
 
     vector_fields = ("P_i0", "P_i1", "X_i", "Y_i", "Z_i", "S_i")
-    serialized_bytes = _encoded_bytes_field_size("domain", len(b"C2LAKE-MESSAGE-v1"))
-    serialized_bytes += _encoded_bytes_field_size("identity", identity_bytes)
-    serialized_bytes += _encoded_uint_field_size("timestamp", timestamp_bytes)
-    serialized_bytes += sum(_encoded_vector_field_size(name, profile.n) for name in vector_fields)
-    one_message_serialized_bits = serialized_bytes * 8
+    canonical_hash_encoding_bytes = _encoded_bytes_field_size("domain", len(b"C2LAKE-MESSAGE-v1"))
+    canonical_hash_encoding_bytes += _encoded_bytes_field_size("identity", identity_bytes)
+    canonical_hash_encoding_bytes += _encoded_uint_field_size("timestamp", timestamp_bytes)
+    canonical_hash_encoding_bytes += sum(
+        _encoded_vector_field_size(name, profile.n) for name in vector_fields
+    )
+    one_message_canonical_hash_encoding_bits = canonical_hash_encoding_bytes * 8
 
     return CommunicationCost(
         profile=profile.name,
@@ -127,16 +135,17 @@ def communication_cost(
         q=profile.q,
         n=profile.n,
         bits_per_zq=bits_per_zq,
-        one_message_paper_bits=one_message_paper_bits,
-        one_message_paper_bytes=one_message_paper_bytes,
-        full_exchange_paper_bits=one_message_paper_bits * 2,
-        full_exchange_paper_bytes=one_message_paper_bytes * 2,
-        one_message_serialized_bits=one_message_serialized_bits,
-        one_message_serialized_bytes=serialized_bytes,
-        full_exchange_serialized_bits=one_message_serialized_bits * 2,
-        full_exchange_serialized_bytes=serialized_bytes * 2,
+        one_message_paper_compact_bits=one_message_paper_compact_bits,
+        one_message_paper_compact_bytes=one_message_paper_compact_bytes,
+        full_exchange_paper_compact_bits=one_message_paper_compact_bits * 2,
+        full_exchange_paper_compact_bytes=one_message_paper_compact_bytes * 2,
+        one_message_canonical_hash_encoding_bits=one_message_canonical_hash_encoding_bits,
+        one_message_canonical_hash_encoding_bytes=canonical_hash_encoding_bytes,
+        full_exchange_canonical_hash_encoding_bits=(one_message_canonical_hash_encoding_bits * 2),
+        full_exchange_canonical_hash_encoding_bytes=canonical_hash_encoding_bytes * 2,
         identity_bytes=identity_bytes,
         timestamp_bytes=timestamp_bytes,
+        network_wire_encoding_defined=False,
     )
 
 
@@ -246,25 +255,35 @@ def render_cost_report(payload: dict[str, object]) -> str:
         "## Scope",
         "",
         "- 仅重算 C2LAKE 自身的通信、存储和运算计数。",
-        "- 论文忽略 ID/T 的口径与实现序列化口径分开报告。",
+        "- `paper_compact_message_bytes` 按 Zq 元素最小位长估算，沿用论文忽略 ID/T 的紧凑口径。",
+        "- `canonical_hash_encoding_bytes` 是当前 SHAKE 输入的长度前缀编码长度。",
+        "- 当前项目未实现专用网络 wire serializer：`network_wire_encoding_defined=false`。",
+        (
+            "- canonical hash encoding 不应解释为实际网络通信开销，"
+            "也不能直接用于否定或验证论文通信效率主张。"
+        ),
         "- 其他方案数据不在本报告中声称独立复现。",
         "- 所有比特长度使用 `ceil(log2(q))` 或等价 `bit_length(q-1)`。",
         "",
         "## Communication Cost",
         "",
-        "| profile | family | m | q | n | paper bytes | serialized bytes |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
+        (
+            "| profile | family | m | q | n | paper compact bytes | "
+            "canonical hash encoding bytes | wire defined |"
+        ),
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | --- |",
     ]
     for row in communication:
         lines.append(
-            "| {profile} | {family} | {m} | {q} | {n} | {paper} | {serialized} |".format(
+            "| {profile} | {family} | {m} | {q} | {n} | {paper} | {canonical} | {wire} |".format(
                 profile=row["profile"],
                 family=row["family"],
                 m=row["m"],
                 q=row["q"],
                 n=row["n"],
-                paper=row["full_exchange_paper_bytes"],
-                serialized=row["full_exchange_serialized_bytes"],
+                paper=row["full_exchange_paper_compact_bytes"],
+                canonical=row["full_exchange_canonical_hash_encoding_bytes"],
+                wire=row["network_wire_encoding_defined"],
             )
         )
     lines.extend(
@@ -441,10 +460,11 @@ def _flatten_payload(payload: dict[str, object]) -> list[dict[str, object]]:
     operations = cast(list[dict[str, object]], payload["operations"])
     for row in communication:
         for metric in (
-            "full_exchange_paper_bits",
-            "full_exchange_paper_bytes",
-            "full_exchange_serialized_bits",
-            "full_exchange_serialized_bytes",
+            "full_exchange_paper_compact_bits",
+            "full_exchange_paper_compact_bytes",
+            "full_exchange_canonical_hash_encoding_bits",
+            "full_exchange_canonical_hash_encoding_bytes",
+            "network_wire_encoding_defined",
         ):
             rows.append(
                 _csv_row("communication", row, metric, row[metric], _unit_for_metric(metric))
@@ -505,4 +525,6 @@ def _csv_row(
 
 
 def _unit_for_metric(metric: str) -> str:
+    if metric == "network_wire_encoding_defined":
+        return "boolean"
     return "bits" if metric.endswith("_bits") else "bytes"

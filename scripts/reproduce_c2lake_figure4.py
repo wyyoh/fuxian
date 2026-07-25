@@ -137,7 +137,11 @@ def _series_from_table(
 def _paper_vs_literal_series(rows: list[dict[str, str]]) -> dict[str, list[tuple[int, float]]]:
     series: dict[str, list[tuple[int, float]]] = defaultdict(list)
     for row in rows:
-        if row["phase"] != "Key_Agreement" or row["timing_boundary"] != "full_handshake":
+        if (
+            row.get("family") != "paper_literal"
+            or row["phase"] != "Key_Agreement"
+            or row["timing_boundary"] != "full_handshake"
+        ):
             continue
         series["paper"].append((int(row["m"]), float(row["paper_ms"])))
         if row["reproduced_mean_ms"]:

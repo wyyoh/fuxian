@@ -91,6 +91,10 @@ class BenchmarkRow:
     matrix_numpy_bytes: int
     estimated_peak_bytes: int
     available_memory_bytes: int | None
+    measurement_kind: str
+    actual_execution_attempted: bool
+    timeout_scope: str
+    parent_attempt_id: str
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -569,6 +573,9 @@ def _failure_rows(
     repetition_start: int = 0,
 ) -> list[BenchmarkRow]:
     timestamp = _timestamp_utc()
+    measurement_kind, actual_execution_attempted, timeout_scope, parent_attempt_id = (
+        _failure_measurement_metadata(error_code, profile_name, timestamp)
+    )
     rows: list[BenchmarkRow] = []
     for repetition in range(repetition_start, repetition_start + repetitions):
         for phase in _PHASES:
@@ -596,6 +603,10 @@ def _failure_rows(
                     matrix_numpy_bytes=matrix_bytes,
                     estimated_peak_bytes=peak_bytes,
                     available_memory_bytes=available_memory,
+                    measurement_kind=measurement_kind,
+                    actual_execution_attempted=actual_execution_attempted,
+                    timeout_scope=timeout_scope,
+                    parent_attempt_id=parent_attempt_id,
                 )
             )
     return rows
@@ -639,7 +650,26 @@ def _row(
         matrix_numpy_bytes=matrix_bytes,
         estimated_peak_bytes=peak_bytes,
         available_memory_bytes=available_memory,
+        measurement_kind="measured_success" if success else "measured_failure",
+        actual_execution_attempted=True,
+        timeout_scope="",
+        parent_attempt_id="",
     )
+
+
+def _failure_measurement_metadata(
+    error_code: str,
+    profile_name: str,
+    timestamp_utc: str,
+) -> tuple[str, bool, str, str]:
+    if error_code == "resource_limited":
+        return (
+            "resource_limit_placeholder",
+            False,
+            "profile_resource_precheck",
+            f"{profile_name}:resource_limit:{timestamp_utc}",
+        )
+    return ("measured_failure", True, "", "")
 
 
 def _error_code(error: Exception) -> str:

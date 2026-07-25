@@ -3,33 +3,36 @@
 ## Scope
 
 - 仅重算 C2LAKE 自身的通信、存储和运算计数。
-- 论文忽略 ID/T 的口径与实现序列化口径分开报告。
+- `paper_compact_message_bytes` 按 Zq 元素最小位长估算，沿用论文忽略 ID/T 的紧凑口径。
+- `canonical_hash_encoding_bytes` 是当前 SHAKE 输入的长度前缀编码长度。
+- 当前项目未实现专用网络 wire serializer：`network_wire_encoding_defined=false`。
+- canonical hash encoding 不应解释为实际网络通信开销，也不能直接用于否定或验证论文通信效率主张。
 - 其他方案数据不在本报告中声称独立复现。
 - 所有比特长度使用 `ceil(log2(q))` 或等价 `bit_length(q-1)`。
 
 ## Communication Cost
 
-| profile | family | m | q | n | paper bytes | serialized bytes |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| audited_prime_m112 | audited_prime | 112 | 12547 | 3050 | 64050 | 293488 |
-| audited_prime_m128 | audited_prime | 128 | 16411 | 3584 | 80640 | 344752 |
-| audited_prime_m160 | audited_prime | 160 | 25601 | 4687 | 105458 | 450640 |
-| audited_prime_m256 | audited_prime | 256 | 65537 | 8192 | 208896 | 787120 |
-| audited_prime_m32 | audited_prime | 32 | 1031 | 640 | 10560 | 62128 |
-| audited_prime_m48 | audited_prime | 48 | 2309 | 1073 | 19314 | 103696 |
-| audited_prime_m64 | audited_prime | 64 | 4099 | 1536 | 29952 | 148144 |
-| audited_prime_m80 | audited_prime | 80 | 6421 | 2024 | 39468 | 194992 |
-| audited_prime_m96 | audited_prime | 96 | 9221 | 2529 | 53110 | 243472 |
-| paper_literal_m112 | paper_literal | 112 | 12544 | 3050 | 64050 | 293488 |
-| paper_literal_m128 | paper_literal | 128 | 16384 | 3584 | 75264 | 344752 |
-| paper_literal_m160 | paper_literal | 160 | 25600 | 4687 | 105458 | 450640 |
-| paper_literal_m256 | paper_literal | 256 | 65536 | 8192 | 196608 | 787120 |
-| paper_literal_m32 | paper_literal | 32 | 1024 | 640 | 9600 | 62128 |
-| paper_literal_m48 | paper_literal | 48 | 2304 | 1073 | 19314 | 103696 |
-| paper_literal_m64 | paper_literal | 64 | 4096 | 1536 | 27648 | 148144 |
-| paper_literal_m80 | paper_literal | 80 | 6400 | 2024 | 39468 | 194992 |
-| paper_literal_m96 | paper_literal | 96 | 9216 | 2529 | 53110 | 243472 |
-| toy | toy | 8 | 257 | 16 | 216 | 2224 |
+| profile | family | m | q | n | paper compact bytes | canonical hash encoding bytes | wire defined |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| audited_prime_m112 | audited_prime | 112 | 12547 | 3050 | 64050 | 293488 | False |
+| audited_prime_m128 | audited_prime | 128 | 16411 | 3584 | 80640 | 344752 | False |
+| audited_prime_m160 | audited_prime | 160 | 25601 | 4687 | 105458 | 450640 | False |
+| audited_prime_m256 | audited_prime | 256 | 65537 | 8192 | 208896 | 787120 | False |
+| audited_prime_m32 | audited_prime | 32 | 1031 | 640 | 10560 | 62128 | False |
+| audited_prime_m48 | audited_prime | 48 | 2309 | 1073 | 19314 | 103696 | False |
+| audited_prime_m64 | audited_prime | 64 | 4099 | 1536 | 29952 | 148144 | False |
+| audited_prime_m80 | audited_prime | 80 | 6421 | 2024 | 39468 | 194992 | False |
+| audited_prime_m96 | audited_prime | 96 | 9221 | 2529 | 53110 | 243472 | False |
+| paper_literal_m112 | paper_literal | 112 | 12544 | 3050 | 64050 | 293488 | False |
+| paper_literal_m128 | paper_literal | 128 | 16384 | 3584 | 75264 | 344752 | False |
+| paper_literal_m160 | paper_literal | 160 | 25600 | 4687 | 105458 | 450640 | False |
+| paper_literal_m256 | paper_literal | 256 | 65536 | 8192 | 196608 | 787120 | False |
+| paper_literal_m32 | paper_literal | 32 | 1024 | 640 | 9600 | 62128 | False |
+| paper_literal_m48 | paper_literal | 48 | 2304 | 1073 | 19314 | 103696 | False |
+| paper_literal_m64 | paper_literal | 64 | 4096 | 1536 | 27648 | 148144 | False |
+| paper_literal_m80 | paper_literal | 80 | 6400 | 2024 | 39468 | 194992 | False |
+| paper_literal_m96 | paper_literal | 96 | 9216 | 2529 | 53110 | 243472 | False |
+| toy | toy | 8 | 257 | 16 | 216 | 2224 | False |
 
 ## Storage Cost
 

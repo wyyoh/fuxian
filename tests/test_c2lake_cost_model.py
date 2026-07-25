@@ -14,13 +14,23 @@ def test_cost_model_derives_c2lake_m32_communication_from_fields() -> None:
     paper_m32 = next(row for row in communication if row["profile"] == "paper_literal_m32")
 
     assert paper_m32["bits_per_zq"] == 10
-    assert paper_m32["full_exchange_paper_bits"] == 2 * 6 * 640 * 10
-    assert paper_m32["full_exchange_paper_bytes"] == 9_600
-    serialized_bytes = paper_m32["full_exchange_serialized_bytes"]
-    paper_bytes = paper_m32["full_exchange_paper_bytes"]
-    assert isinstance(serialized_bytes, int)
+    assert paper_m32["full_exchange_paper_compact_bits"] == 2 * 6 * 640 * 10
+    assert paper_m32["full_exchange_paper_compact_bytes"] == 9_600
+    canonical_hash_encoding_bytes = paper_m32["full_exchange_canonical_hash_encoding_bytes"]
+    paper_bytes = paper_m32["full_exchange_paper_compact_bytes"]
+    assert isinstance(canonical_hash_encoding_bytes, int)
     assert isinstance(paper_bytes, int)
-    assert serialized_bytes > paper_bytes
+    assert canonical_hash_encoding_bytes > paper_bytes
+
+
+def test_canonical_hash_encoding_is_not_marked_as_wire_communication() -> None:
+    payload = build_cost_tables(specs_dir=_REPO_ROOT / "specs")
+    communication = cast(list[dict[str, object]], payload["communication"])
+    paper_m32 = next(row for row in communication if row["profile"] == "paper_literal_m32")
+
+    assert paper_m32["network_wire_encoding_defined"] is False
+    assert "full_exchange_serialized_bytes" not in paper_m32
+    assert "full_exchange_canonical_hash_encoding_bytes" in paper_m32
 
 
 def test_cost_model_sums_full_handshake_operation_counts() -> None:

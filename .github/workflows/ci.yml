@@ -138,6 +138,7 @@ jobs:
             --raw-output artifacts/processed/C2LAKE/ci_benchmark_raw.csv \
             --table-output artifacts/processed/C2LAKE/ci_table7_reproduced.csv \
             --comparison-output artifacts/processed/C2LAKE/ci_table7_comparison.csv \
+            --trend-output artifacts/processed/C2LAKE/ci_table7_trend_summary.csv \
             --report-output artifacts/processed/C2LAKE/c2lake_benchmark_report.md
       - name: 生成 C2LAKE smoke figure
         run: |
@@ -161,13 +162,16 @@ jobs:
               Path("artifacts/processed/C2LAKE/full_validation.json").read_text()
           )
           head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-          assert evidence["result"] == "pass"
+          assert evidence["result"] == "pass_with_partial_benchmark_and_unverified_formal_security"
+          assert evidence["executable_validation_passed"] is True
           assert evidence["protocol_correctness"] is True
           assert evidence["K1_consistency"] is True
           assert evidence["K2_consistency"] is True
           assert evidence["K3_consistency"] is True
           assert evidence["session_key_consistency"] is True
           assert evidence["failed_protocol_cases"] == 0
+          assert evidence["benchmark_status"] == "partial"
+          assert evidence["formal_security_verified"] is False
           assert evidence["eck_formally_verified"] is False
           assert evidence["rom_reduction_verified"] is False
           assert evidence["git_commit"] == head
@@ -185,9 +189,11 @@ jobs:
             artifacts/processed/C2LAKE/cost_tables.md
             artifacts/processed/C2LAKE/table7_reproduced.csv
             artifacts/processed/C2LAKE/table7_comparison.csv
+            artifacts/processed/C2LAKE/table7_trend_summary.csv
             artifacts/processed/C2LAKE/ci_benchmark_raw.csv
             artifacts/processed/C2LAKE/ci_table7_reproduced.csv
             artifacts/processed/C2LAKE/ci_table7_comparison.csv
+            artifacts/processed/C2LAKE/ci_table7_trend_summary.csv
             artifacts/processed/C2LAKE/c2lake_benchmark_report.md
             artifacts/processed/C2LAKE/figure4_reproduced.png
             artifacts/processed/C2LAKE/full_validation.json
