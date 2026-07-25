@@ -1,0 +1,7 @@
+series,completed_point_count,spearman_rho,monotonic_increasing,trend_interpretation
+numpy:paper_performance,10,1.0,True,rank_trend_only_not_absolute_timing_equivalence
+numpy:toy,10,1.0,True,rank_trend_only_not_absolute_timing_equivalence
+paper:Dabra et al. [34],10,1.0,True,rank_trend_only_not_absolute_timing_equivalence
+paper:Ding et al. [35],10,1.0,True,rank_trend_only_not_absolute_timing_equivalence
+paper:Feng et al. [23],10,1.0,True,rank_trend_only_not_absolute_timing_equivalence
+paper:LCLA-AKA,10,1.0,True,rank_trend_only_not_absolute_timing_equivalence

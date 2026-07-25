@@ -1,0 +1,16 @@
+paper_operation,mathematical_shape,reference_function,frodo_function_if_available,included_overhead,excluded_overhead,status
+T_mul0,m×n by n×m,transpose_matrix_matrix_mod,,shape checks;overflow guard;mod q,third-party native dispatch,numpy_reference_not_native
+T_mul1,m×m by m,matrix_vector_mod,,shape checks;overflow guard;mod q,third-party native dispatch,numpy_reference_not_native
+T_mul2,m×n by n,matrix_vector_mod,,shape checks;overflow guard;mod q,third-party native dispatch,numpy_reference_not_native
+T_add0,m×m,matrix_add_mod,,shape/domain checks;Python-int modular addition,unknown Frodo representation,numpy_reference_not_native
+T_add1,m,vector_add_mod,,shape/domain checks;Python-int modular addition,unknown Frodo representation,numpy_reference_not_native
+T_Samp0,m×n uniform Zq,numpy PCG64 integers,,allocation;PCG64 generation,production CSPRNG,numpy_reference_not_native
+T_Samp1,m×m discrete Gaussian,DiscreteGaussianSampler.sample,,probability-table construction;PCG64 choice,unknown paper/Frodo sampler,numpy_reference_not_native
+T_Samp2,m discrete Gaussian,DiscreteGaussianSampler.sample,,probability-table construction;PCG64 choice,unknown paper/Frodo sampler,numpy_reference_not_native
+T_xor,m-bit XOR,xor_identity,,Python bytes allocation,unknown Frodo bit layout,numpy_reference_not_native
+T_H2,MAC-A representative,LCLAHashSuite.mac_a,,canonical type/length/shape encoding;SHAKE256,paper's unspecified H2 implementation,numpy_reference_not_native
+T_H1,identity to Zq^n,LCLAHashSuite.h1,,canonical framing;SHAKE256;mod q,programmed H1 registry,numpy_reference_not_native
+T_mod0,m×m mod q,numpy.remainder,,NumPy allocation,unknown Frodo reduction strategy,numpy_reference_not_native
+T_mod1,m mod q,numpy.remainder,,NumPy allocation,unknown Frodo reduction strategy,numpy_reference_not_native
+T_Sign,m-coordinate S,signal,,PCG64 random b;literal Definition 5,unknown paper random-bit path,numpy_reference_not_native
+T_Mod,m-coordinate Mod2,mod2,,literal Definition 5;array validation,unknown Frodo reconciliation,numpy_reference_not_native

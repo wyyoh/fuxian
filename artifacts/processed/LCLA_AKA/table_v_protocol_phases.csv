@@ -1,0 +1,9 @@
+profile,phase,sample_count,measured_failure_count,mean_ms,median_ms,std_ms,min_ms,max_ms,p95_ms
+paper_performance,initiator_create,2,0,61.4615435,61.4615435,1.095022499999999,60.366521,62.556566,62.556566
+paper_performance,initiator_verify_and_finish,2,0,85.97738799999999,85.97738799999999,0.3209330000000037,85.656455,86.298321,86.298321
+paper_performance,responder_finish,2,0,64.3440375,64.3440375,0.8846194999999994,63.459418,65.228657,65.228657
+paper_performance,responder_verify_and_reply,2,0,81.0909705,81.0909705,1.2848175000000026,79.806153,82.375788,82.375788
+toy,initiator_create,0,2,,,,,,
+toy,initiator_verify_and_finish,0,2,,,,,,
+toy,responder_finish,0,2,,,,,,
+toy,responder_verify_and_reply,0,2,,,,,,

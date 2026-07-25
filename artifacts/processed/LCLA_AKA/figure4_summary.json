@@ -1,0 +1,11 @@
+{
+  "audited_curve_available": false,
+  "formula_status": "reconstructed",
+  "numpy_reference_curve_available": true,
+  "paper_frodo_native_curve_available": false,
+  "result": "figure4_reconstructed_from_table_v_scaling",
+  "schema_version": 1,
+  "spearman_interpretation": "Spearman 只描述跨 entity 数量的秩趋势，不表示绝对计时严格复现。",
+  "strict_original_operation_timing_reproduced": false,
+  "trend_point_minimum": 3
+}

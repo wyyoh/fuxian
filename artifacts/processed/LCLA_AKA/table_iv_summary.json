@@ -1,0 +1,18 @@
+{
+  "constructed_backend_benchmark_completed": true,
+  "mode": "smoke",
+  "numpy_reference_benchmark_completed": true,
+  "operation_mapping": "specs/lcla_aka/table_iv_operation_mapping.csv",
+  "paper_frodo_backend_built": true,
+  "paper_frodo_backend_identified": true,
+  "raw_measurement_counts": {
+    "dependency_unavailable_placeholder": 6,
+    "measured_success": 64
+  },
+  "real_trapdoor_benchmark_completed": false,
+  "repetitions": 2,
+  "result": "reference_benchmark_complete_strict_original_timing_not_reproduced",
+  "schema_version": 1,
+  "strict_original_operation_timing_reproduced": false,
+  "warmup": 1
+}
