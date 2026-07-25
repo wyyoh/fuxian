@@ -271,3 +271,86 @@ Exact benchmark 已按 `warmup=10`、`repetitions=100`、固定 seed schedule、
 ## Final status
 
 除 PR 创建权限外，C2LAKE 论文复现链路、证据、报告、CI artifact 与分支推送已完成。停止等待 GPT 最终审查。不得启动 LCLA-AKA。
+
+## FINAL-EVIDENCE-PATCH
+
+### Scope
+
+本补丁只修正报告、成本口径、benchmark 元数据和安全主张边界。未改变已通过 GPT 技术审查的协议数学公式，未改变 K1/K2/K3 或 H3 canonical 顺序，未启动 LCLA-AKA，未宣称形式安全证明已验证。
+
+### Commits
+
+本轮新增提交：
+
+1. `610dc69` `fix: clarify C2LAKE cost and benchmark evidence semantics`
+2. `75a2526` `test: document in-window replay limitation`
+3. `b322475` `docs: finalize C2LAKE partial performance replication report`
+4. `e8b3cad` `fix: keep C2LAKE CI evidence outputs isolated`
+5. `7396b46` `test: stabilize final evidence boundary tests`
+6. 本文件将作为 `docs: record final evidence patch` 独立提交。
+
+### Evidence semantics fixed
+
+- 通信成本：
+  - 移除误导性 `serialized_bytes` 口径。
+  - 新增 `canonical_hash_encoding_bytes`。
+  - 新增 `network_wire_encoding_defined=false`。
+  - 明确 `paper_compact_message_bytes` 是按 Zq 元素最小位长估算。
+  - 明确 canonical hash encoding 不是网络 wire communication，不能直接用于验证或否定论文通信效率主张。
+- benchmark 趋势：
+  - 删除逐参数行 `trend_match`。
+  - 新增 `artifacts/processed/C2LAKE/table7_trend_summary.csv`。
+  - 趋势按 `family, phase, timing_boundary` 跨多个 m 点计算。
+  - Spearman rho 只解释为趋势相关，不解释为绝对时间复现成功。
+- timeout/failure：
+  - raw schema 新增 `measurement_kind`、`actual_execution_attempted`、`timeout_scope`、`parent_attempt_id`。
+  - m=256 timeout 记录为 `profile_timeout_placeholder`，`actual_execution_attempted=false`。
+  - summary 拆分为 actual measured rows、placeholder rows 和 profile-level timeout。
+- replay 边界：
+  - `timestamp_freshness_enforcement=executable_checked`
+  - `expired_replay_rejection=executable_checked`
+  - `general_replay_resistance=paper_proof_only`
+  - `in_window_replay_prevention=false`
+  - 新增有效窗口内重复提交测试，当前无 replay cache 的真实行为是第二次合法 request 被接受。
+- 性能结论：
+  - `benchmark_class=auditable_python_reference_implementation`
+  - `algorithmic_workflow_reproduced=true`
+  - `reference_implementation_benchmark_completed=partial`
+  - `strict_original_implementation_timing_reproduced=false`
+  - `m256_completed=false`
+- raw CSV 仓库策略：
+  - 采用方案 A，保留 `artifacts/raw/C2LAKE/benchmark_raw.csv`。
+  - 新增 `artifacts/raw/C2LAKE/README.md`。
+  - raw SHA-256：`d481d7ffe17e1da1cadb34f070cf6a6fe86927c42c1e8b6223243d790a7184ee`。
+
+### Local gates
+
+已执行并通过：
+
+- `.venv/bin/python -m ruff format --check .`
+- `.venv/bin/python -m ruff check .`
+- `.venv/bin/python -m mypy`
+- `.venv/bin/python -m pytest`：`99 passed`
+- `.venv/bin/python -m build --no-isolation`
+- `.venv/bin/python scripts/validate_specs.py --repo-root .`
+- `.venv/bin/python scripts/validate_c2lake_core.py --repo-root .`
+- `.venv/bin/python scripts/audit_c2lake_security_claims.py --repo-root .`
+- `.venv/bin/python scripts/reproduce_c2lake_cost_tables.py --repo-root .`
+- `.venv/bin/python scripts/reproduce_c2lake_table7.py --repo-root . --mode exact --aggregate-only ...`
+- `.venv/bin/python scripts/validate_c2lake_full.py --repo-root . --mode smoke`
+
+未重新运行全部 exact benchmark；Table 7 processed/report 使用已有 raw 数据重新聚合。
+
+### Machine result
+
+- `result=pass_with_partial_benchmark_and_unverified_formal_security`
+- `executable_validation_passed=true`
+- `benchmark_status=partial`
+- `formal_security_verified=false`
+- `actual_measured_success_rows=14400`
+- `actual_measured_failure_rows=0`
+- `placeholder_rows=1800`
+- `profile_level_timeouts=2`
+- `timed_out_profiles=audited_prime_m256,paper_literal_m256`
+
+本地 `full_validation.json` 在最终 evidence 文件生成时如实记录工作树状态；GitHub Actions artifact 为 clean checkout 上的权威 CI evidence。

@@ -193,7 +193,7 @@
     "tamper_and_replay_are_attack_simulations": true,
     "timestamp_freshness_enforcement": true
   },
-  "git_commit": "d0e8c9f870f74176bf76bc70115bf3260f41553e",
+  "git_commit": "e8b3cad289119fb89cef5804812955c14ea8826f",
   "git_dirty": true,
   "known_issues": [
     {

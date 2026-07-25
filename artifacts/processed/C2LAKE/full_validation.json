@@ -2,6 +2,8 @@
   "K1_consistency": true,
   "K2_consistency": true,
   "K3_consistency": true,
+  "algorithmic_workflow_reproduced": true,
+  "benchmark_class": "auditable_python_reference_implementation",
   "benchmark_status": "partial",
   "cbi_isis_hardness_verified": false,
   "completed_benchmark_profiles": [
@@ -33,10 +35,12 @@
     "storage_rows": 133
   },
   "eck_formally_verified": false,
+  "executable_validation_passed": true,
   "failed_protocol_cases": 0,
   "failure_reasons": [],
-  "git_commit": "ee631b2cfbdf241e65c147cbde2c8378a8b9b7dc",
-  "git_dirty": false,
+  "formal_security_verified": false,
+  "git_commit": "e8b3cad289119fb89cef5804812955c14ea8826f",
+  "git_dirty": true,
   "incomplete_benchmark_profiles": [
     "audited_prime_m256",
     "paper_literal_m256"
@@ -51,6 +55,7 @@
     }
   },
   "isis_hardness_verified": false,
+  "m256_completed": false,
   "negative_test_matrix": {
     "request:ID_i": true,
     "request:P_i0": true,
@@ -76,20 +81,36 @@
     "toy": 50
   },
   "protocol_correctness": true,
-  "replay_test_matrix": {
-    "replayed_old_request": true,
-    "replayed_old_response": true
+  "raw_benchmark_summary": {
+    "actual_measured_failure_rows": 0,
+    "actual_measured_success_rows": 14400,
+    "placeholder_rows": 1800,
+    "profile_level_timeouts": 2,
+    "timed_out_profiles": [
+      "audited_prime_m256",
+      "paper_literal_m256"
+    ]
   },
-  "result": "pass",
+  "reference_implementation_benchmark_completed": "partial",
+  "replay_test_matrix": {
+    "expired_request_replay_rejected": true,
+    "expired_response_replay_rejected": true,
+    "in_window_replay_prevention": false,
+    "in_window_request_second_submit_accepted": true
+  },
+  "result": "pass_with_partial_benchmark_and_unverified_formal_security",
   "rom_reduction_verified": false,
   "schema_version": 1,
   "security_claims_executable": [
     "correctness",
     "mutual_authentication",
     "session_key_agreement",
-    "replay_resistance"
+    "timestamp_freshness_enforcement",
+    "expired_replay_rejection"
   ],
   "security_claims_paper_only": [
+    "general_replay_resistance",
+    "in_window_replay_prevention",
     "impersonation_resistance",
     "man_in_the_middle_resistance",
     "known_key_security",
@@ -103,6 +124,7 @@
     "cbi_isis_reduction"
   ],
   "session_key_consistency": true,
+  "strict_original_implementation_timing_reproduced": false,
   "timestamp_test_matrix": {
     "future_boundary": true,
     "future_over_skew": true,

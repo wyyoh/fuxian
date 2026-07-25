@@ -362,7 +362,7 @@
       "timestamp_bytes": 8
     }
   ],
-  "git_commit": "d0e8c9f870f74176bf76bc70115bf3260f41553e",
+  "git_commit": "e8b3cad289119fb89cef5804812955c14ea8826f",
   "git_dirty": true,
   "notes": [
     "C2LAKE 成本由字段定义和冻结 profile 推导。",
