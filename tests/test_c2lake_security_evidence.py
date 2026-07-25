@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import cast
 
 from scripts.audit_c2lake_security_claims import audit_security_claims
+from scripts.validate_c2lake_full import validate_c2lake_full
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -24,11 +24,7 @@ def test_general_replay_resistance_is_not_executable_checked() -> None:
 
 
 def test_final_validation_result_names_partial_benchmark_and_unverified_security() -> None:
-    payload = json.loads(
-        (_REPO_ROOT / "artifacts" / "processed" / "C2LAKE" / "full_validation.json").read_text(
-            encoding="utf-8"
-        )
-    )
+    payload = validate_c2lake_full(repo_root=_REPO_ROOT, mode="smoke")
 
     assert payload["result"] == "pass_with_partial_benchmark_and_unverified_formal_security"
     assert payload["executable_validation_passed"] is True

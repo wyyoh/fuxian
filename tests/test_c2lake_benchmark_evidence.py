@@ -25,9 +25,7 @@ def test_trend_summary_uses_cross_m_series() -> None:
     assert trend[0]["completed_point_count"] == 3
     assert trend[0]["spearman_rho"] == 1.0
     assert trend[0]["monotonic_increasing"] is True
-    assert cast(str, trend[0]["trend_interpretation"]).endswith(
-        "not_absolute_timing_reproduction"
-    )
+    assert cast(str, trend[0]["trend_interpretation"]).endswith("not_absolute_timing_reproduction")
     assert "trend_match" not in comparison_rows[0]
 
 
