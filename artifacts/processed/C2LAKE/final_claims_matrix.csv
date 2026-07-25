@@ -2,7 +2,10 @@ claim_id,claim,status,executable_evidence,formal_verification_status,notes
 correctness,协议正确性与双方会话密钥一致,executable_checked,core/protocol tests and independent Python-int oracle,not_formally_verified,可执行正确性不等同安全证明
 mutual_authentication,双向认证,executable_checked,S_i/S_j verification and tamper rejection,not_formally_verified,攻击模拟覆盖公开字段篡改
 session_key_agreement,会话密钥协商一致,executable_checked,K1/K2/K3 and H3/KDF consistency,not_formally_verified,canonical transcript 固定顺序
-replay_resistance,重放窗口抵抗,executable_checked,timestamp boundary and replay tests,not_formally_verified,无全局 replay cache
+timestamp_freshness_enforcement,时间戳新鲜度窗口检查,executable_checked,timestamp freshness boundary tests,not_formally_verified,限制过旧和未来消息
+expired_replay_rejection,过期重放拒绝,executable_checked,expired request/response replay tests,not_formally_verified,只覆盖超出时间窗口的 replay
+general_replay_resistance,一般重放攻击抵抗,paper_proof_only,timestamp tests only,not_formally_verified,无 replay cache 不等同完整 replay resistance
+in_window_replay_prevention,有效窗口内重复提交防护,not_formally_verified,in-window replay behavior documented,not_formally_verified,implemented=false; 当前无状态实现接受第二次提交
 impersonation_resistance,仿冒攻击抵抗,paper_proof_only,limited tamper simulation,not_formally_verified,未形式化 eCK 对手
 man_in_the_middle_resistance,中间人攻击抵抗,paper_proof_only,single-field tamper simulation,not_formally_verified,未形式化网络对手
 known_key_security,known-key security,paper_proof_only,session independence checks,not_formally_verified,不同 seed 差异不构成证明

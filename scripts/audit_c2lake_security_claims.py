@@ -18,7 +18,10 @@ _REQUIRED_CLAIMS: Final = (
     "correctness",
     "mutual_authentication",
     "session_key_agreement",
-    "replay_resistance",
+    "timestamp_freshness_enforcement",
+    "expired_replay_rejection",
+    "general_replay_resistance",
+    "in_window_replay_prevention",
     "impersonation_resistance",
     "man_in_the_middle_resistance",
     "known_key_security",
@@ -113,6 +116,13 @@ def audit_security_claims(*, repo_root: Path) -> dict[str, object]:
         "explicit_boundaries": {
             "correctness_executable_checked": "correctness" in executable_claims,
             "tamper_and_replay_are_attack_simulations": True,
+            "timestamp_freshness_enforcement": "timestamp_freshness_enforcement"
+            in executable_claims,
+            "expired_replay_rejection": "expired_replay_rejection" in executable_claims,
+            "general_replay_resistance_executable_checked": (
+                "general_replay_resistance" in executable_claims
+            ),
+            "in_window_replay_prevention": False,
             "eck_formally_verified": False,
             "rom_reduction_verified": False,
             "forking_lemma_formally_verified": False,
@@ -176,6 +186,18 @@ def _validate_claims_and_issues(
             )
         if claim.get("formally_verified") is not False:
             errors.append({"code": "FORMAL_VERIFICATION_FLAG_INVALID", "claim_id": claim.get("id")})
+        if (
+            claim.get("id") == "general_replay_resistance"
+            and claim.get("status") == "executable_checked"
+        ):
+            errors.append({"code": "GENERAL_REPLAY_STATUS_TOO_STRONG", "claim_id": claim.get("id")})
+        if (
+            claim.get("id") == "in_window_replay_prevention"
+            and claim.get("implemented") is not False
+        ):
+            errors.append(
+                {"code": "IN_WINDOW_REPLAY_PREVENTION_FLAG_INVALID", "claim_id": claim.get("id")}
+            )
         evidence = claim.get("evidence")
         if not isinstance(evidence, list) or not evidence:
             errors.append({"code": "CLAIM_EVIDENCE_MISSING", "claim_id": claim.get("id")})
@@ -237,6 +259,11 @@ def _render_report(payload: dict[str, object]) -> str:
         "",
         "- correctness 可通过代码执行路径与代数恒等式检查。",
         "- 消息篡改与重放只能作为攻击模拟测试。",
+        "- 时间戳可以限制陈旧消息，但不能单独阻止有效窗口内的重复提交。",
+        (
+            "- 当前实现没有 replay cache；完整 replay prevention 需要 "
+            "nonce/session-id cache 或状态化去重机制。"
+        ),
         "- eCK、ROM、forking lemma 与安全归约未做形式化验证。",
         "- 本审计不得解释为论文安全证明已复现成功。",
         "",

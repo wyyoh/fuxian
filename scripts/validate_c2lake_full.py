@@ -37,6 +37,8 @@ from lattice_aka_repro.c2lake_protocol import (
     run_handshake,
 )
 
+_PASS_WITH_BOUNDARIES = "pass_with_partial_benchmark_and_unverified_formal_security"
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -62,7 +64,7 @@ def main() -> int:
     _write_report(payload, args.report_output)
     print(args.json_output)
     print(args.report_output)
-    return 0 if payload["result"] == "pass" else 1
+    return 0 if payload["executable_validation_passed"] is True else 1
 
 
 def validate_c2lake_full(*, repo_root: Path, mode: str) -> dict[str, object]:
@@ -82,6 +84,9 @@ def validate_c2lake_full(*, repo_root: Path, mode: str) -> dict[str, object]:
     benchmark_status = _benchmark_status(
         repo_root / "artifacts" / "processed" / "C2LAKE" / "table7_reproduced.csv"
     )
+    raw_summary = _summarize_raw_measurements(
+        repo_root / "artifacts" / "raw" / "C2LAKE" / "benchmark_raw.csv"
+    )
     cost_payload = build_cost_tables(specs_dir=repo_root / "specs")
     cost_model_status = {
         "result": cost_payload["result"],
@@ -89,23 +94,26 @@ def validate_c2lake_full(*, repo_root: Path, mode: str) -> dict[str, object]:
         "storage_rows": len(cast(list[object], cost_payload["storage"])),
         "operation_rows": len(cast(list[object], cost_payload["operations"])),
     }
-    result = "pass"
+    executable_validation_passed = True
     failure_reasons: list[str] = []
     if core_validation.get("result") != "pass":
-        result = "fail"
+        executable_validation_passed = False
         failure_reasons.append("core_validation_failed")
     if security_audit.get("result") != "pass":
-        result = "fail"
+        executable_validation_passed = False
         failure_reasons.append("security_audit_failed")
     if not protocol["protocol_correctness"]:
-        result = "fail"
+        executable_validation_passed = False
         failure_reasons.append("protocol_correctness_failed")
     if benchmark_status["status"] not in {"complete", "partial"}:
-        result = "fail"
+        executable_validation_passed = False
         failure_reasons.append("benchmark_status_invalid")
+    result = _PASS_WITH_BOUNDARIES if executable_validation_passed else "fail"
+    incomplete_profiles = cast(list[str], benchmark_status["incomplete_profiles"])
     return {
         "schema_version": 1,
         "result": result,
+        "executable_validation_passed": executable_validation_passed,
         "failure_reasons": failure_reasons,
         "git_commit": git_commit,
         "git_dirty": git_dirty,
@@ -127,10 +135,17 @@ def validate_c2lake_full(*, repo_root: Path, mode: str) -> dict[str, object]:
         "replay_test_matrix": protocol["replay_test_matrix"],
         "cost_model_status": cost_model_status,
         "benchmark_status": benchmark_status["status"],
+        "benchmark_class": "auditable_python_reference_implementation",
+        "algorithmic_workflow_reproduced": True,
+        "reference_implementation_benchmark_completed": benchmark_status["status"],
+        "strict_original_implementation_timing_reproduced": False,
+        "m256_completed": not any(profile.endswith("_m256") for profile in incomplete_profiles),
+        "raw_benchmark_summary": raw_summary,
         "completed_benchmark_profiles": benchmark_status["completed_profiles"],
-        "incomplete_benchmark_profiles": benchmark_status["incomplete_profiles"],
+        "incomplete_benchmark_profiles": incomplete_profiles,
         "security_claims_executable": _security_summary(security_audit)["executable_claims"],
         "security_claims_paper_only": _security_summary(security_audit)["paper_only_claims"],
+        "formal_security_verified": False,
         "eck_formally_verified": False,
         "rom_reduction_verified": False,
         "isis_hardness_verified": False,
@@ -178,7 +193,7 @@ def _run_protocol_smoke(mode: str) -> dict[str, object]:
     replay = _replay_test_matrix()
     failed_protocol_cases += sum(not passed for passed in negative.values())
     failed_protocol_cases += sum(not passed for passed in timestamps.values())
-    failed_protocol_cases += sum(not passed for passed in replay.values())
+    failed_protocol_cases += _replay_failure_count(replay)
     protocol_correctness = (
         failed_protocol_cases == 0 and k1_ok and k2_ok and k3_ok and session_key_ok
     )
@@ -323,8 +338,20 @@ def _replay_test_matrix() -> dict[str, bool]:
         now=1_000,
         timestamp_policy=policy,
     )
+    try:
+        _second_response, _second_state, second_result = responder_verify_and_reply(
+            bob_context,
+            request,
+            timestamp=1_001,
+            seed=604,
+            now=1_001,
+            timestamp_policy=policy,
+        )
+        in_window_second_submit_accepted = second_result.accepted
+    except C2LakeCoreError:
+        in_window_second_submit_accepted = False
     return {
-        "replayed_old_request": _raises_code(
+        "expired_request_replay_rejected": _raises_code(
             lambda: responder_verify_and_reply(
                 bob_context,
                 request,
@@ -335,7 +362,7 @@ def _replay_test_matrix() -> dict[str, bool]:
             ),
             "MESSAGE_EXPIRED",
         ),
-        "replayed_old_response": _raises_code(
+        "expired_response_replay_rejected": _raises_code(
             lambda: initiator_verify_and_finish(
                 alice_context,
                 request,
@@ -346,7 +373,19 @@ def _replay_test_matrix() -> dict[str, bool]:
             ),
             "MESSAGE_EXPIRED",
         ),
+        "in_window_request_second_submit_accepted": in_window_second_submit_accepted,
+        "in_window_replay_prevention": False,
     }
+
+
+def _replay_failure_count(replay: dict[str, bool]) -> int:
+    expected = {
+        "expired_request_replay_rejected": True,
+        "expired_response_replay_rejected": True,
+        "in_window_request_second_submit_accepted": True,
+        "in_window_replay_prevention": False,
+    }
+    return sum(replay.get(name) is not value for name, value in expected.items())
 
 
 def _fixture(profile: str) -> tuple[C2LakePublicParameters, C2LakeKeyPair, C2LakeKeyPair]:
@@ -493,6 +532,54 @@ def _benchmark_status(path: Path) -> dict[str, object]:
     }
 
 
+def _summarize_raw_measurements(path: Path) -> dict[str, object]:
+    if not path.is_file():
+        return {
+            "actual_measured_success_rows": 0,
+            "actual_measured_failure_rows": 0,
+            "placeholder_rows": 0,
+            "profile_level_timeouts": 0,
+            "timed_out_profiles": [],
+        }
+    actual_measured_success_rows = 0
+    actual_measured_failure_rows = 0
+    placeholder_rows = 0
+    timeout_parent_ids: set[str] = set()
+    timed_out_profiles: set[str] = set()
+    with path.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            kind = _measurement_kind(row)
+            if kind == "measured_success" and row["success"] in {"True", "true"}:
+                actual_measured_success_rows += 1
+            elif kind == "measured_failure":
+                actual_measured_failure_rows += 1
+            elif kind in {"profile_timeout_placeholder", "resource_limit_placeholder"}:
+                placeholder_rows += 1
+                if kind == "profile_timeout_placeholder":
+                    timeout_parent_ids.add(row.get("parent_attempt_id", row["profile"]))
+                    timed_out_profiles.add(row["profile"])
+    return {
+        "actual_measured_success_rows": actual_measured_success_rows,
+        "actual_measured_failure_rows": actual_measured_failure_rows,
+        "placeholder_rows": placeholder_rows,
+        "profile_level_timeouts": len(timeout_parent_ids),
+        "timed_out_profiles": sorted(timed_out_profiles),
+    }
+
+
+def _measurement_kind(row: dict[str, str]) -> str:
+    explicit = row.get("measurement_kind", "")
+    if explicit:
+        return explicit
+    if row.get("success") in {"True", "true"}:
+        return "measured_success"
+    if row.get("error_code") == "timeout":
+        return "profile_timeout_placeholder"
+    if row.get("error_code") == "resource_limited":
+        return "resource_limit_placeholder"
+    return "measured_failure"
+
+
 def _read_or_run_json(repo_root: Path, path: Path, command: list[str]) -> dict[str, object]:
     if not path.is_file():
         subprocess.run(command, cwd=repo_root, check=True)
@@ -538,6 +625,7 @@ def _write_report(payload: dict[str, object], output: Path) -> Path:
         "# C2LAKE Full Validation",
         "",
         f"- result: {payload['result']}",
+        f"- executable_validation_passed: {payload['executable_validation_passed']}",
         f"- git_commit: {payload['git_commit']}",
         f"- git_dirty: {payload['git_dirty']}",
         f"- protocol_correctness: {payload['protocol_correctness']}",
@@ -547,6 +635,12 @@ def _write_report(payload: dict[str, object], output: Path) -> Path:
         f"- K3_consistency: {payload['K3_consistency']}",
         f"- session_key_consistency: {payload['session_key_consistency']}",
         f"- benchmark_status: {payload['benchmark_status']}",
+        f"- benchmark_class: {payload['benchmark_class']}",
+        (
+            "- strict_original_implementation_timing_reproduced: "
+            f"{payload['strict_original_implementation_timing_reproduced']}"
+        ),
+        f"- formal_security_verified: {payload['formal_security_verified']}",
         "- eck_formally_verified: false",
         "- rom_reduction_verified: false",
         "",

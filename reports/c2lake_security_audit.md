@@ -13,6 +13,8 @@
 
 - correctness 可通过代码执行路径与代数恒等式检查。
 - 消息篡改与重放只能作为攻击模拟测试。
+- 时间戳可以限制陈旧消息，但不能单独阻止有效窗口内的重复提交。
+- 当前实现没有 replay cache；完整 replay prevention 需要 nonce/session-id cache 或状态化去重机制。
 - eCK、ROM、forking lemma 与安全归约未做形式化验证。
 - 本审计不得解释为论文安全证明已复现成功。
 
@@ -23,7 +25,10 @@
 | correctness | executable_checked | False |
 | mutual_authentication | executable_checked | False |
 | session_key_agreement | executable_checked | False |
-| replay_resistance | executable_checked | False |
+| timestamp_freshness_enforcement | executable_checked | False |
+| expired_replay_rejection | executable_checked | False |
+| general_replay_resistance | paper_proof_only | False |
+| in_window_replay_prevention | not_formally_verified | False |
 | impersonation_resistance | paper_proof_only | False |
 | man_in_the_middle_resistance | paper_proof_only | False |
 | known_key_security | paper_proof_only | False |
@@ -52,10 +57,14 @@
   "cbi_isis_hardness_verified": false,
   "correctness_executable_checked": true,
   "eck_formally_verified": false,
+  "expired_replay_rejection": true,
   "forking_lemma_formally_verified": false,
+  "general_replay_resistance_executable_checked": false,
+  "in_window_replay_prevention": false,
   "isis_hardness_verified": false,
   "paper_security_proof_reproduced": false,
   "rom_reduction_verified": false,
-  "tamper_and_replay_are_attack_simulations": true
+  "tamper_and_replay_are_attack_simulations": true,
+  "timestamp_freshness_enforcement": true
 }
 ```

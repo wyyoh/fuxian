@@ -31,13 +31,34 @@ claims:
       - "H3 canonical transcript 顺序固定"
       - "literal scalar 与 audited KDF 输出一致性测试"
     formally_verified: false
-  - id: replay_resistance
-    claim: "重放攻击抵抗"
+  - id: timestamp_freshness_enforcement
+    claim: "时间戳新鲜度窗口检查"
     status: executable_checked
     evidence:
       - "显式时间戳窗口边界测试"
-      - "旧 request/response 重放窗口拒绝测试"
+      - "过旧消息和未来消息拒绝测试"
     formally_verified: false
+  - id: expired_replay_rejection
+    claim: "过期 request/response 重放拒绝"
+    status: executable_checked
+    evidence:
+      - "旧 request/response 超出时间窗口后被 MESSAGE_EXPIRED 拒绝"
+    formally_verified: false
+  - id: general_replay_resistance
+    claim: "一般重放攻击抵抗"
+    status: paper_proof_only
+    evidence:
+      - "当前代码仅检查时间戳 freshness 和 expired replay"
+      - "无 replay cache，因此不把完整 replay resistance 标为 executable_checked"
+    formally_verified: false
+  - id: in_window_replay_prevention
+    claim: "有效时间窗口内重复提交防护"
+    status: not_formally_verified
+    evidence:
+      - "同一合法 request 在有效窗口内连续提交两次会被当前无状态实现接受"
+      - "若需要完整 replay prevention，需要 nonce/session-id cache 或状态化去重机制"
+    formally_verified: false
+    implemented: false
   - id: impersonation_resistance
     claim: "仿冒攻击抵抗"
     status: paper_proof_only

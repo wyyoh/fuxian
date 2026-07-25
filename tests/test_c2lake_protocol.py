@@ -308,6 +308,41 @@ def test_timestamp_boundaries_and_replay_window() -> None:
     assert response_replay_error.value.code == "MESSAGE_EXPIRED"
 
 
+def test_in_window_replay_is_accepted_without_replay_cache() -> None:
+    public_params, alice_key_pair, bob_key_pair = _make_protocol_fixture("toy")
+    alice_context = make_protocol_context(public_params, alice_key_pair, "alice@example.test")
+    bob_context = make_protocol_context(public_params, bob_key_pair, "bob@example.test")
+    policy = C2LakeTimestampPolicy(max_clock_skew=10, max_message_age=100)
+    request, _state = initiator_create_request(
+        alice_context,
+        bob_context.identity,
+        timestamp=1_000,
+        seed=551,
+    )
+
+    first_response, _first_state, first_result = responder_verify_and_reply(
+        bob_context,
+        request,
+        timestamp=1_001,
+        seed=552,
+        now=1_001,
+        timestamp_policy=policy,
+    )
+    second_response, _second_state, second_result = responder_verify_and_reply(
+        bob_context,
+        request,
+        timestamp=1_002,
+        seed=553,
+        now=1_002,
+        timestamp_policy=policy,
+    )
+
+    assert first_result.accepted
+    assert second_result.accepted
+    assert first_response.timestamp == 1_001
+    assert second_response.timestamp == 1_002
+
+
 def test_protocol_context_errors_are_reported_with_stable_codes() -> None:
     public_params, alice_key_pair, bob_key_pair = _make_protocol_fixture("toy")
     alice_context = make_protocol_context(public_params, alice_key_pair, "alice@example.test")
