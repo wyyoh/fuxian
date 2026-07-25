@@ -1,0 +1,65 @@
+{
+  "formula_status": "partial",
+  "formulas": [
+    {
+      "ambiguity": "Figure 6 axis coordinates/formula are not tabulated",
+      "formula": "2*entities*initiators",
+      "id": "F6-other-rounds",
+      "source": "fitted to narrative maximum",
+      "status": "example_fitted_partial",
+      "verified_example": "E=50,I=100 -> 10000"
+    },
+    {
+      "ambiguity": "conflicts with applying Figure 5's 3n+4/3n+5 per initiator",
+      "formula": "entities*initiators",
+      "id": "F6-other-fields",
+      "source": "fitted to narrative maximum",
+      "status": "example_fitted_partial",
+      "verified_example": "E=50,I=100 -> 5000"
+    },
+    {
+      "ambiguity": "paper gives only order of magnitude, not an exact coefficient",
+      "formula": "20000*entities*initiators",
+      "id": "F6-other-bits",
+      "source": "order-of-magnitude fit",
+      "status": "example_fitted_partial",
+      "verified_example": "E=50,I=100 -> 1e8"
+    },
+    {
+      "ambiguity": "conflicts with Figure 5's constant 3 rounds per initiator",
+      "formula": "4*initiators",
+      "id": "F6-LCLA-rounds",
+      "source": "fitted to narrative maximum",
+      "status": "example_fitted_conflicting",
+      "verified_example": "I=100 -> 400"
+    },
+    {
+      "ambiguity": "conflicts with Figure 5's 7 transmitted fields per initiator",
+      "formula": "4*initiators",
+      "id": "F6-LCLA-fields",
+      "source": "fitted to narrative maximum",
+      "status": "example_fitted_conflicting",
+      "verified_example": "I=100 -> 400"
+    },
+    {
+      "ambiguity": "conflicts with field-derived 3147008 bits per initiator",
+      "formula": "100000*initiators",
+      "id": "F6-LCLA-bits",
+      "source": "order-of-magnitude fit",
+      "status": "example_fitted_conflicting",
+      "verified_example": "I=100 -> 1e7"
+    }
+  ],
+  "paper_example": {
+    "entities": 50,
+    "initiators_interpreted_as": 100,
+    "lcla_bits_order": 10000000,
+    "lcla_fields_order": 400,
+    "lcla_rounds_order": 400,
+    "other_bits_order": 100000000,
+    "other_fields_order": 5000,
+    "other_rounds_order": 10000
+  },
+  "result": "figure6_partial_example_fitted_reconstruction",
+  "schema_version": 1
+}

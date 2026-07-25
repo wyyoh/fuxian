@@ -1,0 +1,73 @@
+{
+  "formulas": [
+    {
+      "ambiguity": "none for the stated single-initiator round count",
+      "formula": "3",
+      "id": "F5-LCLA-rounds",
+      "metric": "rounds",
+      "source": "paper narrative printed p9223",
+      "status": "paper_reported_reference",
+      "verified_example": "all entities -> 3"
+    },
+    {
+      "ambiguity": "paper calls them messages; this reproduction treats them as fields in 3 packets",
+      "formula": "7",
+      "id": "F5-LCLA-fields",
+      "metric": "fields",
+      "source": "paper narrative printed p9223",
+      "status": "paper_reported_reference_reinterpreted_fields",
+      "verified_example": "all entities -> 7 statistical fields"
+    },
+    {
+      "ambiguity": "paper Figure 5 exact plotted coordinate is not tabulated",
+      "formula": "2*m^2*bitlen(q)+5*m with m=256,q=2^24-1",
+      "id": "F5-LCLA-bits",
+      "metric": "bits",
+      "source": "field-level reconstruction",
+      "status": "reconstructed",
+      "verified_example": 3147008
+    },
+    {
+      "ambiguity": "paper's n/entity indexing convention is not defined in the figure text",
+      "formula": "entities+2",
+      "id": "F5-other-rounds",
+      "metric": "rounds",
+      "source": "paper narrative printed p9221",
+      "status": "reconstructed",
+      "verified_example": "n+2 statement"
+    },
+    {
+      "ambiguity": "called messages rather than typed fields",
+      "formula": "3*entities+4",
+      "id": "F5-Feng-fields",
+      "metric": "fields",
+      "source": "paper narrative printed p9221",
+      "status": "paper_reported_reference",
+      "verified_example": "explicit 3n+4 statement"
+    },
+    {
+      "ambiguity": "called messages rather than typed fields",
+      "formula": "3*entities+5",
+      "id": "F5-Dabra-Ding-fields",
+      "metric": "fields",
+      "source": "paper narrative printed p9221",
+      "status": "paper_reported_reference",
+      "verified_example": "explicit 3n+5 statement"
+    },
+    {
+      "ambiguity": "paper does not uniquely state whether sender broadcast payload is counted once or per receiver",
+      "formula": "sender_bits + (entities-1)*receiver_bits",
+      "id": "F5-other-bits",
+      "metric": "bits",
+      "source": "two-entity bit totals and broadcast narrative printed p9223",
+      "status": "reconstructed_partial",
+      "verified_example": "entities=2 reproduces 8448/13064/16672 bits"
+    }
+  ],
+  "lcla_transmitted_fields": 7,
+  "network_packets": 3,
+  "network_rounds": 3,
+  "network_wire_encoding_defined": false,
+  "result": "figure5_reconstructed_with_explicit_formula_status",
+  "schema_version": 1
+}
