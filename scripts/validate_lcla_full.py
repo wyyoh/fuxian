@@ -66,9 +66,7 @@ def main() -> int:
     parser.add_argument(
         "--correctness-benchmark-input",
         type=Path,
-        default=Path(
-            "artifacts/processed/LCLA_AKA/correctness_patch_benchmark_summary.json"
-        ),
+        default=Path("artifacts/processed/LCLA_AKA/correctness_patch_benchmark_summary.json"),
     )
     args = parser.parse_args()
     repo_root = args.repo_root.resolve()
