@@ -37,6 +37,12 @@ def main() -> int:
     parser.add_argument("--mode", choices=("smoke", "exact"), default="exact")
     parser.add_argument("--attempts", type=int)
     parser.add_argument("--intended-attempts", type=int)
+    parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--checkpoint-dir",
+        type=Path,
+        default=Path("artifacts/raw/LCLA_AKA/correctness_checkpoints"),
+    )
     parser.add_argument(
         "--matrix-output",
         type=Path,
@@ -67,30 +73,59 @@ def main() -> int:
         if args.intended_attempts is not None
         else (10 if args.mode == "smoke" else 1000)
     )
+    checkpoint_dir = _resolve(repo_root, args.checkpoint_dir)
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
     matrix: list[dict[str, object]] = []
     for profile_index, profile in enumerate(PROFILES):
         for variant_index, variant in enumerate(VARIANTS):
             seed_base = 10_000_000 + profile_index * 1_000_000 + variant_index * 400_000
-            matrix.append(
-                run_honest_executions(
+            checkpoint = checkpoint_dir / f"{profile}__{variant}__{attempts}.json"
+            row = _load_checkpoint(checkpoint) if args.resume else None
+            if row is None:
+                row = run_honest_executions(
                     repo_root=repo_root,
                     profile_name=profile,
                     distribution_variant=variant,
                     attempts=attempts,
                     seed_base=seed_base,
                 ).as_dict()
+                _write_json(checkpoint, row)
+            matrix.append(row)
+            print(
+                json.dumps(
+                    {
+                        "checkpoint": checkpoint.name,
+                        "accepted": row["honest_execution_accepted"],
+                        "attempts": row["honest_execution_attempts"],
+                    }
+                ),
+                flush=True,
             )
-    intended = [
-        run_intended_recipient_trials(
-            repo_root=repo_root,
-            profile_name="paper_performance",
-            distribution_variant=variant,
-            attempts=intended_attempts,
-            candidate_count=20,
-            seed_base=30_000_000 + index * 2_000_000,
+    intended: list[dict[str, object]] = []
+    for index, variant in enumerate(VARIANTS):
+        checkpoint = checkpoint_dir / f"intended__{variant}__{intended_attempts}.json"
+        intended_row = _load_checkpoint(checkpoint) if args.resume else None
+        if intended_row is None:
+            intended_row = run_intended_recipient_trials(
+                repo_root=repo_root,
+                profile_name="paper_performance",
+                distribution_variant=variant,
+                attempts=intended_attempts,
+                candidate_count=20,
+                seed_base=30_000_000 + index * 2_000_000,
+            )
+            _write_json(checkpoint, intended_row)
+        intended.append(intended_row)
+        print(
+            json.dumps(
+                {
+                    "checkpoint": checkpoint.name,
+                    "target_true_accept": intended_row["target_true_accept"],
+                    "target_false_reject": intended_row["target_false_reject"],
+                }
+            ),
+            flush=True,
         )
-        for index, variant in enumerate(VARIANTS)
-    ]
     lemma_rows = [search_lemma3_counterexamples(q) for q in SMALL_ODD_Q]
     prime_counterexample = any(
         row["q_is_prime"] is True and row["counterexample_found"] is True for row in lemma_rows
@@ -240,6 +275,22 @@ def render_lemma_report(rows: list[dict[str, object]], prime_counterexample: boo
 
 def _resolve(repo_root: Path, path: Path) -> Path:
     return path if path.is_absolute() else repo_root / path
+
+
+def _load_checkpoint(path: Path) -> dict[str, object] | None:
+    if not path.exists():
+        return None
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"checkpoint {path} 顶层必须为 object")
+    return cast(dict[str, object], value)
+
+
+def _write_json(path: Path, value: dict[str, object]) -> None:
+    path.write_text(
+        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
 
 if __name__ == "__main__":
