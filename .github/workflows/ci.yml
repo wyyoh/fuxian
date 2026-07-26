@@ -219,6 +219,23 @@ jobs:
             --json-output artifacts/processed/LCLA_AKA/ci_cost_tables.json \
             --csv-output artifacts/processed/LCLA_AKA/ci_cost_tables.csv \
             --report-output artifacts/processed/LCLA_AKA/ci_cost_tables.md
+      - name: 生成 LCLA-AKA 无条件正确性 smoke evidence
+        run: |
+          python scripts/analyze_lcla_correctness.py \
+            --repo-root . \
+            --mode smoke \
+            --matrix-output artifacts/processed/LCLA_AKA/ci_unconditioned_correctness_matrix.csv \
+            --summary-output artifacts/processed/LCLA_AKA/ci_unconditioned_correctness_summary.json \
+            --lemma-output artifacts/processed/LCLA_AKA/ci_lemma3_counterexamples.csv \
+            --lemma-report-output artifacts/processed/LCLA_AKA/ci_lemma3_audit.md
+          python scripts/reproduce_lcla_correctness_benchmarks.py \
+            --repo-root . \
+            --mode smoke \
+            --resume \
+            --raw-output artifacts/processed/LCLA_AKA/ci_correctness_patch_raw.csv \
+            --correctness-input artifacts/processed/LCLA_AKA/ci_unconditioned_correctness_summary.json \
+            --summary-output artifacts/processed/LCLA_AKA/ci_correctness_patch_summary.csv \
+            --json-output artifacts/processed/LCLA_AKA/ci_correctness_patch_summary.json
       - name: 运行 LCLA-AKA Table IV smoke
         run: |
           python scripts/reproduce_lcla_table_iv.py \
@@ -269,6 +286,7 @@ jobs:
           python scripts/validate_lcla_full.py \
             --repo-root . \
             --mode smoke \
+            --correctness-input artifacts/processed/LCLA_AKA/ci_unconditioned_correctness_summary.json \
             --json-output artifacts/processed/LCLA_AKA/ci_full_validation.json \
             --report-output artifacts/processed/LCLA_AKA/lcla_aka_full_validation.md
       - name: 校验 LCLA-AKA full evidence
@@ -283,10 +301,17 @@ jobs:
           )
           head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
           assert evidence["result"] == (
-              "pass_with_partial_backend_and_partial_performance_unverified_formal_security"
+              "partial_reproduction_observed_correctness_failure_"
+              "constructed_backend_unverified_security"
           )
           assert evidence["executable_validation_passed"] is True
-          assert evidence["protocol_correctness"] is True
+          assert evidence["executable_state_machine_implemented"] is True
+          assert evidence["static_relation_constructed"] is True
+          assert evidence["accepted_session_consistency"] is True
+          assert evidence["honest_execution_correctness_reproduced"] is False
+          assert evidence["paper_correctness_claim_reproduced"] is False
+          assert evidence["lemma3_universal_correctness"] is False
+          assert evidence["conditional_accepted_path_smoke"] is True
           assert evidence["failed_protocol_cases"] == 0
           assert evidence["reconciliation_status"] is True
           assert evidence["m1_consistency"] is True
@@ -313,6 +338,19 @@ jobs:
             artifacts/processed/LCLA_AKA/ci_cost_tables.json
             artifacts/processed/LCLA_AKA/ci_cost_tables.csv
             artifacts/processed/LCLA_AKA/ci_cost_tables.md
+            artifacts/processed/LCLA_AKA/unconditioned_correctness_matrix.csv
+            artifacts/processed/LCLA_AKA/unconditioned_correctness_summary.json
+            artifacts/processed/LCLA_AKA/lemma3_counterexamples.csv
+            artifacts/processed/LCLA_AKA/correctness_patch_benchmark_summary.csv
+            artifacts/processed/LCLA_AKA/correctness_patch_benchmark_summary.json
+            artifacts/processed/LCLA_AKA/ci_unconditioned_correctness_matrix.csv
+            artifacts/processed/LCLA_AKA/ci_unconditioned_correctness_summary.json
+            artifacts/processed/LCLA_AKA/ci_lemma3_counterexamples.csv
+            artifacts/processed/LCLA_AKA/ci_lemma3_audit.md
+            artifacts/processed/LCLA_AKA/ci_correctness_patch_raw.csv
+            artifacts/processed/LCLA_AKA/ci_correctness_patch_summary.csv
+            artifacts/processed/LCLA_AKA/ci_correctness_patch_summary.json
+            reports/lcla_lemma3_audit.md
             artifacts/processed/LCLA_AKA/ci_benchmark_raw.csv
             artifacts/processed/LCLA_AKA/ci_table_iv_reproduced.csv
             artifacts/processed/LCLA_AKA/ci_table_iv_comparison.csv

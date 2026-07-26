@@ -7,14 +7,18 @@ from scripts.validate_lcla_full import public_packet_field_counts, validate_lcla
 _ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_full_validation_keeps_partial_backend_and_formal_boundaries() -> None:
+def test_full_validation_reports_observed_correctness_failure() -> None:
     payload = validate_lcla_full(repo_root=_ROOT, mode="smoke")
 
     assert payload["result"] == (
-        "pass_with_partial_backend_and_partial_performance_unverified_formal_security"
+        "partial_reproduction_observed_correctness_failure_constructed_backend_unverified_security"
     )
     assert payload["executable_validation_passed"] is True
-    assert payload["protocol_correctness"] is True
+    assert payload["protocol_correctness"] is False
+    assert payload["accepted_session_consistency"] is True
+    assert payload["honest_execution_correctness_reproduced"] is False
+    assert payload["paper_correctness_claim_reproduced"] is False
+    assert payload["lemma3_universal_correctness"] is False
     assert payload["failed_protocol_cases"] == 0
     assert payload["reconciliation_status"] is True
     assert payload["m1_consistency"] is True

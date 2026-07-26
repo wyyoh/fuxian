@@ -38,15 +38,10 @@ from lattice_aka_repro.lcla_types import (
     LCLAStaticKeyPair,
 )
 
-_PARTIAL_PASS = "pass_with_partial_backend_and_partial_performance_unverified_formal_security"
+_OBSERVED_FAILURE = (
+    "partial_reproduction_observed_correctness_failure_constructed_backend_unverified_security"
+)
 _REPO_ROOT = Path(__file__).resolve().parents[1]
-_PROFILE_SEEDS = {
-    "toy": (1, 1129, 1942, 10_060, 20_060),
-    "paper_correctness": (1, 2, 3, 50_001, 60_001),
-    "paper_performance": (1, 2, 3, 50_000, 60_000),
-    "audited_preserve_keylen": (1, 2, 3, 50_001, 60_001),
-    "audited_preserve_dimension": (1, 2, 3, 50_001, 60_001),
-}
 
 
 def main() -> int:
@@ -63,9 +58,18 @@ def main() -> int:
         type=Path,
         default=Path("reports/lcla_aka_full_validation.md"),
     )
+    parser.add_argument(
+        "--correctness-input",
+        type=Path,
+        default=Path("artifacts/processed/LCLA_AKA/unconditioned_correctness_summary.json"),
+    )
     args = parser.parse_args()
     repo_root = args.repo_root.resolve()
-    payload = validate_lcla_full(repo_root=repo_root, mode=args.mode)
+    payload = validate_lcla_full(
+        repo_root=repo_root,
+        mode=args.mode,
+        correctness_path=_resolve(repo_root, args.correctness_input),
+    )
     json_output = _resolve(repo_root, args.json_output)
     report_output = _resolve(repo_root, args.report_output)
     json_output.parent.mkdir(parents=True, exist_ok=True)
@@ -79,7 +83,12 @@ def main() -> int:
     return 0 if payload["executable_validation_passed"] is True else 1
 
 
-def validate_lcla_full(*, repo_root: Path, mode: str) -> dict[str, object]:
+def validate_lcla_full(
+    *,
+    repo_root: Path,
+    mode: str,
+    correctness_path: Path | None = None,
+) -> dict[str, object]:
     """执行轻量协议/攻击检查并聚合已提交证据。"""
 
     if mode not in {"smoke", "full"}:
@@ -95,8 +104,19 @@ def validate_lcla_full(*, repo_root: Path, mode: str) -> dict[str, object]:
     reproduction = _read_json(
         repo_root / "artifacts" / "processed" / "LCLA_AKA" / "reproduction_summary.json"
     )
-    protocol = _protocol_smoke()
-    intended = _intended_recipient_smoke()
+    correctness = _read_json(
+        correctness_path
+        if correctness_path is not None
+        else (
+            repo_root
+            / "artifacts"
+            / "processed"
+            / "LCLA_AKA"
+            / "unconditioned_correctness_summary.json"
+        )
+    )
+    protocol = _conditional_path_smoke()
+    intended = cast(list[dict[str, object]], correctness["intended_recipient_statistics"])
     tamper = _tamper_matrix()
     costs = _read_json(repo_root / "artifacts" / "processed" / "LCLA_AKA" / "cost_tables.json")
     table_iv = _read_json(
@@ -114,12 +134,15 @@ def validate_lcla_full(*, repo_root: Path, mode: str) -> dict[str, object]:
     figure6 = _read_json(
         repo_root / "artifacts" / "processed" / "LCLA_AKA" / "figure6_formulas.json"
     )
-    protocol_correctness = bool(protocol["protocol_correctness"])
-    failed_protocol_cases = int(cast(int, protocol["failed_protocol_cases"]))
+    aggregate = cast(dict[str, object], correctness["aggregate"])
+    accepted_consistency = bool(correctness["accepted_session_consistency"])
+    honest_correctness = bool(correctness["honest_execution_correctness_reproduced"])
+    paper_correctness = bool(correctness["paper_correctness_claim_reproduced"])
+    failed_protocol_cases = int(cast(int, aggregate["other_failure"]))
     executable_validation_passed = bool(
-        protocol_correctness
+        protocol["conditional_accepted_path_smoke"] is True
+        and accepted_consistency
         and failed_protocol_cases == 0
-        and intended["passed"] is True
         and all(tamper.values())
         and security["formal_security_verified"] is False
     )
@@ -128,14 +151,11 @@ def validate_lcla_full(*, repo_root: Path, mode: str) -> dict[str, object]:
         and dependency["real_trapdoor_backend_status"] == "available"
         and dependency["sample_pre_status"] == "available"
     )
-    result = (
-        "fail"
-        if not executable_validation_passed
-        else ("pass_with_unverified_formal_security" if backend_complete else _PARTIAL_PASS)
-    )
-    exact_counts = cast(dict[str, object], reproduction["protocol_attempts"])
+    result = "fail" if not executable_validation_passed else _OBSERVED_FAILURE
+    matrix = cast(list[dict[str, object]], correctness["matrix"])
+    counts = {f"{row['profile']}:{row['distribution_variant']}": row for row in matrix}
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "result": result,
         "git_commit": git_commit,
         "git_dirty": git_dirty,
@@ -150,22 +170,36 @@ def validate_lcla_full(*, repo_root: Path, mode: str) -> dict[str, object]:
         "trapdoor_backend_status": dependency["real_trapdoor_backend_status"],
         "sample_pre_status": dependency["sample_pre_status"],
         "programmed_h1_used": True,
-        "static_relation_correctness": protocol["static_relation_correctness"],
-        "reconciliation_status": True,
+        "distribution_variants": correctness["distribution_variants"],
+        "static_relation_correctness": correctness["static_relation_correctness"],
+        "static_relation_constructed": True,
+        "definition5_literal_implemented": correctness["definition5_literal_implemented"],
+        "lemma3_counterexample_found": correctness["lemma3_counterexample_found"],
+        "lemma3_universal_correctness": correctness["lemma3_universal_correctness"],
+        "paper_correctness_proof_supported": correctness["paper_correctness_proof_supported"],
+        "reconciliation_status": correctness["definition5_literal_implemented"],
         "reconciliation_failure_counts": {
-            profile: cast(dict[str, object], counts).get("reconciliation_failure", 0)
-            for profile, counts in exact_counts.items()
-            if isinstance(counts, dict)
+            key: row["final_reconciliation_failure_count"] for key, row in counts.items()
         },
-        "protocol_correctness": protocol_correctness,
+        "protocol_correctness": False,
+        "accepted_session_consistency": accepted_consistency,
+        "honest_execution_correctness_reproduced": honest_correctness,
+        "paper_correctness_claim_reproduced": paper_correctness,
+        "honest_execution_attempts": aggregate["honest_execution_attempts"],
+        "honest_execution_accepted": aggregate["honest_execution_accepted"],
+        "honest_execution_acceptance_rate": aggregate["honest_execution_acceptance_rate"],
+        "first_stage_false_reject_count": aggregate["first_stage_false_reject_count"],
+        "final_reconciliation_failure_count": aggregate["final_reconciliation_failure_count"],
         "failed_protocol_cases": failed_protocol_cases,
-        "profile_session_counts": protocol["profile_session_counts"],
-        "documented_full_profile_attempts": exact_counts,
+        "profile_session_counts": counts,
+        "documented_legacy_profile_attempts": reproduction["protocol_attempts"],
         "intended_receiver_filtering": intended,
-        "m1_consistency": protocol["m1_consistency"],
-        "m2_consistency": protocol["m2_consistency"],
-        "session_key_consistency": protocol["session_key_consistency"],
-        "identity_recovery": protocol["identity_recovery"],
+        "conditional_accepted_path_smoke": protocol["conditional_accepted_path_smoke"],
+        "conditional_path_seed_selection_used": True,
+        "m1_consistency": accepted_consistency,
+        "m2_consistency": accepted_consistency,
+        "session_key_consistency": accepted_consistency,
+        "identity_recovery": accepted_consistency,
         "plaintext_identity_round1": False,
         "plaintext_identity_round2": False,
         "identity_masked_round3": True,
@@ -177,8 +211,10 @@ def validate_lcla_full(*, repo_root: Path, mode: str) -> dict[str, object]:
         "figure5_status": figure5["result"],
         "figure6_status": figure6["result"],
         "strict_original_timing_reproduced": False,
+        "real_trapdoor_reproduced": False,
         "real_trapdoor_static_keygen_reproduced": False,
         "constructed_protocol_reproduced": True,
+        "executable_state_machine_implemented": True,
         "executable_validation_passed": executable_validation_passed,
         "benchmark_status": "partial",
         "backend_status": ("complete" if backend_complete else "partial_constructed_relation_only"),
@@ -193,136 +229,57 @@ def validate_lcla_full(*, repo_root: Path, mode: str) -> dict[str, object]:
     }
 
 
-def _protocol_smoke() -> dict[str, object]:
-    counts: dict[str, dict[str, int]] = {}
-    static_ok = True
-    m1_ok = m2_ok = key_ok = identity_ok = True
-    failed = 0
-    for profile_name in _PROFILE_SEEDS:
-        context, alice, bob, trace = _accepted_fixture(profile_name)
-        static_ok = static_ok and verify_static_key(context.parameters, alice)
-        static_ok = static_ok and verify_static_key(context.parameters, bob)
-        m1_ok = m1_ok and trace.m1_consistency
-        m2_ok = m2_ok and trace.m2_consistency
-        key_ok = key_ok and trace.session_key_consistency
-        identity_ok = identity_ok and (
-            trace.alice_result.local_identity == trace.bob_result.peer_identity
-        )
-        if context.profile.family == "audited":
-            key_ok = key_ok and trace.alice_result.session_key_bytes is not None
-            key_ok = key_ok and (
-                trace.alice_result.session_key_bytes == trace.bob_result.session_key_bytes
-            )
-        counts[profile_name] = {"attempted": 1, "accepted": 1, "unexpected_failure": 0}
-    protocol_correctness = static_ok and m1_ok and m2_ok and key_ok and identity_ok
-    if not protocol_correctness:
-        failed += 1
+def _conditional_path_smoke() -> dict[str, object]:
+    context, alice, bob, trace = _find_conditional_fixture("paper_performance")
+    static_ok = verify_static_key(context.parameters, alice) and verify_static_key(
+        context.parameters, bob
+    )
+    consistent = bool(
+        trace.m1_consistency
+        and trace.m2_consistency
+        and trace.session_key_consistency
+        and trace.alice_result.local_identity == trace.bob_result.peer_identity
+    )
     return {
         "static_relation_correctness": static_ok,
-        "protocol_correctness": protocol_correctness,
-        "failed_protocol_cases": failed,
-        "profile_session_counts": counts,
-        "m1_consistency": m1_ok,
-        "m2_consistency": m2_ok,
-        "session_key_consistency": key_ok,
-        "identity_recovery": identity_ok,
+        "conditional_accepted_path_smoke": static_ok and consistent,
+        "seed_selection_used": True,
     }
 
 
-def _accepted_fixture(
+def _find_conditional_fixture(
     profile_name: str,
 ) -> tuple[LCLAProtocolContext, LCLAStaticKeyPair, LCLAStaticKeyPair, LCLAHandshakeTrace]:
-    setup_seed, alice_seed, bob_seed, initiator_seed, responder_seed = _PROFILE_SEEDS[profile_name]
     profile = load_lcla_profile(_REPO_ROOT, profile_name)
     parameters = setup_lcla(
         profile=profile,
         backend="fast",
         keygen_backend="constructed_relation",
-        seed=setup_seed,
+        seed=41_000_000,
+        distribution_variant="proof_consistent_small_secret",
     )
-    alice = generate_static_key_pair(parameters, "Alice", seed=alice_seed)
-    bob = generate_static_key_pair(parameters, "Bob", seed=bob_seed)
+    alice = generate_static_key_pair(parameters, "Alice", seed=41_000_001)
+    bob = generate_static_key_pair(parameters, "Bob", seed=41_000_002)
     context = make_lcla_context(parameters)
-    trace = run_lcla_handshake(
-        context,
-        alice,
-        bob,
-        "Alice",
-        "Bob",
-        initiator_seed=initiator_seed,
-        responder_seed=responder_seed,
-    )
-    return context, alice, bob, trace
-
-
-def _intended_recipient_smoke() -> dict[str, object]:
-    profile = load_lcla_profile(_REPO_ROOT, "paper_performance")
-    parameters = setup_lcla(
-        profile=profile,
-        backend="fast",
-        keygen_backend="constructed_relation",
-        seed=81,
-    )
-    context = make_lcla_context(parameters)
-    alice = generate_static_key_pair(parameters, "Alice", seed=82)
-    bobs = [
-        generate_static_key_pair(parameters, f"Bob-{index}", seed=100 + index)
-        for index in range(20)
-    ]
-    target_index = 7
-    trace: LCLAHandshakeTrace | None = None
-    selected_seed = 90_000
-    while selected_seed < 91_000:
+    for offset in range(5_000):
         try:
             trace = run_lcla_handshake(
                 context,
                 alice,
-                bobs[target_index],
+                bob,
                 "Alice",
-                f"Bob-{target_index}",
-                initiator_seed=selected_seed,
-                responder_seed=selected_seed + 10_000,
+                "Bob",
+                initiator_seed=41_010_000 + offset,
+                responder_seed=41_100_000 + offset,
             )
         except LCLAError:
-            selected_seed += 1
             continue
-        break
-    if trace is None:
-        return {
-            "passed": False,
-            "candidate_count": 20,
-            "target_accepted": False,
-            "non_target_unexpected_accepts": -1,
-        }
-    unexpected = 0
-    for index, candidate in enumerate(bobs):
-        if index == target_index:
-            continue
-        try:
-            bob_respond(
-                context,
-                candidate,
-                f"Bob-{index}",
-                trace.request,
-                seed=selected_seed + 20_000 + index,
-            )
-        except LCLAError as exc:
-            if exc.code != "NOT_INTENDED_RECEIVER":
-                unexpected += 1
-        else:
-            unexpected += 1
-    return {
-        "passed": unexpected == 0,
-        "candidate_count": 20,
-        "target_accepted": True,
-        "non_target_rejected": 19 - unexpected,
-        "non_target_unexpected_accepts": unexpected,
-        "evidence_boundary": "executable_filtering_not_anonymity_proof",
-    }
+        return context, alice, bob, trace
+    raise LCLAError("CONDITIONAL_SMOKE_UNAVAILABLE", "未找到仅用于攻击夹具的接受路径")
 
 
 def _tamper_matrix() -> dict[str, bool]:
-    context, alice, bob, trace = _accepted_fixture("paper_performance")
+    context, alice, bob, trace = _find_conditional_fixture("paper_performance")
     q = context.profile.q
     results: dict[str, bool] = {}
     request_variants = {
@@ -436,17 +393,19 @@ def render_report(payload: dict[str, object]) -> str:
             f"- executable_validation_passed: `{payload['executable_validation_passed']}`",
             f"- benchmark_status: `{payload['benchmark_status']}`",
             f"- backend_status: `{payload['backend_status']}`",
-            f"- protocol_correctness: `{payload['protocol_correctness']}`",
-            f"- reconciliation_status: `{payload['reconciliation_status']}`",
-            f"- m1_consistency: `{payload['m1_consistency']}`",
-            f"- m2_consistency: `{payload['m2_consistency']}`",
-            f"- session_key_consistency: `{payload['session_key_consistency']}`",
-            f"- identity_recovery: `{payload['identity_recovery']}`",
+            f"- accepted_session_consistency: `{payload['accepted_session_consistency']}`",
+            "- honest_execution_correctness_reproduced: "
+            f"`{payload['honest_execution_correctness_reproduced']}`",
+            "- paper_correctness_claim_reproduced: "
+            f"`{payload['paper_correctness_claim_reproduced']}`",
+            f"- lemma3_universal_correctness: `{payload['lemma3_universal_correctness']}`",
+            f"- honest_execution_attempts: `{payload['honest_execution_attempts']}`",
+            f"- honest_execution_accepted: `{payload['honest_execution_accepted']}`",
             f"- formal_security_verified: `{payload['formal_security_verified']}`",
             "",
-            "通过表示所有被接受的 smoke 会话及攻击检查一致；literal reconciliation",
-            "拒绝数在 `documented_full_profile_attempts` 中单独保留。它不表示真实",
-            "TrapGen/SamplePre、Frodo 原生计时、匿名性、mBR、LWE/ISIS 或量子安全已验证。",
+            "`executable_validation_passed=true` 只表示状态机、constructed relation、条件接受",
+            "路径与篡改夹具可执行。它不表示诚实执行达到论文的高概率正确性主张。",
+            "无条件连续 seed 试验、目标误拒绝和 Lemma 3 素数 q 反例均独立保留。",
             "",
         ]
     )
@@ -474,7 +433,7 @@ def _git_state(repo_root: Path) -> tuple[str, bool]:
     ).strip()
     dirty = bool(
         subprocess.check_output(
-            ["git", "status", "--porcelain=v1"],
+            ["git", "status", "--porcelain"],
             cwd=repo_root,
             text=True,
         ).strip()

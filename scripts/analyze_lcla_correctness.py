@@ -37,6 +37,26 @@ def main() -> int:
     parser.add_argument("--mode", choices=("smoke", "exact"), default="exact")
     parser.add_argument("--attempts", type=int)
     parser.add_argument("--intended-attempts", type=int)
+    parser.add_argument(
+        "--matrix-output",
+        type=Path,
+        default=Path("artifacts/processed/LCLA_AKA/unconditioned_correctness_matrix.csv"),
+    )
+    parser.add_argument(
+        "--summary-output",
+        type=Path,
+        default=Path("artifacts/processed/LCLA_AKA/unconditioned_correctness_summary.json"),
+    )
+    parser.add_argument(
+        "--lemma-output",
+        type=Path,
+        default=Path("artifacts/processed/LCLA_AKA/lemma3_counterexamples.csv"),
+    )
+    parser.add_argument(
+        "--lemma-report-output",
+        type=Path,
+        default=Path("reports/lcla_lemma3_audit.md"),
+    )
     args = parser.parse_args()
     repo_root = args.repo_root.resolve()
     attempts = (
@@ -120,15 +140,19 @@ def main() -> int:
         "lemma3_universal_correctness": not prime_counterexample,
         "paper_correctness_proof_supported": not prime_counterexample,
     }
-    processed = repo_root / "artifacts" / "processed" / "LCLA_AKA"
-    processed.mkdir(parents=True, exist_ok=True)
-    _write_csv(processed / "unconditioned_correctness_matrix.csv", matrix)
-    (processed / "unconditioned_correctness_summary.json").write_text(
+    matrix_output = _resolve(repo_root, args.matrix_output)
+    summary_output = _resolve(repo_root, args.summary_output)
+    lemma_output = _resolve(repo_root, args.lemma_output)
+    lemma_report_output = _resolve(repo_root, args.lemma_report_output)
+    for output in (matrix_output, summary_output, lemma_output, lemma_report_output):
+        output.parent.mkdir(parents=True, exist_ok=True)
+    _write_csv(matrix_output, matrix)
+    summary_output.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
-    _write_lemma_csv(processed / "lemma3_counterexamples.csv", lemma_rows)
-    (repo_root / "reports" / "lcla_lemma3_audit.md").write_text(
+    _write_lemma_csv(lemma_output, lemma_rows)
+    lemma_report_output.write_text(
         render_lemma_report(lemma_rows, prime_counterexample),
         encoding="utf-8",
     )
@@ -212,6 +236,10 @@ def render_lemma_report(rows: list[dict[str, object]], prime_counterexample: boo
         ]
     )
     return "\n".join(lines)
+
+
+def _resolve(repo_root: Path, path: Path) -> Path:
+    return path if path.is_absolute() else repo_root / path
 
 
 if __name__ == "__main__":
