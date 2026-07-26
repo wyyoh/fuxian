@@ -1,0 +1,11 @@
+accepted_session_consistency,distribution_variant,final_reconciliation_failure_count,first_stage_false_reject_count,honest_execution_acceptance_rate,honest_execution_accepted,honest_execution_attempts,key_mismatch,m1_mismatch,m2_mismatch,not_intended_receiver,other_failure,paper_correctness_claim_reproduced,profile,reconciliation_failure,seed_end,seed_start,static_relation_correctness,wilson_95_high,wilson_95_low
+False,paper_literal_distribution,0,1000,0.0,0,1000,0,1000,0,1000,0,False,toy,0,10010999,10010000,True,0.0038267584855551234,2.168404344971009e-19
+False,proof_consistent_small_secret,4,996,0.0,0,1000,4,996,4,996,0,False,toy,4,10410999,10410000,True,0.0038267584855551234,2.168404344971009e-19
+False,paper_literal_distribution,0,1000,0.0,0,1000,0,1000,0,1000,0,False,paper_correctness,0,11010999,11010000,True,0.0038267584855551234,2.168404344971009e-19
+True,proof_consistent_small_secret,196,328,0.476,476,1000,196,328,196,328,0,False,paper_correctness,196,11410999,11410000,True,0.5069867259789885,0.4451969584283181
+False,paper_literal_distribution,0,1000,0.0,0,1000,0,1000,0,1000,0,False,paper_performance,0,12010999,12010000,True,0.0038267584855551234,2.168404344971009e-19
+True,proof_consistent_small_secret,105,116,0.779,779,1000,105,116,105,116,0,False,paper_performance,105,12410999,12410000,True,0.803621842435146,0.7522428263299143
+False,paper_literal_distribution,0,1000,0.0,0,1000,0,1000,0,1000,0,False,audited_preserve_keylen,0,13010999,13010000,True,0.0038267584855551234,2.168404344971009e-19
+True,proof_consistent_small_secret,229,294,0.477,477,1000,229,294,229,294,0,False,audited_preserve_keylen,229,13410999,13410000,True,0.5079857987454065,0.44619023214492903
+False,paper_literal_distribution,0,1000,0.0,0,1000,0,1000,0,1000,0,False,audited_preserve_dimension,0,14010999,14010000,True,0.0038267584855551234,2.168404344971009e-19
+True,proof_consistent_small_secret,108,126,0.766,766,1000,108,126,108,126,0,False,audited_preserve_dimension,108,14410999,14410000,True,0.7911919974381493,0.7387721670475355
