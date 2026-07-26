@@ -1,0 +1,16 @@
+paper_operation,mathematical_example,paper_time_ms,Num_A,Num_B,source_printed_page,transcription_verified
+T_mul0,Z_q^(m×n) × Z_q^(n×m),1.313,1,1,9222,true
+T_mul1,Z_q^(m×m) × Z_q^m,0.145,1,1,9222,true
+T_mul2,Z_q^(m×n) × Z_q^n,0.004,1,1,9222,true
+T_add0,Z_q^(m×m) addition,0.267,2,2,9222,true
+T_add1,Z_q^m addition,0.001,4,0,9222,true
+T_Samp0,Z_q^(m×n) generation,0.013,1,1,9222,true
+T_Samp1,chi_beta^(m×m) sampling,0.291,1,1,9222,true
+T_Samp2,chi_beta^m sampling,0.004,1,1,9222,true
+T_xor,m-bit XOR,0.001,1,1,9222,true
+T_H2,H2 invocation,0.005,4,4,9222,true
+T_H1,H1 invocation,0.002,1,1,9222,true
+T_mod0,Z_q^(m×m) mod q,0.173,1,1,9222,true
+T_mod1,Z_q^m mod q,0.002,2,2,9222,true
+T_Sign,S invocation,0.014,2,0,9222,true
+T_Mod,Mod2 invocation,0.837,2,2,9222,true

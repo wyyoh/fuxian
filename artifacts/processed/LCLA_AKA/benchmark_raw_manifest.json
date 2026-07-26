@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "dataset": "artifacts/raw/LCLA_AKA/benchmark_raw.csv",
+  "tracked_in_git": false,
+  "local_dataset_present": true,
+  "immutable_exact_reference_dataset": true,
+  "sha256": "ce1a13356801436787e02b323972542ee1e96c7b903473118747f6d2bcd4e841",
+  "header_rows": 1,
+  "data_rows": 49209,
+  "measurement_kind_counts": {
+    "measured_success": 49200,
+    "measured_failure": 0,
+    "dependency_unavailable_placeholder": 9
+  },
+  "actual_execution_attempted_counts": {
+    "true": 49200,
+    "false": 9
+  },
+  "profile_measured_success_counts": {
+    "paper_performance": 16400,
+    "audited_preserve_keylen": 16400,
+    "audited_preserve_dimension": 16400
+  },
+  "table_iv": {
+    "warmup": 20,
+    "repetitions": 1000
+  },
+  "protocol_phase_repetitions_per_profile": 100,
+  "benchmark_class": "auditable_python_reference_implementation",
+  "strict_original_operation_timing_reproduced": false,
+  "real_trapdoor_benchmark_completed": false,
+  "frodo_native_lcla_benchmark_completed": false
+}

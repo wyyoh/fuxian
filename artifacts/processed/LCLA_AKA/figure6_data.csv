@@ -1,0 +1,301 @@
+panel,scheme,entities,initiators,value,unit,formula_id,formula_variant,status
+rounds,Feng et al. [23],10,20,400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],10,20,200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],10,20,4000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],10,20,400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],10,20,200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],10,20,4000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],10,20,400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],10,20,200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],10,20,4000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,10,20,80,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,10,20,80,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,10,20,2000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],10,40,800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],10,40,400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],10,40,8000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],10,40,800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],10,40,400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],10,40,8000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],10,40,800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],10,40,400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],10,40,8000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,10,40,160,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,10,40,160,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,10,40,4000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],10,60,1200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],10,60,600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],10,60,12000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],10,60,1200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],10,60,600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],10,60,12000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],10,60,1200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],10,60,600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],10,60,12000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,10,60,240,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,10,60,240,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,10,60,6000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],10,80,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],10,80,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],10,80,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],10,80,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],10,80,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],10,80,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],10,80,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],10,80,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],10,80,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,10,80,320,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,10,80,320,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,10,80,8000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],10,100,2000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],10,100,1000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],10,100,20000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],10,100,2000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],10,100,1000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],10,100,20000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],10,100,2000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],10,100,1000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],10,100,20000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,10,100,400,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,10,100,400,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,10,100,10000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],20,20,800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],20,20,400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],20,20,8000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],20,20,800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],20,20,400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],20,20,8000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],20,20,800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],20,20,400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],20,20,8000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,20,20,80,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,20,20,80,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,20,20,2000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],20,40,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],20,40,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],20,40,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],20,40,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],20,40,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],20,40,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],20,40,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],20,40,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],20,40,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,20,40,160,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,20,40,160,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,20,40,4000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],20,60,2400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],20,60,1200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],20,60,24000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],20,60,2400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],20,60,1200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],20,60,24000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],20,60,2400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],20,60,1200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],20,60,24000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,20,60,240,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,20,60,240,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,20,60,6000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],20,80,3200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],20,80,1600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],20,80,32000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],20,80,3200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],20,80,1600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],20,80,32000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],20,80,3200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],20,80,1600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],20,80,32000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,20,80,320,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,20,80,320,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,20,80,8000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],20,100,4000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],20,100,2000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],20,100,40000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],20,100,4000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],20,100,2000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],20,100,40000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],20,100,4000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],20,100,2000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],20,100,40000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,20,100,400,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,20,100,400,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,20,100,10000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],30,20,1200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],30,20,600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],30,20,12000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],30,20,1200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],30,20,600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],30,20,12000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],30,20,1200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],30,20,600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],30,20,12000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,30,20,80,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,30,20,80,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,30,20,2000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],30,40,2400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],30,40,1200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],30,40,24000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],30,40,2400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],30,40,1200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],30,40,24000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],30,40,2400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],30,40,1200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],30,40,24000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,30,40,160,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,30,40,160,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,30,40,4000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],30,60,3600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],30,60,1800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],30,60,36000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],30,60,3600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],30,60,1800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],30,60,36000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],30,60,3600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],30,60,1800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],30,60,36000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,30,60,240,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,30,60,240,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,30,60,6000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],30,80,4800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],30,80,2400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],30,80,48000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],30,80,4800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],30,80,2400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],30,80,48000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],30,80,4800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],30,80,2400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],30,80,48000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,30,80,320,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,30,80,320,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,30,80,8000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],30,100,6000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],30,100,3000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],30,100,60000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],30,100,6000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],30,100,3000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],30,100,60000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],30,100,6000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],30,100,3000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],30,100,60000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,30,100,400,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,30,100,400,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,30,100,10000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],40,20,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],40,20,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],40,20,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],40,20,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],40,20,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],40,20,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],40,20,1600,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],40,20,800,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],40,20,16000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,40,20,80,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,40,20,80,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,40,20,2000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],40,40,3200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],40,40,1600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],40,40,32000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],40,40,3200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],40,40,1600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],40,40,32000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],40,40,3200,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],40,40,1600,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],40,40,32000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,40,40,160,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,40,40,160,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,40,40,4000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],40,60,4800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],40,60,2400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],40,60,48000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],40,60,4800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],40,60,2400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],40,60,48000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],40,60,4800,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],40,60,2400,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],40,60,48000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,40,60,240,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,40,60,240,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,40,60,6000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],40,80,6400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],40,80,3200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],40,80,64000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],40,80,6400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],40,80,3200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],40,80,64000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],40,80,6400,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],40,80,3200,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],40,80,64000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,40,80,320,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,40,80,320,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,40,80,8000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],40,100,8000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],40,100,4000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],40,100,80000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],40,100,8000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],40,100,4000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],40,100,80000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],40,100,8000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],40,100,4000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],40,100,80000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,40,100,400,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,40,100,400,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,40,100,10000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],50,20,2000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],50,20,1000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],50,20,20000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],50,20,2000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],50,20,1000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],50,20,20000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],50,20,2000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],50,20,1000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],50,20,20000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,50,20,80,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,50,20,80,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,50,20,2000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],50,40,4000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],50,40,2000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],50,40,40000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],50,40,4000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],50,40,2000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],50,40,40000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],50,40,4000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],50,40,2000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],50,40,40000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,50,40,160,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,50,40,160,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,50,40,4000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],50,60,6000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],50,60,3000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],50,60,60000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],50,60,6000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],50,60,3000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],50,60,60000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],50,60,6000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],50,60,3000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],50,60,60000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,50,60,240,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,50,60,240,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,50,60,6000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],50,80,8000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],50,80,4000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],50,80,80000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],50,80,8000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],50,80,4000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],50,80,80000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],50,80,8000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],50,80,4000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],50,80,80000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,50,80,320,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,50,80,320,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,50,80,8000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting
+rounds,Feng et al. [23],50,100,10000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Feng et al. [23],50,100,5000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Feng et al. [23],50,100,100000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Dabra et al. [34],50,100,10000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Dabra et al. [34],50,100,5000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Dabra et al. [34],50,100,100000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,Ding et al. [35],50,100,10000,rounds,F6-other-rounds,paper_narrative_example_fitted,example_fitted_partial
+fields,Ding et al. [35],50,100,5000,fields,F6-other-fields,paper_narrative_example_fitted,example_fitted_partial
+bits,Ding et al. [35],50,100,100000000,bits,F6-other-bits,paper_narrative_example_fitted,example_fitted_partial
+rounds,LCLA-AKA,50,100,400,rounds,F6-LCLA-rounds,paper_narrative_example_fitted,example_fitted_conflicting
+fields,LCLA-AKA,50,100,400,fields,F6-LCLA-fields,paper_narrative_example_fitted,example_fitted_conflicting
+bits,LCLA-AKA,50,100,10000000,bits,F6-LCLA-bits,paper_narrative_example_fitted,example_fitted_conflicting

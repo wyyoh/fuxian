@@ -1,0 +1,184 @@
+{
+  "schema_version": 2,
+  "result": "partial_reproduction_observed_correctness_failure_constructed_backend_unverified_security",
+  "executable_validation_passed": true,
+  "executable_state_machine_implemented": true,
+  "static_relation_constructed": true,
+  "static_relation_correctness": true,
+  "accepted_session_consistency": true,
+  "honest_execution_correctness_reproduced": false,
+  "paper_correctness_claim_reproduced": false,
+  "lemma3_universal_correctness": false,
+  "real_trapdoor_reproduced": false,
+  "strict_original_timing_reproduced": false,
+  "formal_security_verified": false,
+  "benchmark_status": "partial",
+  "backend_status": "constructed_relation_available_real_trapdoor_unavailable",
+  "distribution_variants": {
+    "paper_literal_distribution": {
+      "s1": "uniform_Zq",
+      "f": "paper_definition3_exp_minus_pi_k2_over_2_beta2",
+      "s2": "preselected_paper_definition3_gaussian",
+      "programmed_h1": true,
+      "trapdoor_used": false,
+      "sample_pre_used": false
+    },
+    "proof_consistent_small_secret": {
+      "s1": "standard_lattice_gaussian",
+      "f": "standard_lattice_gaussian",
+      "s2": "standard_lattice_gaussian",
+      "weight": "exp_minus_pi_k2_over_beta2",
+      "programmed_h1": true,
+      "trapdoor_used": false,
+      "sample_pre_used": false
+    },
+    "legacy_reference": {
+      "purpose": "interpretation_of_pre_patch_data_only",
+      "paper_literal": false
+    }
+  },
+  "paper": {
+    "title": "Quantum-Safe Lattice-Based Certificateless Anonymous Authenticated Key Agreement for Internet of Things",
+    "doi": "10.1109/JIOT.2023.3323275",
+    "sha256": "5412a2962dbbbc3314cbe513d70946c0e238ba60c5debd9dfae6b7f5411bebe3"
+  },
+  "dependency": {
+    "paper_frodo_backend_identified": true,
+    "paper_frodo_backend_built_serially": true,
+    "frodo_native_lcla_backend_available": false,
+    "trapgen_available": false,
+    "samplepre_available": false,
+    "real_trapdoor_static_keygen_reproduced": false,
+    "programmed_h1_used": true
+  },
+  "unconditioned_correctness": {
+    "attempts": 10000,
+    "accepted": 2498,
+    "acceptance_rate": 0.2498,
+    "first_stage_false_reject_count": 6860,
+    "final_reconciliation_failure_count": 642,
+    "other_failure_count": 0,
+    "threshold": 0.999,
+    "seed_selection_used": false,
+    "profile_distribution_combinations": 10,
+    "attempts_per_combination": 1000,
+    "wilson_95_reported_per_combination": true
+  },
+  "protocol_attempts": {
+    "evidence_class": "legacy_reference",
+    "distribution_variant": "legacy_reference",
+    "conditional_path_warning": "pre-patch dataset does not represent paper literal distribution and must not decide correctness",
+    "toy": {
+      "attempted": 1000,
+      "accepted": 7,
+      "not_intended_receiver": 922,
+      "reconciliation_failure": 71
+    },
+    "paper_correctness": {
+      "attempted": 100,
+      "accepted": 40,
+      "not_intended_receiver": 31,
+      "reconciliation_failure": 29
+    },
+    "paper_performance": {
+      "attempted": 100,
+      "accepted": 77,
+      "not_intended_receiver": 12,
+      "reconciliation_failure": 11
+    },
+    "audited_preserve_keylen": {
+      "attempted": 100,
+      "accepted": 40,
+      "not_intended_receiver": 31,
+      "reconciliation_failure": 29
+    },
+    "audited_preserve_dimension": {
+      "attempted": 100,
+      "accepted": 79,
+      "not_intended_receiver": 16,
+      "reconciliation_failure": 5
+    },
+    "total": {
+      "attempted": 1400,
+      "accepted": 243,
+      "not_intended_receiver": 1012,
+      "reconciliation_failure": 145
+    }
+  },
+  "intended_recipient": {
+    "candidate_count": 20,
+    "requests_per_variant": 1000,
+    "seed_selection_used": false,
+    "paper_literal_distribution": {
+      "target_true_accept": 0,
+      "target_false_reject": 1000,
+      "non_target_false_accept": 0,
+      "non_target_true_reject": 19000
+    },
+    "proof_consistent_small_secret": {
+      "target_true_accept": 876,
+      "target_false_reject": 124,
+      "non_target_false_accept": 0,
+      "non_target_true_reject": 19000
+    }
+  },
+  "lemma3_audit": {
+    "definition5_literal_implemented": true,
+    "counterexample_found": true,
+    "prime_q_counterexample_found": true,
+    "prime_q_with_counterexample": [
+      31,
+      127
+    ],
+    "paper_correctness_proof_supported": false
+  },
+  "accepted_session_properties": {
+    "m1_consistency": true,
+    "m2_consistency": true,
+    "session_key_consistency": true,
+    "identity_recovery": true,
+    "audited_32_byte_key_consistency": true
+  },
+  "structural_anonymity": {
+    "plaintext_identity_round1": false,
+    "plaintext_identity_round2": false,
+    "identity_masked_round3": true,
+    "passive_transcript_anonymity_formally_verified": false
+  },
+  "performance": {
+    "benchmark_class": "auditable_python_reference_implementation",
+    "legacy_exact_raw_rows": 49209,
+    "legacy_distribution_variant": "legacy_reference",
+    "legacy_protocol_sampling_condition": "conditional_success_path_latency",
+    "legacy_exact_raw_sha256": "ce1a13356801436787e02b323972542ee1e96c7b903473118747f6d2bcd4e841",
+    "correctness_patch_exact_raw_rows": 13021,
+    "correctness_patch_exact_raw_sha256": "80caacbea5a350d538fb2519da5bfcd0836b7ef6ee161583372b6b8950f884e2",
+    "correctness_patch_actual_measured_success_rows": 6272,
+    "correctness_patch_actual_measured_failure_rows": 6743,
+    "sampling_operations_remeasured": [
+      "T_Samp0",
+      "T_Samp1",
+      "T_Samp2"
+    ],
+    "sampling_exact_repetitions_per_operation_and_variant": 1000,
+    "unconditioned_attempt_latency_present": true,
+    "retry_until_success_latency_present": true,
+    "retry_time_included": true,
+    "conditional_success_path_latency_is_not_table_v_equivalent": true,
+    "table_iv_status": "numpy_reference_exact_1000_complete",
+    "table_v_status": "legacy_conditional_path_measurement_not_strictly_equivalent",
+    "figure4_status": "reconstructed",
+    "figure5_status": "reconstructed",
+    "figure6_status": "partial_example_fitted",
+    "strict_original_operation_timing_reproduced": false
+  },
+  "formal_boundaries": {
+    "anonymity_formally_verified": false,
+    "mbr_formally_verified": false,
+    "lwe_reduction_verified": false,
+    "isis_hardness_verified": false,
+    "quantum_security_verified": false,
+    "malicious_kgc_security_reproduced": false,
+    "paper_security_proof_reproduced": false
+  }
+}

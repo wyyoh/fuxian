@@ -1,0 +1,23 @@
+claim_id,status,backend_scope,executable_result,formal_result
+accepted_session_consistency,executable_checked,constructed_relation,"2498 accepted sessions across the exact unscreened matrix have equal m1/m2/session keys",conditional_on_acceptance_only
+honest_execution_correctness,empirically_not_reproduced,constructed_relation,"2498/10000 exact unscreened attempts accepted; aggregate rate 0.2498 is below 0.999",paper_correctness_claim_not_reproduced
+lemma3_correctness,counterexample_found,definition5_literal,"prime-q counterexamples found for q=31 and q=127 while the stated error bound holds",universal_correctness_false
+static_key_binding,algebraically_checked,constructed_relation,A(s1+s2)+2f=pk_full and A*s2=u2 checked,real_distribution_not_reproduced
+intended_recipient_non_target_filtering,executable_checked,constructed_relation,"0/19000 non-target false accepts in each active distribution variant",not_anonymity_proof
+intended_recipient_target_availability,empirically_not_reproduced,constructed_relation,"paper literal target accepts 0/1000; proof-consistent target accepts 876/1000",target_false_rejects_observed
+mutual_authentication,executable_checked,constructed_relation,h_A/h_B tamper rejection checked,not_formally_verified
+session_key_agreement,executable_checked,constructed_relation,all accepted sessions have equal m1/m2/keys,not_formally_verified
+identity_anonymity,structural_checked,all,plaintext ID absent in rounds 1/2 and masked in round 3,anonymity_not_formally_verified
+public_key_replacement_resistance,paper_proof_only,all,no executable Type-I game,not_formally_verified
+malicious_KGC_resistance,backend_not_reproduced,constructed_relation,programmed H1 and no real trapdoor,not_formally_verified
+known_key_security,paper_proof_only,all,no executable game,not_formally_verified
+no_key_control,paper_proof_only,all,no executable game,not_formally_verified
+KCI_resistance,paper_proof_only,all,no executable game,not_formally_verified
+UKS_resistance,paper_proof_only,all,no executable game,not_formally_verified
+perfect_forward_secrecy,paper_proof_only,all,no compromise experiment,not_formally_verified
+Type_I_adversary,not_formally_verified,all,proof text audited,reduction_not_mechanized
+Type_II_adversary,not_formally_verified,all,proof text audited,reduction_not_mechanized
+mBR_security,not_formally_verified,all,Game0-Game5 catalogued,not_formally_verified
+LWE_reduction,not_formally_verified,all,assumption catalogued,hardness_not_verified
+ISIS_security,backend_not_reproduced,constructed_relation,no real TrapGen/SamplePre,hardness_not_verified
+quantum_security,not_formally_verified,all,no quantum proof assistant or reduction,not_formally_verified

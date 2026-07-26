@@ -1,0 +1,12 @@
+scheme,profile,evidence_class,Num_A_ms,Num_B_ms,Sum_ms,Verify_ms,verify_scope,source_printed_page,status
+Feng et al. [23],paper_reference,paper_reported_reference,2.102,2.096,4.198,2.091,paper_reported,9222,reference_only
+Dabra et al. [34],paper_reference,paper_reported_reference,2.7,2.403,5.103,2.398,paper_reported,9222,reference_only
+Ding et al. [35],paper_reference,paper_reported_reference,2.873,2.495,5.368,2.49,paper_reported,9222,reference_only
+LCLA-AKA,paper_reference,paper_reported_reference,4.255,4.233,8.448,1.025,paper_reported,9222,reference_only
+LCLA-AKA,paper_performance,reconstructed_from_table_iv,4.21,4.178,8.388,0.989,reconstructed_C_A_times_s_Mod2_H2_with_mod,9222,rounding_and_formula_discrepancy_recorded
+LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,163.336596144,160.947832882,324.284429026,28.444950499999997,reference_operation_formula_not_native,,non_equivalent_reference_measurement
+LCLA-AKA,audited_preserve_dimension,actually_measured_protocol_phases,193.89032500000002,189.93774672,383.82807172,,not_isolated_from_reply_or_finish,,accepted_seed_schedule_validation_overhead_included
+LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,130.11938105,127.95839825399999,258.077779304,22.597201785,reference_operation_formula_not_native,,non_equivalent_reference_measurement
+LCLA-AKA,audited_preserve_keylen,actually_measured_protocol_phases,152.36033856,149.51417848,301.87451704,,not_isolated_from_reply_or_finish,,accepted_seed_schedule_validation_overhead_included
+LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,129.298146642,127.16908814800001,256.46723479,22.383537059000002,reference_operation_formula_not_native,,non_equivalent_reference_measurement
+LCLA-AKA,paper_performance,actually_measured_protocol_phases,151.55440486999998,148.97988362,300.53428849,,not_isolated_from_reply_or_finish,,accepted_seed_schedule_validation_overhead_included

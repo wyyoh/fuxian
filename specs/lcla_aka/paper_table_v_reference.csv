@@ -1,0 +1,5 @@
+scheme,Num_A_ms,Num_B_ms,Sum_ms,Verify_ms,source_printed_page,transcription_verified,evidence_class
+Feng et al. [23],2.102,2.096,4.198,2.091,9222,true,paper_reported_reference
+Dabra et al. [34],2.700,2.403,5.103,2.398,9222,true,paper_reported_reference
+Ding et al. [35],2.873,2.495,5.368,2.490,9222,true,paper_reported_reference
+LCLA-AKA,4.255,4.233,8.448,1.025,9222,true,paper_reported_reference

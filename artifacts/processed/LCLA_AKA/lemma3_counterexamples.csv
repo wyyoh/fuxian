@@ -1,0 +1,7 @@
+q,q_is_prime,error_bound,qualifying_error_count,violating_tuple_count,counterexample_found,first_base,first_error,first_close_mod_q,first_random_bit,first_delta,error_bound_satisfied,crossing_modular_boundary
+7,True,-0.125,0,0,False,,,,,,,
+11,True,0.375,1,0,False,,,,,,,
+15,False,0.875,1,0,False,,,,,,,
+31,True,2.875,5,48,True,0,-2,27,0,0,True,True
+63,False,6.875,13,336,True,0,-6,51,0,0,True,True
+127,True,14.875,29,1680,True,0,-14,99,0,0,True,True

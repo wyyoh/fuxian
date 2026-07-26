@@ -37,8 +37,13 @@ where = ["src"]
 ]
 "share/lattice_aka_repro/specs/lcla_aka" = [
   "specs/lcla_aka/claims_matrix.csv",
+  "specs/lcla_aka/dependency_lock.yaml",
   "specs/lcla_aka/parameter_profiles.yaml",
+  "specs/lcla_aka/paper_table_iv_reference.csv",
+  "specs/lcla_aka/paper_table_v_reference.csv",
+  "specs/lcla_aka/proof_obligations.yaml",
   "specs/lcla_aka/shape_table.csv",
+  "specs/lcla_aka/table_iv_operation_mapping.csv",
 ]
 
 [tool.pytest.ini_options]

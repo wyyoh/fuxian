@@ -1,0 +1,71 @@
+series,scheme,profile,evidence_class,entities,cost_ms,formula,formula_status
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,10,41.980000000000004,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,20,83.96000000000001,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,30,125.94000000000001,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,40,167.92000000000002,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,50,209.90000000000003,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,60,251.88000000000002,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,70,293.86,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,80,335.84000000000003,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,90,377.82000000000005,entities * per_entity_Sum_ms,reconstructed
+paper:Feng et al. [23],Feng et al. [23],paper_reference,paper_reported_reference,100,419.80000000000007,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,10,51.03,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,20,102.06,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,30,153.09,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,40,204.12,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,50,255.14999999999998,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,60,306.18,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,70,357.21,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,80,408.24,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,90,459.27,entities * per_entity_Sum_ms,reconstructed
+paper:Dabra et al. [34],Dabra et al. [34],paper_reference,paper_reported_reference,100,510.29999999999995,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,10,53.68000000000001,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,20,107.36000000000001,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,30,161.04000000000002,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,40,214.72000000000003,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,50,268.40000000000003,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,60,322.08000000000004,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,70,375.76000000000005,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,80,429.44000000000005,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,90,483.12,entities * per_entity_Sum_ms,reconstructed
+paper:Ding et al. [35],Ding et al. [35],paper_reference,paper_reported_reference,100,536.8000000000001,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,10,84.48,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,20,168.96,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,30,253.44,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,40,337.92,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,50,422.40000000000003,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,60,506.88,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,70,591.36,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,80,675.84,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,90,760.32,entities * per_entity_Sum_ms,reconstructed
+paper:LCLA-AKA,LCLA-AKA,paper_reference,paper_reported_reference,100,844.8000000000001,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,10,3242.84429026,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,20,6485.68858052,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,30,9728.53287078,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,40,12971.37716104,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,50,16214.2214513,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,60,19457.06574156,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,70,22699.91003182,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,80,25942.75432208,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,90,29185.59861234,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_dimension,LCLA-AKA,audited_preserve_dimension,numpy_reference_reconstructed_from_operations,100,32428.4429026,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,10,2580.77779304,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,20,5161.55558608,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,30,7742.333379119999,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,40,10323.11117216,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,50,12903.8889652,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,60,15484.666758239999,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,70,18065.444551279998,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,80,20646.22234432,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,90,23227.00013736,entities * per_entity_Sum_ms,reconstructed
+numpy:audited_preserve_keylen,LCLA-AKA,audited_preserve_keylen,numpy_reference_reconstructed_from_operations,100,25807.7779304,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,10,2564.6723479,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,20,5129.3446958,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,30,7694.017043700001,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,40,10258.6893916,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,50,12823.3617395,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,60,15388.034087400001,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,70,17952.706435300002,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,80,20517.3787832,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,90,23082.0511311,entities * per_entity_Sum_ms,reconstructed
+numpy:paper_performance,LCLA-AKA,paper_performance,numpy_reference_reconstructed_from_operations,100,25646.723479,entities * per_entity_Sum_ms,reconstructed

@@ -1,0 +1,301 @@
+panel,scheme,entities,value,unit,formula_id,evidence_class,status
+rounds,Feng et al. [23],2,4,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],2,10,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],2,8448,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],2,4,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],2,11,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],2,13064,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],2,4,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],2,11,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],2,16672,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,2,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,2,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,2,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],4,6,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],4,16,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],4,16640,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],4,6,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],4,17,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],4,25864,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],4,6,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],4,17,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],4,33088,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,4,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,4,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,4,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],6,8,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],6,22,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],6,24832,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],6,8,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],6,23,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],6,38664,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],6,8,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],6,23,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],6,49504,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,6,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,6,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,6,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],8,10,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],8,28,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],8,33024,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],8,10,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],8,29,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],8,51464,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],8,10,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],8,29,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],8,65920,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,8,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,8,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,8,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],10,12,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],10,34,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],10,41216,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],10,12,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],10,35,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],10,64264,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],10,12,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],10,35,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],10,82336,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,10,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,10,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,10,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],12,14,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],12,40,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],12,49408,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],12,14,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],12,41,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],12,77064,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],12,14,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],12,41,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],12,98752,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,12,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,12,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,12,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],14,16,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],14,46,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],14,57600,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],14,16,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],14,47,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],14,89864,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],14,16,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],14,47,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],14,115168,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,14,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,14,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,14,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],16,18,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],16,52,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],16,65792,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],16,18,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],16,53,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],16,102664,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],16,18,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],16,53,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],16,131584,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,16,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,16,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,16,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],18,20,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],18,58,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],18,73984,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],18,20,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],18,59,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],18,115464,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],18,20,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],18,59,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],18,148000,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,18,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,18,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,18,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],20,22,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],20,64,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],20,82176,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],20,22,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],20,65,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],20,128264,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],20,22,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],20,65,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],20,164416,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,20,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,20,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,20,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],22,24,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],22,70,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],22,90368,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],22,24,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],22,71,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],22,141064,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],22,24,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],22,71,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],22,180832,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,22,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,22,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,22,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],24,26,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],24,76,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],24,98560,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],24,26,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],24,77,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],24,153864,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],24,26,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],24,77,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],24,197248,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,24,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,24,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,24,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],26,28,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],26,82,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],26,106752,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],26,28,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],26,83,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],26,166664,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],26,28,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],26,83,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],26,213664,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,26,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,26,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,26,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],28,30,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],28,88,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],28,114944,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],28,30,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],28,89,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],28,179464,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],28,30,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],28,89,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],28,230080,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,28,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,28,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,28,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],30,32,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],30,94,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],30,123136,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],30,32,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],30,95,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],30,192264,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],30,32,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],30,95,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],30,246496,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,30,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,30,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,30,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],32,34,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],32,100,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],32,131328,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],32,34,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],32,101,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],32,205064,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],32,34,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],32,101,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],32,262912,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,32,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,32,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,32,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],34,36,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],34,106,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],34,139520,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],34,36,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],34,107,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],34,217864,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],34,36,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],34,107,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],34,279328,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,34,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,34,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,34,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],36,38,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],36,112,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],36,147712,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],36,38,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],36,113,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],36,230664,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],36,38,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],36,113,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],36,295744,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,36,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,36,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,36,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],38,40,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],38,118,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],38,155904,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],38,40,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],38,119,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],38,243464,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],38,40,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],38,119,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],38,312160,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,38,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,38,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,38,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],40,42,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],40,124,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],40,164096,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],40,42,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],40,125,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],40,256264,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],40,42,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],40,125,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],40,328576,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,40,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,40,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,40,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],42,44,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],42,130,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],42,172288,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],42,44,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],42,131,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],42,269064,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],42,44,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],42,131,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],42,344992,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,42,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,42,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,42,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],44,46,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],44,136,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],44,180480,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],44,46,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],44,137,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],44,281864,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],44,46,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],44,137,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],44,361408,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,44,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,44,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,44,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],46,48,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],46,142,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],46,188672,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],46,48,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],46,143,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],46,294664,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],46,48,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],46,143,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],46,377824,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,46,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,46,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,46,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],48,50,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],48,148,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],48,196864,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],48,50,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],48,149,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],48,307464,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],48,50,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],48,149,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],48,394240,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,48,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,48,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,48,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
+rounds,Feng et al. [23],50,52,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Feng et al. [23],50,154,fields,F5-Feng-fields,paper_reported_reference,paper_reported_reference
+bits,Feng et al. [23],50,205056,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Dabra et al. [34],50,52,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Dabra et al. [34],50,155,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Dabra et al. [34],50,320264,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,Ding et al. [35],50,52,rounds,F5-other-rounds,paper_reported_reference,reconstructed
+fields,Ding et al. [35],50,155,fields,F5-Dabra-Ding-fields,paper_reported_reference,paper_reported_reference
+bits,Ding et al. [35],50,410656,bits,F5-other-bits,paper_reported_reference,reconstructed_partial
+rounds,LCLA-AKA,50,3,rounds,F5-LCLA-rounds,lcla_derived,paper_reported_reference
+fields,LCLA-AKA,50,7,fields,F5-LCLA-fields,lcla_derived,paper_reported_reference_reinterpreted_fields
+bits,LCLA-AKA,50,3147008,bits,F5-LCLA-bits,lcla_derived,reconstructed
