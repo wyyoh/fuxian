@@ -287,6 +287,7 @@ jobs:
             --repo-root . \
             --mode smoke \
             --correctness-input artifacts/processed/LCLA_AKA/ci_unconditioned_correctness_summary.json \
+            --correctness-benchmark-input artifacts/processed/LCLA_AKA/ci_correctness_patch_summary.json \
             --json-output artifacts/processed/LCLA_AKA/ci_full_validation.json \
             --report-output artifacts/processed/LCLA_AKA/lcla_aka_full_validation.md
       - name: 校验 LCLA-AKA full evidence

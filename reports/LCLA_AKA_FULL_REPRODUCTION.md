@@ -1,23 +1,33 @@
-# LCLA-AKA Algorithm Reproduction and Partial Performance Replication
+# LCLA-AKA Algorithm Reconstruction, Conditional-Path Validation, and Correctness-Failure Analysis
 
 ## 1. 执行摘要
 
-本项目完成了 LCLA-AKA 的可审计 Python reference 实现、constructed 静态关系、
-三轮状态机、负向测试、成本模型、Table IV/V reference benchmark 管线和
-Figure 4–6 重绘。最终机器状态使用
-`pass_with_partial_backend_and_partial_performance_unverified_formal_security`，
-不使用可能暗示全部论文结论成立的简单 `pass`。
+本项目重构了 LCLA-AKA 三轮状态机、constructed static relation、哈希与身份掩码、
+Definition 5 reconciliation、成本模型、reference benchmark 和 Figure 4–6 的部分
+数据重绘。最终机器状态为：
 
-核心结论有三点：
+`partial_reproduction_observed_correctness_failure_constructed_backend_unverified_security`
 
-1. 所有被协议接受的会话都具有一致的 `m1/m2/session key/identity`；
-2. literal Definition 5/Lemma 3 在模回绕处存在反例，1400 次尝试中仅 243 次接受；
-3. 官方 FrodoKEM 可 serial build，但没有论文所需 TrapGen/SamplePre 或 LCLA API，
-   因此真实静态密钥生成和严格原始性能没有复现。
+这不是“协议完整正确复现”。精确无条件试验的核心结果是：
 
-## 2. 论文与 PDF manifest
+- 5 个 profile × 2 个 active distribution variant × 1000 个连续 seed；
+- 10,000 次诚实执行仅接受 2,498 次，总接受率 0.2498；
+- `paper_literal_distribution` 在所有 profile 均为 0/1000；
+- proof-consistent 小秘密分布最高接受率为 0.779；
+- 所有结果低于预先冻结的 0.999 正确性标准；
+- 已接受会话内部的 m1/m2/session key 一致；
+- Definition 5/Lemma 3 在素数 q=31、127 上存在满足误差界的模回绕反例。
 
-- 题目：*Quantum-Safe Lattice-Based Certificateless Anonymous Authenticated Key
+因此：
+
+- `accepted_session_consistency=true`；
+- `honest_execution_correctness_reproduced=false`；
+- `paper_correctness_claim_reproduced=false`；
+- `lemma3_universal_correctness=false`。
+
+## 2. 论文、PDF 与版权边界
+
+- 论文：*Quantum-Safe Lattice-Based Certificateless Anonymous Authenticated Key
   Agreement for Internet of Things*；
 - IEEE Internet of Things Journal 11(5)，1 March 2024；
 - printed pages 9213–9225；
@@ -25,218 +35,213 @@ Figure 4–6 重绘。最终机器状态使用
 - PDF SHA-256：
   `5412a2962dbbbc3314cbe513d70946c0e238ba60c5debd9dfae6b7f5411bebe3`；
 - file pages：13；
-- `local_file_tracked=false`、`ieee_republication_restricted=true`。
+- `local_file_tracked=false`；
+- `ieee_republication_restricted=true`。
 
-仓库没有 PDF、全文提取、论文截图或表格原图。
+仓库未提交 PDF、全文提取、论文截图、表格原图或 Figure 2–6 复制图片。
 
-## 3. 实现范围与 backend 分层
+## 3. 参数与论文冲突
 
-实现了 modular/Gaussian/reconciliation/hash/static/protocol/cost/benchmark/plot
-独立模块。所有数组有冻结 shape/domain，不允许无约束 dict 传递密钥或协议状态。
+保留 toy、paper_correctness、paper_performance、audited_preserve_keylen 和
+audited_preserve_dimension 五个 profile。机器检查确认：
 
-| backend | 状态 | 能力 | 不能支持的主张 |
+- paper q=`16777215=2^24-1` 为合数，与“odd prime”表述冲突；
+- audited q=`16777259` 为素数；
+- correctness 使用 n=5，performance 使用 n=6；
+- paper_performance 不满足 `m>=2*n*log2(q)`；
+- audited_preserve_dimension(m=288,n=6) 满足该近似关系。
+
+paper 冲突保留为 expected warning，不用 audited 参数冒充论文 literal。
+
+## 4. Execution distribution variants
+
+### paper_literal_distribution
+
+- s1：uniform over `Zq^m`；
+- f：论文 Definition 3 字面权重
+  `exp(-pi*k²/(2*beta²))`；
+- s2：constructed backend 预选自同一 paper Gaussian；
+- `programmed_h1=true`；
+- `trapdoor_used=false`；
+- `sample_pre_used=false`。
+
+这一路径恢复了论文长期秘密和噪声的字面分布，但 constructed backend 仍不是真实
+TrapGen/SamplePre。
+
+### proof_consistent_small_secret
+
+- s1、f、s2：standard lattice Gaussian/small secret；
+- 权重 `exp(-pi*k²/beta²)`；
+- 仍使用 programmed H1 与 constructed relation。
+
+### legacy_reference
+
+只用于解释修订前数据，不是 paper literal。旧 49,209 行 benchmark 以及旧 1,400
+次协议统计均明确归入此类，不与两种 active variant 混合。
+
+## 5. 后端边界
+
+| backend | 状态 | 可执行内容 | 不能支持 |
 | --- | --- | --- | --- |
-| numpy safe/fast | available | 模运算、reference protocol | 原生 Frodo 等价 |
-| constructed_relation | available | programmed H1 与静态代数关系 | TrapGen/SamplePre、malicious KGC |
-| real_trapdoor | unavailable | 无 | 真实静态分布、ISIS trapdoor |
-| frodo_native LCLA | unavailable | FrodoKEM serial build only | arbitrary params、S/Mod2、LCLA protocol |
-| toy_trapdoor | not implemented | 无 | 不能外推到论文参数 |
+| NumPy safe/fast | available | modular/reference protocol | 原生 Frodo 等价 |
+| constructed_relation | available | programmed H1、静态代数关系 | TrapGen/SamplePre、malicious KGC |
+| real_trapdoor | unavailable | 无 | 真实静态密钥分布 |
+| Frodo native LCLA | unavailable | FrodoKEM serial build only | arbitrary 参数、S/Mod2、LCLA |
+| toy trapdoor | not implemented | 无 | 不能外推到论文参数 |
 
-## 4. 参数冲突
+官方 Microsoft PQCrypto-LWEKE/FrodoKEM serial build 成功，但未提供论文所需
+TrapGen、SamplePre 或 LCLA API。real static key generation 未复现。
 
-paper literal 与 audited profile 并存。机器检查确认：
+## 6. 状态机与代数关系
 
-- `16777215` 为合数，和论文“odd prime”表述冲突；
-- correctness 用 `n=5`，performance 用 `n=6`；
-- `paper_performance` 不满足 `m>=2*n*log2(q)`；
-- audited 使用素数 `16777259`；
-- `audited_preserve_dimension(m=288,n=6)` 满足近似关系。
-
-paper 冲突是 expected warning，audited 冲突是 unexpected error。
-
-## 5. Dependency probe 与 Frodo 能力
-
-探测对象为 Microsoft `PQCrypto-LWEKE` 官方仓库 commit
-`7a4e7219d06305e16aef734213001cd8fefbcc14`。GCC 13.3.0、GNU Make 4.3 下
-`make -C FrodoKEM OPT_LEVEL=REFERENCE -j1` 成功；`-j2` 暴露 KAT archive
-ordering race，不影响 serial build 结论。
-
-FrodoKEM 有固定参数矩阵/采样/hash primitive，但不提供 arbitrary `(n,m,q)`、
-TrapGen、SamplePre、论文 Definition 5 reconciliation 或完整 LCLA 接口。
-所以 `paper_frodo_backend_identified=true`、`paper_frodo_backend_built=true`，
-但 `strict_original_operation_timing_reproduced=false`。
-
-## 6. 离散高斯与 reconciliation
-
-reference Gaussian 使用 `exp(-pi*k²/beta²)` 离散权重、显式尾截断和 PCG64。
-测试覆盖可复现性、对称性、经验均值、正负样本、shape 与 cutoff；统计测试不被描述为
-密码学安全证明。
-
-S/Mod2 按 Definition 5 literal 实现并在 q/4 临界点穷举。发现
-`LCLA-D11` 模回绕反例，且 paper/audited profile 均出现实际协商拒绝。
-没有降低 beta、删除噪声、关闭 reconciliation 或固定输出 bit。
-
-## 7. Static key generation
-
-constructed backend 生成 `A,s1,s2,f` 并注册
-`H1(ID)=A(s1+s2)+2f`，检查：
-
-- `u1=As1+2f`；
-- `u2=pk_full-u1`；
-- `As2=u2`；
-- `A(s1+s2)+2f=pk_full`。
-
-`s2` 按论文 literal 是公开 KGC share，不被错误描述为单独保密。真正保密的是 `s1`
-与组合 `s`。programmed registry 绑定 identity，同一 identity 冲突注册被拒绝。
-
-## 8. 三轮协议和七字段
-
-网络状态机为：
+公开网络状态机严格为三轮：
 
 1. `AliceRequest(C_A,delta_A,h_A)`；
 2. `BobResponse(C_B,h_B)`；
 3. `AliceFinish(T_A,delta_B)`。
 
-因此 `network_rounds=3`、`network_packets=3`、`transmitted_fields=7`。
-“7 messages”在本项目中按统计字段解释，不能写成七个网络 packet。
+即 `network_rounds=3`、`network_packets=3`、`transmitted_fields=7`。公开 packet
+不含 X/E/e、m1/m2 或 static secret。
 
-## 9. Identity masking 与 intended-recipient filtering
+constructed static relation 独立检查：
 
-第一、二轮 packet 无 `ID_A/ID_B` 字段；第三轮 `T_A=ID_A XOR mask`。
-mask 由独立 H2 域、精确 identity 字节长度导出，Unicode 可恢复。
+- `u1=A*s1+2f`；
+- `u2=pk_full-u1`；
+- `A*s2=u2`；
+- `A(s1+s2)+2f=pk_full`。
 
-Bob 先计算 `C_A*s_B`、Mod2 和 h_A；失败返回 `NOT_INTENDED_RECEIVER`，不生成
-response、ephemeral state 或 key。20 候选、100 轮攻击模拟中非目标意外通过为 0。
-这是接收者过滤证据，不是完整匿名证明。
+这证明 implemented relation 自洽，不证明真实 SamplePre 分布或 malicious KGC 安全。
 
-## 10. 正确性、m1/m2 与 session key
+## 7. 无条件 correctness matrix
 
-1400 次固定 seed 尝试的真实结果：
+所有 seed 在执行前固定且连续，失败后不替换 seed：
 
-| profile | attempts | accepted | intended-filter reject | final reconciliation reject |
+| profile | variant | attempts | accepted | rate | Wilson 95% | first-stage reject | final reject |
+| --- | --- | ---: | ---: | ---: | --- | ---: | ---: |
+| toy | paper literal | 1000 | 0 | 0.000 | [0.0000, 0.0038] | 1000 | 0 |
+| toy | proof-consistent | 1000 | 0 | 0.000 | [0.0000, 0.0038] | 996 | 4 |
+| paper_correctness | paper literal | 1000 | 0 | 0.000 | [0.0000, 0.0038] | 1000 | 0 |
+| paper_correctness | proof-consistent | 1000 | 476 | 0.476 | [0.4452, 0.5070] | 328 | 196 |
+| paper_performance | paper literal | 1000 | 0 | 0.000 | [0.0000, 0.0038] | 1000 | 0 |
+| paper_performance | proof-consistent | 1000 | 779 | 0.779 | [0.7522, 0.8036] | 116 | 105 |
+| audited keylen | paper literal | 1000 | 0 | 0.000 | [0.0000, 0.0038] | 1000 | 0 |
+| audited keylen | proof-consistent | 1000 | 477 | 0.477 | [0.4462, 0.5080] | 294 | 229 |
+| audited dimension | paper literal | 1000 | 0 | 0.000 | [0.0000, 0.0038] | 1000 | 0 |
+| audited dimension | proof-consistent | 1000 | 766 | 0.766 | [0.7388, 0.7912] | 126 | 108 |
+
+合计 first-stage false reject 6,860 次，final reconciliation failure 642 次，
+unexpected other failure 0 次。已接受的 2,498 次会话均满足 m1、m2、session key
+和 identity recovery 一致；该条件性事实不等于诚实执行高概率正确。
+
+## 8. Definition 5 / Lemma 3 审计
+
+未修改论文 literal μ 区间或 Mod2 公式。对 q=7、11、15、31、63、127 穷举：
+
+| q | prime | qualifying errors | violating tuples | first counterexample |
+| ---: | --- | ---: | ---: | --- |
+| 7 | yes | 0 | 0 | 无 |
+| 11 | yes | 1 | 0 | 无 |
+| 15 | no | 1 | 0 | 无 |
+| 31 | yes | 5 | 48 | base=0, e=-2, close=27, b=0 |
+| 63 | no | 13 | 336 | base=0, e=-6, close=51, b=0 |
+| 127 | yes | 29 | 1680 | base=0, e=-14, close=99, b=0 |
+
+q=31、127 的首个反例均满足论文误差界并跨越模边界。因此
+`paper_correctness_proof_supported=false`。项目没有通过改公式、降低噪声或固定 bit
+消除反例。
+
+## 9. Intended-recipient 无条件统计
+
+paper_performance 下，每种 variant 使用 1000 个连续 Alice request；每个 request
+由目标 Bob 和 19 个非目标 Bob 处理：
+
+| variant | target true accept | target false reject | non-target false accept | non-target true reject |
 | --- | ---: | ---: | ---: | ---: |
-| toy | 1000 | 7 | 922 | 71 |
-| paper_correctness | 100 | 40 | 31 | 29 |
-| paper_performance | 100 | 77 | 12 | 11 |
-| audited_preserve_keylen | 100 | 40 | 31 | 29 |
-| audited_preserve_dimension | 100 | 79 | 16 | 5 |
+| paper literal | 0 | 1000 | 0 | 19000 |
+| proof-consistent | 876 | 124 | 0 | 19000 |
 
-243 个接受会话全部满足 h_A/h_B、m1、m2、paper session bits、audited 32-byte key、
-identity recovery 与 transcript hash 一致。1012 个 first-stage reject 和 145 个
-final-stage reject 均保留。结果支持接受会话正确性，不支持论文参数 universal success。
+非目标误接受率为 0 只支持 implemented non-target filtering。paper literal 目标误拒绝
+率 1.0、proof-consistent 目标误拒绝率 0.124，不能声称 filtering “完全成功”，更不
+构成匿名性证明。
 
-## 11. 篡改与独立 oracle
+## 10. 身份、篡改与结构匿名性
 
-公开三轮七字段及静态 A/s1/s2/f/u1/u2/pk_full/identity 均有单字段篡改测试。
-失败路径不输出 accepted key，并返回稳定 error code。
+第一、二轮无明文 ID 字段；第三轮 `T_A=ID_A XOR mask`，Unicode identity 可恢复。
+该结论是结构检查，不是被动 transcript 匿名性、不可链接性或主动匿名游戏证明。
 
-独立 Python-int oracle 不调用协议派生 helper，重算 u1/u2/static relation、
-C_A/n_A/n_A'、C_B/n_B/n_B'；reconciliation 使用已经独立边界审计的 S/Mod2。
+逐项篡改 C_A/delta_A/h_A/C_B/h_B/T_A/delta_B 与静态 A/s1/s2/f/u1/u2/
+pk_full/identity 均由 implemented checks 拒绝或在最终 pair validation 失败。
 
-## 12. 安全主张证据边界
+## 11. Benchmark 语义修订
 
-| 层级 | 内容 |
+旧 49,209 行 raw 数据保留为 `legacy_reference`。旧协议 phase 使用预先确认成功 seed，
+正确名称是 `conditional_success_path_latency`；seed 搜索和失败时间未计入。
+
+新 exact raw：
+
+- 文件：`correctness_patch_benchmark_exact.csv`；
+- 行数：13,021；
+- SHA-256：
+  `80caacbea5a350d538fb2519da5bfcd0836b7ef6ee161583372b6b8950f884e2`；
+- actual measured success：6,272；
+- actual measured failure：6,743；
+- dependency placeholder：6；
+- T_Samp0/1/2：每种 active variant 各 1000 次；
+- unconditioned attempt：成功和失败全部保留；
+- retry-until-success：逐次与 total-end-to-end 同时保留；
+- `retry_time_included=true`。
+
+当无条件 acceptance probability 为 0 时，不伪造有限 expected time per success。
+conditional success path 不能直接与论文 Table V 严格等价。
+
+## 12. 成本、Table IV/V 与 Figure 4–6
+
+通信模型区分 paper compact bits、canonical hash encoding 与未定义的 network wire
+encoding。canonical encoding 不能被当作网络通信量。
+
+Table IV NumPy reference exact 完成，但不是 Frodo native。Table IV 三位小数加权
+得到 Num_A/Num_B=4.210/4.178 ms，与论文 Table V 的 4.255/4.233 ms 不一致。
+Table V legacy measured phases 是条件成功路径，不能据此复现端到端正确性或重试成本。
+
+Figure 4 为 reconstructed；Figure 5 为 reconstructed；Figure 6 仅为
+partial/example-fitted。其他方案只保留 `paper_reported_reference`，未运行其实现。
+
+## 13. 安全主张边界
+
+| 主张 | 状态 |
 | --- | --- |
-| executable/algebraic | 接受会话正确性、static relation、接收者过滤、篡改拒绝 |
-| structural | 第一/二轮无明文 ID、第三轮 mask |
-| paper proof only | known-key、no-key-control、KCI、UKS、PFS 等 |
-| backend not reproduced | malicious KGC、ISIS trapdoor |
-| not formally verified | Type I/II、mBR、LWE reduction、匿名性、量子安全 |
+| accepted_session_consistency | executable_checked |
+| honest_execution_correctness | empirically_not_reproduced |
+| lemma3_correctness | counterexample_found |
+| intended_recipient_non_target_filtering | executable_checked |
+| intended_recipient_target_availability | empirically_not_reproduced |
+| identity plaintext absence | structural_checked |
+| malicious KGC / ISIS trapdoor | backend_not_reproduced |
+| mBR、Type I/II、LWE、匿名性、量子安全 | not_formally_verified |
 
-`mbr_formally_verified=false`、`lwe_reduction_verified=false`、
-`isis_hardness_verified=false`、`anonymity_formally_verified=false`、
-`quantum_security_verified=false`、`paper_security_proof_reproduced=false`。
+`anonymity_formally_verified=false`、`mbr_formally_verified=false`、
+`lwe_reduction_verified=false`、`isis_hardness_verified=false`、
+`quantum_security_verified=false`、`malicious_kgc_security_reproduced=false`。
 
-## 13. 理论通信、存储和运算成本
+## 14. 最终结论
 
-paper compact bit 数按 `2*m²*bitlen(q)+4m+identity_bits` 推导；
-paper 固定 identity 假设取 m bits。`canonical_hash_encoding_bytes` 只描述当前
-SHAKE transcript 编码，`network_wire_encoding_defined=false`，不能把它作为实际网络
-通信量或用来验证论文通信效率。
+已完成：
 
-存储表分别报告数学理想 bit 与 NumPy int64 bytes。真实 trapdoor 结构不可用，
-因此存储标 unavailable，不用普通向量伪造。运算表分 setup、static、Alice create、
-Bob verify/reply、Alice finish、Bob finish 与 full handshake。
+- 论文三轮状态机重构；
+- constructed static relation；
+- accepted session 一致性；
+- 无筛选失败分布测量；
+- reconciliation 反例审计；
+- reference operation benchmark；
+- 部分 Figure 4–6 重构。
 
-## 14. Table IV 与 Table V
+未完成或未成立：
 
-Table IV 15 个 paper operation 已人工交叉核对 printed p9222。NumPy reference
-mapping 明确列出 included/excluded overhead。当前 reference 相对论文实现多出：
+- real TrapGen/SamplePre；
+- 论文 literal static-key distribution 的真实生成；
+- overwhelming-probability correctness；
+- Lemma 3 universal correctness；
+- strict Frodo timing；
+- 形式安全与匿名性证明。
 
-- dataclass/shape/dtype/domain/overflow validation；
-- array copy/read-only conversion；
-- canonical hash encoding 与 SHAKE256；
-- Python object/function overhead。
-
-Table IV 三位小数逐项乘 Num_A/Num_B 得 `4.210/4.178 ms`，但论文 Table V 是
-`4.255/4.233 ms`；两者并列。Verify 的重构公式和 actually measured phases 也分列，
-不把 paper reported、reconstructed 和 measured 混成一个数字。
-
-## 15. Figure 4
-
-Figure 4 数据由 Table V 的 per-entity Sum 重构为 entity scaling curve。
-论文 reference、NumPy reference 和 audited profile 分开；Frodo native 曲线不存在。
-趋势统计使用跨 entity 序列的 Spearman/单调性，不在单点上使用 `trend_match`。
-Spearman 只表示秩趋势，不表示绝对计时复现成功。
-
-## 16. Figure 5
-
-Figure 5 的 LCLA 3 rounds/7 fields 为论文文字值；LCLA bit 数由七字段推导。
-其他方案 rounds/field 公式来自论文文字，bit 曲线由两实体 payload 与 broadcast
-叙述重构。所有曲线标明 `paper_reported_reference` 或 `reconstructed_partial`。
-
-## 17. Figure 6
-
-论文只给 `entities=50` 时最高约 10000 rounds、5000 messages、`10^8` bits，
-LCLA 约 400/400/`10^7` 的示例，没有曲面公式。提交图使用明确的
-`paper_narrative_example_fitted` 公式，状态 `partial`。
-
-这些拟合值和 Figure 5 的每发起者 3 rounds/7 fields 及字段级 bit 数冲突。
-报告没有目测拟合成“严格复现”，而是把冲突作为未解决歧义。
-
-## 18. 性能实现范围
-
-`benchmark_class=auditable_python_reference_implementation`。
-已完成 reference smoke 与 exact：Table IV 对三个 profile 的 15 个 operation
-各执行 1000 次；Table V 每个 profile 测量 100 个接受会话的四个 phase。
-exact raw 共 49,200 个 measured-success、0 个 measured-failure 和 9 个
-dependency-unavailable placeholder。严格 Frodo 原始计时未复现。
-绝对偏差不能只归因于 CPU/OS，还来自 API 语义、校验、编码、SHAKE、数组表示与
-Python overhead。
-
-## 19. 论文歧义
-
-已记录：
-
-1. q 素数/合数冲突；
-2. correctness n=5 与 performance n=6；
-3. `paper_performance` 参数关系冲突；
-4. tK trapdoor 类型表述；
-5. pk whole vector/public components 混名；
-6. s2 名称与公开传输；
-7. H2 多用途无域分离；
-8. identity XOR 长度未定义；
-9. S 的随机 b 口径；
-10. Frodo TrapGen/SamplePre 来源缺失；
-11. Definition 5/Lemma 3 模回绕反例；
-12. mBR matching-session/Game 文字；
-13. PFS/KCI/UKS/NKC 论证简略；
-14. Table IV 加权和与 Table V 不一致；
-15. Figure 6 示例与 Figure 5 公式不一致。
-
-## 20. 已复现、条件性与未验证
-
-已复现：协议代数关系、literal reconciliation 行为、constructed static relation、
-三轮消息流程、接收者过滤、接受会话 m1/m2/key/identity、结构性明文身份隐藏、
-理论成本、reference benchmark 管线与重绘图。
-
-条件性：real TrapGen/SamplePre、Frodo native、strict Table IV timing、真实静态分布。
-
-未验证：mBR、LWE/ISIS 困难性、完整匿名性、量子安全、malicious KGC、
-PFS/KCI/UKS/NKC 形式证明和其他方案的实际性能。
-
-## 21. 后续建议
-
-优先事项是从作者获取确切 Definition 5/S 实现、Frodo fork/commit、TrapGen/SamplePre
-接口与 Figure 6 公式。若目标转向生产实现，应使用 CSPRNG、固定 wire serializer、
-侧信道审计、真实 trapdoor 库和独立密码分析；当前 reference 代码不能直接部署。
+当前代码是可审计研究 reference，不可直接用于生产部署。

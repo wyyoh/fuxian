@@ -2,17 +2,21 @@
 
 ## 结论
 
-协议正确性、目标接收者过滤、MAC 篡改拒绝和接受会话密钥一致性可以执行检查。
-身份未以明文字段出现在前两轮只属于结构检查。mBR、LWE/ISIS 归约、匿名性和
-量子安全均未形式化验证；不得表述为“论文安全证明已复现”。
+状态机、静态代数关系和接受会话一致性可以执行检查，但无条件诚实执行
+未达到 0.999 正确性标准，Definition 5/Lemma 3 还存在素数 q 模回绕反例。
+身份未以明文字段出现在前两轮只属于结构检查。mBR、LWE/ISIS 归约、匿名性
+和量子安全均未形式化验证；不得表述为“论文安全证明已复现”。
 
 ## 主张矩阵
 
 | 主张 | 状态 | 证据 | 限制 |
 | --- | --- | --- | --- |
-| correctness | executable_checked | Accepted sessions check m1, m2, identity and key equality; literal reconciliation failures are retained. | Definition 5/Lemma 3 has an executable modular-wrap counterexample, so universal correctness is not established. |
+| accepted_session_consistency | executable_checked | All accepted sessions explicitly check m1, m2, identity and session-key equality. | This is conditional on acceptance and does not establish honest-execution correctness. |
+| honest_execution_correctness | empirically_not_reproduced | Continuous unscreened seeds are measured for every profile and both active distribution variants. | Observed acceptance rates are below the frozen 0.999 criterion. |
+| lemma3_correctness | counterexample_found | Exhaustive small-q search finds prime-q modular-wrap counterexamples satisfying the stated error bound. | The literal Definition 5 formula was not changed to hide the counterexample. |
 | static_key_binding | algebraically_checked | Constructed backend independently checks u1, u2, A*s2 and A*(s1+s2)+2f. | The static-key distribution and GPV trapdoor path are not reproduced. |
-| intended_recipient_filtering | executable_checked | Twenty-candidate attack simulation rejects non-target recipients before response generation. | This is filtering evidence, not a formal anonymity result. |
+| intended_recipient_non_target_filtering | executable_checked | Twenty-candidate unconditional trials record non-target false accepts and true rejects. | Low non-target false accept alone does not establish availability or anonymity. |
+| intended_recipient_target_availability | empirically_not_reproduced | Unconditional target true accepts and false rejects are both recorded. | The observed target false-reject rate prevents claiming complete filtering success. |
 | mutual_authentication | executable_checked | h_A and h_B tamper simulations reject altered first/second-round packets. | Only the implemented model and constructed backend are checked. |
 | session_key_agreement | executable_checked | All accepted sessions explicitly compare m1, m2 and both session-key outputs. | Some literal sessions reject because reconciliation disagrees. |
 | identity_anonymity | structural_checked | Rounds 1 and 2 contain no identity fields; T_A masks Alice identity in round 3. | Passive-transcript anonymity and unlinkability are not formally verified. |

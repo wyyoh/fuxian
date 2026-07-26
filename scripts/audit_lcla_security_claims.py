@@ -49,6 +49,7 @@ def audit(repo_root: Path) -> dict[str, object]:
         "quantum_security_verified",
         "paper_security_proof_reproduced",
         "formal_security_verified",
+        "malicious_kgc_security_reproduced",
     }
     flags = cast(dict[str, object], flags_raw)
     if any(flags.get(name) is not False for name in required_false):
@@ -74,9 +75,10 @@ def render_report(evidence: dict[str, object]) -> str:
         "",
         "## 结论",
         "",
-        "协议正确性、目标接收者过滤、MAC 篡改拒绝和接受会话密钥一致性可以执行检查。",
-        "身份未以明文字段出现在前两轮只属于结构检查。mBR、LWE/ISIS 归约、匿名性和",
-        "量子安全均未形式化验证；不得表述为“论文安全证明已复现”。",
+        "状态机、静态代数关系和接受会话一致性可以执行检查，但无条件诚实执行",
+        "未达到 0.999 正确性标准，Definition 5/Lemma 3 还存在素数 q 模回绕反例。",
+        "身份未以明文字段出现在前两轮只属于结构检查。mBR、LWE/ISIS 归约、匿名性",
+        "和量子安全均未形式化验证；不得表述为“论文安全证明已复现”。",
         "",
         "## 主张矩阵",
         "",

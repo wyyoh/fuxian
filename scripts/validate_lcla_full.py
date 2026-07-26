@@ -63,12 +63,23 @@ def main() -> int:
         type=Path,
         default=Path("artifacts/processed/LCLA_AKA/unconditioned_correctness_summary.json"),
     )
+    parser.add_argument(
+        "--correctness-benchmark-input",
+        type=Path,
+        default=Path(
+            "artifacts/processed/LCLA_AKA/correctness_patch_benchmark_summary.json"
+        ),
+    )
     args = parser.parse_args()
     repo_root = args.repo_root.resolve()
     payload = validate_lcla_full(
         repo_root=repo_root,
         mode=args.mode,
         correctness_path=_resolve(repo_root, args.correctness_input),
+        correctness_benchmark_path=_resolve(
+            repo_root,
+            args.correctness_benchmark_input,
+        ),
     )
     json_output = _resolve(repo_root, args.json_output)
     report_output = _resolve(repo_root, args.report_output)
@@ -88,6 +99,7 @@ def validate_lcla_full(
     repo_root: Path,
     mode: str,
     correctness_path: Path | None = None,
+    correctness_benchmark_path: Path | None = None,
 ) -> dict[str, object]:
     """执行轻量协议/攻击检查并聚合已提交证据。"""
 
@@ -113,6 +125,17 @@ def validate_lcla_full(
             / "processed"
             / "LCLA_AKA"
             / "unconditioned_correctness_summary.json"
+        )
+    )
+    correctness_benchmark = _read_json(
+        correctness_benchmark_path
+        if correctness_benchmark_path is not None
+        else (
+            repo_root
+            / "artifacts"
+            / "processed"
+            / "LCLA_AKA"
+            / "correctness_patch_benchmark_summary.json"
         )
     )
     protocol = _conditional_path_smoke()
@@ -171,6 +194,15 @@ def validate_lcla_full(
         "sample_pre_status": dependency["sample_pre_status"],
         "programmed_h1_used": True,
         "distribution_variants": correctness["distribution_variants"],
+        "correctness_benchmark_distribution_variants": correctness_benchmark[
+            "distribution_variants"
+        ],
+        "correctness_benchmark_status": correctness_benchmark["result"],
+        "correctness_benchmark_raw_sha256": correctness_benchmark["raw_sha256"],
+        "correctness_benchmark_raw_row_count": correctness_benchmark["raw_row_count"],
+        "conditional_success_path_latency_is_not_table_v_equivalent": correctness_benchmark[
+            "conditional_success_path_latency_is_not_table_v_equivalent"
+        ],
         "static_relation_correctness": correctness["static_relation_correctness"],
         "static_relation_constructed": True,
         "definition5_literal_implemented": correctness["definition5_literal_implemented"],
@@ -225,6 +257,7 @@ def validate_lcla_full(
         "isis_hardness_verified": False,
         "quantum_security_verified": False,
         "paper_security_proof_reproduced": False,
+        "malicious_kgc_security_reproduced": False,
         "mode": mode,
     }
 

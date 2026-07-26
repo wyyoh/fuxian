@@ -1,148 +1,101 @@
-# LCLA-AKA 算法复现报告
+# LCLA-AKA 算法重构与正确性失败分析
 
-## 1. 论文与范围
+## 范围
 
-复现对象为 *Quantum-Safe Lattice-Based Certificateless Anonymous Authenticated Key
-Agreement for Internet of Things*，IEEE Internet of Things Journal 11(5)，
-printed pages 9213–9225，DOI `10.1109/JIOT.2023.3323275`。
+本报告描述 LCLA-AKA 的可执行算法、分布口径和正确性边界。论文 PDF 只保存在
+`papers/private/`，仓库仅提交 manifest。C2LAKE 数学实现未被修改。
 
-本报告只说明可执行算法和证据边界，不修改已经审查通过的 C2LAKE 数学实现。
-论文 PDF 仅保存在 `papers/private/`，由 Git ignore 保护；仓库只提交 manifest。
+## 固定维度与状态机
 
-## 2. 参数与不变量
+- A: n×m；
+- s1/s2/s: m；
+- f/pk_full/u1/u2: n；
+- X_A/X_B: n×m；
+- E_A/E_B/C_A/C_B: m×m；
+- e_A/e_B/n_A/n_A'/n_B/n_B': m；
+- delta_A/delta_B/m1/m2: m bits。
 
-保留五个冻结 profile：
+三轮 packet 为：
 
-| profile | m | n | q | family | 说明 |
-| --- | ---: | ---: | ---: | --- | --- |
-| toy | 32 | 2 | 127 | toy | 性质测试 |
-| paper_correctness | 256 | 5 | 16777215 | paper_literal | 正确性段落 |
-| paper_performance | 256 | 6 | 16777215 | paper_literal | 性能段落 |
-| audited_preserve_keylen | 256 | 5 | 16777259 | audited | 保留 key length |
-| audited_preserve_dimension | 288 | 6 | 16777259 | audited | 保留 n=6 并修正关系 |
+1. `AliceRequest(C_A,delta_A,h_A)`；
+2. `BobResponse(C_B,h_B)`；
+3. `AliceFinish(T_A,delta_B)`。
 
-`16777215=2^24-1` 是合数，只在 paper profile 中作为 expected warning；
-`16777259` 通过素数检查。`paper_performance` 不满足
-`m>=2*n*log2(q)`，audited profile 违反该关系会成为 unexpected error。
+即 3 个网络 packet、7 个论文统计字段，不是 7 个独立网络 round。
 
-固定维度为：
+## Distribution variants
 
-- `A: n×m`，`s1/s2/s: m`，`f/pk_full/u1/u2: n`；
-- `X_A/X_B: n×m`，`E_A/E_B/C_A/C_B: m×m`；
-- `e_A/e_B/n_A/n_A'/n_B/n_B': m`；
-- `delta_A/delta_B/m1/m2: m bits`。
+`paper_literal_distribution`：
 
-所有 dataclass 均为 frozen/slots；数组构造时复制、设为只读并检查 shape、dtype、
-Zq/bit domain。`pk_full` 与 `(u1,u2)` 使用不同字段，不再混名。
+- s1 uniform over Zq^m；
+- f/s2 权重 `exp(-pi*k²/(2*beta²))`；
+- constructed backend 仍为 programmed H1，无 TrapGen/SamplePre。
 
-## 3. 数学后端
+`proof_consistent_small_secret`：
 
-`safe` 在 int64 最坏累加不安全时回退 Python int；`fast` 在同一条件下稳定返回
-`BACKEND_OVERFLOW_UNSAFE`。实现了矩阵乘、矩阵向量乘、转置方向乘法、加减、
-标量乘、centered representative 和 bit pack/unpack。非对称小矩阵已知答案测试
-避免只用左右实现互证。
+- s1/f/s2 均为 standard lattice Gaussian/small secret；
+- 权重 `exp(-pi*k²/beta²)`。
 
-离散高斯 reference sampler 的整数权重正比于
-`exp(-pi*k^2/beta^2)`，使用显式尾截断和 PCG64 seed。PCG64 只用于可重复实验，
-不被描述为生产级 CSPRNG。
+`legacy_reference` 只解释旧数据，不能称为 paper literal。
 
-## 4. Reconciliation
+## Static relation
 
-Definition 5 按原文实现 `mu_0`、`mu_1`、随机 bit 的 signal `S` 和：
+constructed backend 检查：
+
+`u1=A*s1+2f`，`u2=pk_full-u1`，
+`A*s2=u2`，`A(s1+s2)+2f=pk_full`。
+
+这些等式已通过独立 Python-int oracle。它们不等于真实 TrapGen/SamplePre，也不支持
+malicious KGC 或 ISIS trapdoor 安全主张。
+
+## Definition 5 / Lemma 3
+
+literal 实现保留：
 
 `Mod2(x,delta)=((x+delta*((q-1)//2)) mod q) mod 2`。
 
-边界穷举发现 literal Definition 5 与 Lemma 3 在模回绕处存在反例。例如
-`q=127,b=0,e=-1,a=125` 时满足论文误差界，但两端 Mod2 不一致。这一冲突编号
-`LCLA-D11`，没有通过改区间、减噪或固定 bit 隐藏。
+小奇数 q 穷举在素数 q=31 和 q=127 找到满足论文误差界的模回绕反例。
+因此 `lemma3_universal_correctness=false`，没有通过改 μ、Mod2、beta 或噪声分布
+消除失败。
 
-## 5. 静态密钥后端
+## 无条件 correctness
 
-官方 FrodoKEM 源码 serial build 成功，但没有 LCLA 所需的 arbitrary `(n,m,q)`、
-TrapGen、SamplePre、Definition 5 S/Mod2。因此：
+5 个 profile × 2 个 active variant，每组 1000 个连续、预先固定且不替换的 seed：
 
-- `real_trapdoor_backend.status=unavailable`；
-- `toy_trapdoor_backend.status=not_implemented`；
-- 可执行路径是 `constructed_relation`。
+| profile | paper literal accepted | proof-consistent accepted |
+| --- | ---: | ---: |
+| toy | 0/1000 | 0/1000 |
+| paper_correctness | 0/1000 | 476/1000 |
+| paper_performance | 0/1000 | 779/1000 |
+| audited_preserve_keylen | 0/1000 | 477/1000 |
+| audited_preserve_dimension | 0/1000 | 766/1000 |
 
-constructed 路径先采样 `s1,s2,f`，再构造并注册：
+合计 2,498/10,000，接受率 0.2498。冻结标准为 0.999，故：
 
-`pk_full=A(s1+s2)+2f mod q`，
-`u1=As1+2f`，`u2=pk_full-u1`。
+- accepted session consistency：true；
+- honest execution correctness reproduced：false；
+- paper correctness claim reproduced：false。
 
-运行时检查 `As2=u2` 和 `A(s1+s2)+2f=pk_full`。每个结果明确携带
-`programmed_h1=true`、`trapdoor_used=false`、`sample_pre_used=false`。
-这一路径只复现代数关系，不能支持真实静态密钥分布、malicious KGC 或 ISIS
-trapdoor 安全主张。
+accepted session consistency 仅表示已接受会话的 m1、m2、identity 与 session key
+相同，不能用它替代无条件正确性。
 
-## 6. 哈希、身份与三轮状态机
+## Intended-recipient
 
-实现采用 SHAKE256、长度前缀、类型/shape/q/profile 编码，并分域：
+每个 variant 使用 1000 个无筛选 request，目标 Bob 与 19 个非目标 Bob 均处理：
 
-- `LCLA-MAC-A-v1`；
-- `LCLA-MAC-B-v1`；
-- `LCLA-ID-MASK-v1`；
-- `LCLA-SESSION-KDF-v1`。
+- paper literal：目标 0/1000，非目标误接受 0/19000；
+- proof-consistent：目标 876/1000，非目标误接受 0/19000。
 
-identity 必须是非空 UTF-8 string 或 bytes；Unicode 可完整恢复。mask 长度精确等于
-identity 字节数，不假设 identity 恰好 m bits。canonical hash encoding 不等于网络
-wire encoding；项目没有专用 wire serializer。
+该结果支持 implemented non-target filtering，但目标误拒绝必须同时报告；它也不是匿名性
+形式证明。
 
-公开状态机严格是三轮：
+## 证据边界
 
-1. Alice：`(C_A,delta_A,h_A)`；
-2. Bob：`(C_B,h_B)`；
-3. Alice：`(T_A,delta_B)`。
+已实现：状态机、constructed relation、accepted session 一致性、失败分布测量、
+identity mask/recovery、篡改拒绝。
 
-这三个 packet 包含论文统计的七个字段。第一、二轮没有明文 `ID_A/ID_B`，
-第三轮 `T_A` 是等长 XOR mask；`X/E/e/m1/m2/static secret` 均不在 packet 中。
+未复现：真实 TrapGen/SamplePre、论文 literal static-key distribution 的真实生成、
+高概率正确性、Lemma 3 universal correctness 和 strict Frodo timing。
 
-## 7. 可执行结果
-
-固定 seed 矩阵共执行 1400 次：
-
-| profile | 尝试 | 接受 | NOT_INTENDED_RECEIVER | RECONCILIATION_FAILURE |
-| --- | ---: | ---: | ---: | ---: |
-| toy | 1000 | 7 | 922 | 71 |
-| paper_correctness | 100 | 40 | 31 | 29 |
-| paper_performance | 100 | 77 | 12 | 11 |
-| audited_preserve_keylen | 100 | 40 | 31 | 29 |
-| audited_preserve_dimension | 100 | 79 | 16 | 5 |
-| 合计 | 1400 | 243 | 1012 | 145 |
-
-所有 243 个接受会话均满足：
-
-- h_A、h_B 验证成功；
-- `m1=m1'`、`m2=m2'`；
-- paper m-bit session key 一致；
-- audited 32-byte key 一致；
-- Bob 恢复的 `ID_A` 与 Unicode 原文完全一致；
-- transcript hash 一致。
-
-因此“接受会话的代数一致性”已复现；“论文参数下每次都能成功协商”没有成立。
-高拒绝率是 literal reconciliation 的观察结果，不能删除或归类为安全证明。
-
-## 8. 负向、接收者与匿名结构
-
-测试逐项篡改 `C_A/delta_A/h_A/C_B/h_B/T_A/delta_B`，以及
-`A/s1/s2/f/u1/u2/pk_full/ID_A/ID_B`。篡改在接收者过滤、MAC、身份恢复、
-static relation 或最终 pair validation 处被拒绝。
-
-20 个候选 Bob、100 轮 intended-recipient 实验中，目标 Bob 在可协调 seed 上通过，
-19 个非目标 Bob 不产生 response；意外通过为 0。它只支持 intended-recipient
-filtering，不是匿名性证明。
-
-第一、二轮没有明文 identity、第三轮 identity 被 mask 属于结构检查。
-被动 transcript 匿名性、不可链接性和主动匿名游戏均未形式化验证。
-
-## 9. 结论边界
-
-已复现：代数关系、literal reconciliation 实现及反例、constructed static relation、
-三轮流程、目标接收者过滤、接受会话 m1/m2/key/identity 一致、篡改拒绝与结构性
-明文身份隐藏。
-
-条件性/未复现：真实 TrapGen/SamplePre、Frodo native LCLA operation、真实静态密钥
-分布、严格原始计时。
-
-未验证：mBR Game0–Game5、LWE/ISIS 困难性、完整匿名性、malicious KGC 形式安全、
-PFS/KCI/UKS/NKC 形式证明和量子安全证明。
+未验证：mBR、LWE/ISIS、完整匿名性、malicious KGC、PFS/KCI/UKS/NKC 与量子安全
+形式证明。

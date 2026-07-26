@@ -8,19 +8,34 @@ allowed_statuses:
   - not_formally_verified
   - backend_not_reproduced
   - out_of_scope
+  - empirically_not_reproduced
+  - not_reproduced
+  - counterexample_found
 claims:
-  - id: correctness
+  - id: accepted_session_consistency
     status: executable_checked
-    evidence: "Accepted sessions check m1, m2, identity and key equality; literal reconciliation failures are retained."
-    limitation: "Definition 5/Lemma 3 has an executable modular-wrap counterexample, so universal correctness is not established."
+    evidence: "All accepted sessions explicitly check m1, m2, identity and session-key equality."
+    limitation: "This is conditional on acceptance and does not establish honest-execution correctness."
+  - id: honest_execution_correctness
+    status: empirically_not_reproduced
+    evidence: "Continuous unscreened seeds are measured for every profile and both active distribution variants."
+    limitation: "Observed acceptance rates are below the frozen 0.999 criterion."
+  - id: lemma3_correctness
+    status: counterexample_found
+    evidence: "Exhaustive small-q search finds prime-q modular-wrap counterexamples satisfying the stated error bound."
+    limitation: "The literal Definition 5 formula was not changed to hide the counterexample."
   - id: static_key_binding
     status: algebraically_checked
     evidence: "Constructed backend independently checks u1, u2, A*s2 and A*(s1+s2)+2f."
     limitation: "The static-key distribution and GPV trapdoor path are not reproduced."
-  - id: intended_recipient_filtering
+  - id: intended_recipient_non_target_filtering
     status: executable_checked
-    evidence: "Twenty-candidate attack simulation rejects non-target recipients before response generation."
-    limitation: "This is filtering evidence, not a formal anonymity result."
+    evidence: "Twenty-candidate unconditional trials record non-target false accepts and true rejects."
+    limitation: "Low non-target false accept alone does not establish availability or anonymity."
+  - id: intended_recipient_target_availability
+    status: empirically_not_reproduced
+    evidence: "Unconditional target true accepts and false rejects are both recorded."
+    limitation: "The observed target false-reject rate prevents claiming complete filtering success."
   - id: mutual_authentication
     status: executable_checked
     evidence: "h_A and h_B tamper simulations reject altered first/second-round packets."
@@ -93,6 +108,7 @@ machine_flags:
   quantum_security_verified: false
   paper_security_proof_reproduced: false
   formal_security_verified: false
+  malicious_kgc_security_reproduced: false
 known_ambiguities:
   - id: LCLA-D01
     summary: "论文称 q 为素数，但 paper profile 的 q=2^24-1 是合数。"
