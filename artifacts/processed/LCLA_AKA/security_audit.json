@@ -1,12 +1,24 @@
 {
   "anonymity_formally_verified": false,
-  "claim_count": 19,
+  "claim_count": 22,
   "claims": [
     {
-      "evidence": "Accepted sessions check m1, m2, identity and key equality; literal reconciliation failures are retained.",
-      "id": "correctness",
-      "limitation": "Definition 5/Lemma 3 has an executable modular-wrap counterexample, so universal correctness is not established.",
+      "evidence": "All accepted sessions explicitly check m1, m2, identity and session-key equality.",
+      "id": "accepted_session_consistency",
+      "limitation": "This is conditional on acceptance and does not establish honest-execution correctness.",
       "status": "executable_checked"
+    },
+    {
+      "evidence": "Continuous unscreened seeds are measured for every profile and both active distribution variants.",
+      "id": "honest_execution_correctness",
+      "limitation": "Observed acceptance rates are below the frozen 0.999 criterion.",
+      "status": "empirically_not_reproduced"
+    },
+    {
+      "evidence": "Exhaustive small-q search finds prime-q modular-wrap counterexamples satisfying the stated error bound.",
+      "id": "lemma3_correctness",
+      "limitation": "The literal Definition 5 formula was not changed to hide the counterexample.",
+      "status": "counterexample_found"
     },
     {
       "evidence": "Constructed backend independently checks u1, u2, A*s2 and A*(s1+s2)+2f.",
@@ -15,10 +27,16 @@
       "status": "algebraically_checked"
     },
     {
-      "evidence": "Twenty-candidate attack simulation rejects non-target recipients before response generation.",
-      "id": "intended_recipient_filtering",
-      "limitation": "This is filtering evidence, not a formal anonymity result.",
+      "evidence": "Twenty-candidate unconditional trials record non-target false accepts and true rejects.",
+      "id": "intended_recipient_non_target_filtering",
+      "limitation": "Low non-target false accept alone does not establish availability or anonymity.",
       "status": "executable_checked"
+    },
+    {
+      "evidence": "Unconditional target true accepts and false rejects are both recorded.",
+      "id": "intended_recipient_target_availability",
+      "limitation": "The observed target false-reject rate prevents claiming complete filtering success.",
+      "status": "empirically_not_reproduced"
     },
     {
       "evidence": "h_A and h_B tamper simulations reject altered first/second-round packets.",
@@ -174,6 +192,7 @@
     }
   ],
   "lwe_reduction_verified": false,
+  "malicious_kgc_security_reproduced": false,
   "mbr_formally_verified": false,
   "paper_security_proof_reproduced": false,
   "quantum_security_verified": false,
@@ -182,6 +201,8 @@
   "status_counts": {
     "algebraically_checked": 1,
     "backend_not_reproduced": 2,
+    "counterexample_found": 1,
+    "empirically_not_reproduced": 2,
     "executable_checked": 4,
     "not_formally_verified": 5,
     "paper_proof_only": 6,

@@ -1,7 +1,10 @@
 claim_id,status,backend_scope,executable_result,formal_result
-correctness,executable_checked,constructed_relation,"accepted sessions consistent; 1157/1400 attempts rejected by literal reconciliation",not_universally_established
+accepted_session_consistency,executable_checked,constructed_relation,"2498 accepted sessions across the exact unscreened matrix have equal m1/m2/session keys",conditional_on_acceptance_only
+honest_execution_correctness,empirically_not_reproduced,constructed_relation,"2498/10000 exact unscreened attempts accepted; aggregate rate 0.2498 is below 0.999",paper_correctness_claim_not_reproduced
+lemma3_correctness,counterexample_found,definition5_literal,"prime-q counterexamples found for q=31 and q=127 while the stated error bound holds",universal_correctness_false
 static_key_binding,algebraically_checked,constructed_relation,A(s1+s2)+2f=pk_full and A*s2=u2 checked,real_distribution_not_reproduced
-intended_recipient_filtering,executable_checked,constructed_relation,target accepts when reconciliation agrees; non-targets rejected,not_anonymity_proof
+intended_recipient_non_target_filtering,executable_checked,constructed_relation,"0/19000 non-target false accepts in each active distribution variant",not_anonymity_proof
+intended_recipient_target_availability,empirically_not_reproduced,constructed_relation,"paper literal target accepts 0/1000; proof-consistent target accepts 876/1000",target_false_rejects_observed
 mutual_authentication,executable_checked,constructed_relation,h_A/h_B tamper rejection checked,not_formally_verified
 session_key_agreement,executable_checked,constructed_relation,all accepted sessions have equal m1/m2/keys,not_formally_verified
 identity_anonymity,structural_checked,all,plaintext ID absent in rounds 1/2 and masked in round 3,anonymity_not_formally_verified
