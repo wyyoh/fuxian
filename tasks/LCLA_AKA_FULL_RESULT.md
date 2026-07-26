@@ -7,6 +7,8 @@
 - 受测实现 HEAD：`d426b477179af19ddddce628da26ce4bbfa9515d`
 - 本地 evidence HEAD（RESULT 前）：
   `f48e3b60c64fa5ac9dcb6d64ffca7874411f634e`
+- 首次包含 RESULT 的已通过 CI HEAD：
+  `bf9721d4f8b38f113864fb0b45cc7741a89d2599`
 - machine result：
   `partial_reproduction_observed_correctness_failure_constructed_backend_unverified_security`
 - executable state machine implemented：true
@@ -42,6 +44,8 @@
    `style: format LCLA full validator`
 10. `f48e3b60c64fa5ac9dcb6d64ffca7874411f634e`
     `docs: record validated LCLA correctness status`
+11. `bf9721d4f8b38f113864fb0b45cc7741a89d2599`
+    `docs: record final LCLA correctness patch result`
 
 ## PDF 与版权
 
@@ -182,29 +186,21 @@ q=31、127 的反例满足论文误差界并跨越模边界；未修改 μ、Mod
   `d426b477179af19ddddce628da26ce4bbfa9515d`
 - full validation git dirty：false
 
-## GitHub push / CI / artifact BLOCKER
+## GitHub push / CI / artifact
 
-- 远端 branch 当前仍为：
-  `d4ff5df1fb278219d2e93bd848f9c133e1e0fc4b`
-- 本地相对远端：ahead 10（RESULT 提交前）
-- SSH 主机 key 已按 GitHub 官方 Ed25519 fingerprint 验证；
-- SSH 认证结果：`Permission denied (publickey)`；
-- HTTPS credential helper：不存在；
-- GitHub CLI：不存在；
-- 当前工具上下文没有可调用 GitHub plugin；
-- GitHub plugin 安装请求未获当前会话确认。
-
-因此：
-
-- push：BLOCKED（未伪造成功）
-- GitHub Actions run：未启动
-- CI run ID：无
-- `LCLA-AKA-full-evidence` artifact：未生成
-- artifact ID：无
-
-解除阻塞所需条件：为当前会话提供可用 GitHub SSH/HTTPS 凭据，或确认安装并授权
-GitHub plugin。恢复后应推送同一分支，等待 Actions success，并确认
-`LCLA-AKA-full-evidence`。
+- push：成功
+- 远端分支：`exp/LCLA-AKA-full-reproduction`
+- CI head：`bf9721d4f8b38f113864fb0b45cc7741a89d2599`
+- GitHub Actions run ID：`30202465273`
+- run URL：
+  `https://github.com/wyyoh/fuxian/actions/runs/30202465273`
+- conclusion：`success`
+- artifact：`LCLA-AKA-full-evidence`
+- artifact ID：`8632122154`
+- artifact size：77,134 bytes
+- artifact expired：false
+- artifact expires：2026-10-24T12:38:33Z
+- 同一 run 中 T001、T002、T010 与 C2LAKE evidence 也均成功上传。
 
 ## 残余风险与未复现内容
 
