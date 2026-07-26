@@ -13,6 +13,11 @@ if TYPE_CHECKING:
 
 IntArray = npt.NDArray[np.int64]
 BackendName = Literal["safe", "fast"]
+DistributionVariant = Literal[
+    "paper_literal_distribution",
+    "proof_consistent_small_secret",
+    "legacy_reference",
+]
 
 
 class LCLAError(ValueError):
@@ -97,11 +102,13 @@ class LCLAParameters:
     profile: LCLAProfile
     backend: BackendName
     keygen_backend: str
+    distribution_variant: DistributionVariant
     matrix_a: IntArray
     hash_suite: LCLAHashSuite
     trapdoor: LCLATrapdoorHandle
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         object.__setattr__(
             self,
             "matrix_a",
@@ -128,8 +135,10 @@ class LCLAEntityContribution:
     profile: str
     backend: BackendName
     keygen_backend: str
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         if not self.identity:
             raise LCLAError("IDENTITY_ERROR", "identity 不能为空")
         m = int(np.asarray(self.s1).size)
@@ -176,8 +185,10 @@ class LCLAKGCShare:
     profile: str
     backend: BackendName
     keygen_backend: str
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         m = int(np.asarray(self.kgc_share_s2).size)
         n = int(np.asarray(self.kgc_target_u2).size)
         object.__setattr__(self, "identity", bytes(self.identity))
@@ -205,8 +216,10 @@ class LCLAStaticPublicComponents:
     profile: str
     backend: BackendName
     keygen_backend: str
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         n = int(np.asarray(self.pk_full).size)
         object.__setattr__(self, "identity", bytes(self.identity))
         for field_name in ("pk_full", "entity_share_u1", "kgc_target_u2"):
@@ -232,8 +245,10 @@ class LCLAStaticPrivateKey:
     profile: str
     backend: BackendName
     keygen_backend: str
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         m = int(np.asarray(self.s1).size)
         n = int(np.asarray(self.error_f).size)
         object.__setattr__(self, "identity", bytes(self.identity))
@@ -261,14 +276,18 @@ class LCLAStaticKeyPair:
     programmed_h1: bool
     trapdoor_used: bool
     sample_pre_used: bool
+    distribution_variant: DistributionVariant = "legacy_reference"
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         if self.public_components.identity != self.private_key.identity:
             raise LCLAError("IDENTITY_ERROR", "静态公私钥 identity 不一致")
         if (
             self.public_components.q != self.private_key.q
             or self.public_components.profile != self.private_key.profile
             or self.public_components.backend != self.private_key.backend
+            or self.public_components.distribution_variant != self.private_key.distribution_variant
+            or self.distribution_variant != self.private_key.distribution_variant
         ):
             raise LCLAError("CONTEXT_ERROR", "静态公私钥上下文不一致")
 
@@ -357,8 +376,10 @@ class LCLAAliceEphemeralState:
     q: int
     profile: str
     backend: BackendName
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         n, m = np.asarray(self.x_a).shape
         object.__setattr__(
             self, "x_a", freeze_integer_array(self.x_a, shape=(n, m), q=self.q, name="X_A")
@@ -415,8 +436,10 @@ class LCLABobEphemeralState:
     q: int
     profile: str
     backend: BackendName
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         n, m = np.asarray(self.x_b).shape
         object.__setattr__(
             self, "x_b", freeze_integer_array(self.x_b, shape=(n, m), q=self.q, name="X_B")
@@ -469,8 +492,10 @@ class LCLASessionResult:
     profile: str
     backend: BackendName
     keygen_backend: str
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         object.__setattr__(self, "local_identity", bytes(self.local_identity))
         object.__setattr__(self, "peer_identity", bytes(self.peer_identity))
         object.__setattr__(self, "session_key_bits", bytes(self.session_key_bits))
@@ -490,9 +515,22 @@ class LCLAProtocolContext:
     profile: LCLAProfile
     backend: BackendName
     keygen_backend: str
+    distribution_variant: DistributionVariant
 
     def __post_init__(self) -> None:
+        _validate_distribution_variant(self.distribution_variant)
         if self.parameters.profile != self.profile:
             raise LCLAError("CONTEXT_ERROR", "parameters/profile 不一致")
         if self.parameters.backend != self.backend:
             raise LCLAError("CONTEXT_ERROR", "parameters/backend 不一致")
+        if self.parameters.distribution_variant != self.distribution_variant:
+            raise LCLAError("CONTEXT_ERROR", "parameters/distribution variant 不一致")
+
+
+def _validate_distribution_variant(value: str) -> None:
+    if value not in {
+        "paper_literal_distribution",
+        "proof_consistent_small_secret",
+        "legacy_reference",
+    }:
+        raise LCLAError("DISTRIBUTION_VARIANT_ERROR", f"非法 distribution_variant={value!r}")

@@ -20,6 +20,7 @@ from lattice_aka_repro.lcla_modular import (
 )
 from lattice_aka_repro.lcla_types import (
     BackendName,
+    DistributionVariant,
     LCLABackendCapabilities,
     LCLAEntityContribution,
     LCLAError,
@@ -135,6 +136,7 @@ def setup_lcla(
     backend: BackendName,
     keygen_backend: str,
     seed: int,
+    distribution_variant: DistributionVariant = "legacy_reference",
 ) -> LCLAParameters:
     """生成公共 A；真实 TrapGen 不可用时不创建虚假 trapdoor。"""
 
@@ -156,6 +158,7 @@ def setup_lcla(
         profile=profile,
         backend=backend,
         keygen_backend=keygen_backend,
+        distribution_variant=distribution_variant,
         matrix_a=matrix_a,
         hash_suite=hash_suite,
         trapdoor=LCLATrapdoorHandle(
@@ -178,8 +181,25 @@ def entity_key_generation(
         raise LCLAError("BACKEND_UNAVAILABLE", "仅 constructed_relation 可用")
     identity_bytes = normalize_identity(identity)
     profile = parameters.profile
-    sampler = DiscreteGaussianSampler(beta=profile.beta, seed=seed)
-    s1 = map_centered_to_zq(sampler.sample((profile.m,)).centered, q=profile.q)
+    variant = parameters.distribution_variant
+    if variant == "paper_literal_distribution":
+        s1_rng = np.random.Generator(np.random.PCG64(seed))
+        s1 = np.asarray(
+            s1_rng.integers(0, profile.q, size=profile.m, dtype=np.int64),
+            dtype=np.int64,
+        )
+        sampler = DiscreteGaussianSampler(
+            beta=profile.beta,
+            seed=seed + 1_000_019,
+            exponent_variant="paper_definition3",
+        )
+    else:
+        sampler = DiscreteGaussianSampler(
+            beta=profile.beta,
+            seed=seed,
+            exponent_variant="standard_lattice",
+        )
+        s1 = map_centered_to_zq(sampler.sample((profile.m,)).centered, q=profile.q)
     error_f = map_centered_to_zq(sampler.sample((profile.n,)).centered, q=profile.q)
     s2 = map_centered_to_zq(sampler.sample((profile.m,)).centered, q=profile.q)
     combined_s = vector_add_mod(s1, s2, q=profile.q)
@@ -212,6 +232,7 @@ def entity_key_generation(
         profile=profile.name,
         backend=parameters.backend,
         keygen_backend=parameters.keygen_backend,
+        distribution_variant=variant,
     )
 
 
@@ -245,6 +266,7 @@ def kgc_key_generation(
         profile=parameters.profile.name,
         backend=parameters.backend,
         keygen_backend=parameters.keygen_backend,
+        distribution_variant=contribution.distribution_variant,
     )
 
 
@@ -262,6 +284,7 @@ def assemble_static_key(
         kgc_share.q != parameters.profile.q
         or kgc_share.profile != parameters.profile.name
         or kgc_share.backend != parameters.backend
+        or kgc_share.distribution_variant != parameters.distribution_variant
     ):
         raise LCLAError("CONTEXT_ERROR", "KGC share 上下文不一致")
     combined_s = vector_add_mod(contribution.s1, kgc_share.kgc_share_s2, q=parameters.profile.q)
@@ -274,6 +297,7 @@ def assemble_static_key(
         profile=parameters.profile.name,
         backend=parameters.backend,
         keygen_backend=parameters.keygen_backend,
+        distribution_variant=contribution.distribution_variant,
     )
     private = LCLAStaticPrivateKey(
         identity=contribution.identity,
@@ -285,6 +309,7 @@ def assemble_static_key(
         profile=parameters.profile.name,
         backend=parameters.backend,
         keygen_backend=parameters.keygen_backend,
+        distribution_variant=contribution.distribution_variant,
     )
     key_pair = LCLAStaticKeyPair(
         public_components=public,
@@ -292,6 +317,7 @@ def assemble_static_key(
         programmed_h1=kgc_share.programmed_h1,
         trapdoor_used=kgc_share.trapdoor_used,
         sample_pre_used=kgc_share.sample_pre_used,
+        distribution_variant=contribution.distribution_variant,
     )
     if not verify_static_key(parameters, key_pair):
         raise LCLAError("STATIC_KEY_VERIFY_ERROR", "静态密钥验证式失败")
@@ -314,6 +340,7 @@ def verify_static_key(
         public.q != parameters.profile.q
         or public.profile != parameters.profile.name
         or public.backend != parameters.backend
+        or public.distribution_variant != parameters.distribution_variant
     ):
         return False
     try:
@@ -383,5 +410,6 @@ def _check_contribution_context(
         or contribution.profile != parameters.profile.name
         or contribution.backend != parameters.backend
         or contribution.keygen_backend != parameters.keygen_backend
+        or contribution.distribution_variant != parameters.distribution_variant
     ):
         raise LCLAError("CONTEXT_ERROR", "entity contribution 上下文不一致")

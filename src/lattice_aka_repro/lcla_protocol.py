@@ -55,6 +55,7 @@ class LCLAHandshakeTrace:
     m1_consistency: bool
     m2_consistency: bool
     session_key_consistency: bool
+    distribution_variant: str
 
 
 def make_lcla_context(parameters: LCLAParameters) -> LCLAProtocolContext:
@@ -66,6 +67,7 @@ def make_lcla_context(parameters: LCLAParameters) -> LCLAProtocolContext:
         profile=parameters.profile,
         backend=parameters.backend,
         keygen_backend=parameters.keygen_backend,
+        distribution_variant=parameters.distribution_variant,
     )
 
 
@@ -82,6 +84,7 @@ def _check_key_context(
         or key_pair.private_key.profile != context.profile.name
         or key_pair.private_key.backend != context.backend
         or key_pair.private_key.keygen_backend != context.keygen_backend
+        or key_pair.distribution_variant != context.distribution_variant
     ):
         raise LCLAError("CONTEXT_ERROR", "static key pair 与协议上下文不一致")
     if not verify_static_key(context.parameters, key_pair, identity=identity_bytes):
@@ -107,7 +110,15 @@ def _sample_ephemeral(
     include_vector: bool,
 ) -> tuple[IntArray, IntArray, IntArray | None]:
     profile = context.profile
-    sampler = DiscreteGaussianSampler(beta=profile.beta, seed=seed)
+    sampler = DiscreteGaussianSampler(
+        beta=profile.beta,
+        seed=seed,
+        exponent_variant=(
+            "paper_definition3"
+            if context.distribution_variant == "paper_literal_distribution"
+            else "standard_lattice"
+        ),
+    )
     matrix_x = map_centered_to_zq(sampler.sample((profile.n, profile.m)).centered, q=profile.q)
     matrix_e = map_centered_to_zq(sampler.sample((profile.m, profile.m)).centered, q=profile.q)
     vector_e = None
@@ -173,6 +184,7 @@ def alice_create_request(
         q=profile.q,
         profile=profile.name,
         backend=context.backend,
+        distribution_variant=context.distribution_variant,
     )
     return request, state
 
@@ -188,7 +200,12 @@ def bob_respond(
     """Bob 验证目标接收者 MAC，成功后生成第二轮。"""
 
     _check_key_context(context, bob_key_pair, bob_identity)
-    _check_packet_context(context, q=request.q, profile=request.profile, backend=request.backend)
+    _check_packet_context(
+        context,
+        q=request.q,
+        profile=request.profile,
+        backend=request.backend,
+    )
     profile = context.profile
     n_a_prime = matrix_vector_mod(
         request.c_a,
@@ -230,6 +247,7 @@ def bob_respond(
         q=profile.q,
         profile=profile.name,
         backend=context.backend,
+        distribution_variant=context.distribution_variant,
     )
     return response, state
 
@@ -249,18 +267,32 @@ def alice_finish(
 
     identity_a = _check_key_context(context, alice_key_pair, alice_identity)
     identity_b = normalize_identity(bob_identity)
-    _check_packet_context(context, q=response.q, profile=response.profile, backend=response.backend)
+    _check_packet_context(
+        context,
+        q=response.q,
+        profile=response.profile,
+        backend=response.backend,
+    )
     if (
         alice_state.q != context.profile.q
         or alice_state.profile != context.profile.name
         or alice_state.backend != context.backend
+        or alice_state.distribution_variant != context.distribution_variant
     ):
         raise LCLAError("CONTEXT_ERROR", "Alice ephemeral state 上下文不一致")
     expected_h_b = context.hash_suite.mac_b(response.c_b, alice_state.m1)
     if not np.array_equal(expected_h_b, response.h_b):
         raise LCLAError("INVALID_RESPONDER_MAC", "h_B 验证失败")
     profile = context.profile
-    sampler = DiscreteGaussianSampler(beta=profile.beta, seed=seed)
+    sampler = DiscreteGaussianSampler(
+        beta=profile.beta,
+        seed=seed,
+        exponent_variant=(
+            "paper_definition3"
+            if context.distribution_variant == "paper_literal_distribution"
+            else "standard_lattice"
+        ),
+    )
     e_b_vector = map_centered_to_zq(sampler.sample((profile.m,)).centered, q=profile.q)
     n_b_prime = vector_add_mod(
         matrix_vector_mod(
@@ -319,6 +351,7 @@ def alice_finish(
         profile=profile.name,
         backend=context.backend,
         keygen_backend=context.keygen_backend,
+        distribution_variant=context.distribution_variant,
     )
     return finish, final_state, result
 
@@ -335,11 +368,17 @@ def bob_finish(
     """Bob 恢复 ID_A、计算 m2 和会话密钥。"""
 
     identity_b = _check_key_context(context, bob_key_pair, bob_identity)
-    _check_packet_context(context, q=finish.q, profile=finish.profile, backend=finish.backend)
+    _check_packet_context(
+        context,
+        q=finish.q,
+        profile=finish.profile,
+        backend=finish.backend,
+    )
     if (
         bob_state.q != context.profile.q
         or bob_state.profile != context.profile.name
         or bob_state.backend != context.backend
+        or bob_state.distribution_variant != context.distribution_variant
     ):
         raise LCLAError("CONTEXT_ERROR", "Bob ephemeral state 上下文不一致")
     mask = context.hash_suite.identity_mask(
@@ -392,12 +431,15 @@ def bob_finish(
         profile=context.profile.name,
         backend=context.backend,
         keygen_backend=context.keygen_backend,
+        distribution_variant=context.distribution_variant,
     )
 
 
 def validate_session_pair(alice_result: LCLASessionResult, bob_result: LCLASessionResult) -> None:
     """显式检查 m1/m2/key/identity/transcript 一致性。"""
 
+    if alice_result.distribution_variant != bob_result.distribution_variant:
+        raise LCLAError("CONTEXT_ERROR", "双方 distribution variant 不一致")
     if alice_result.local_identity != bob_result.peer_identity:
         raise LCLAError("ID_RECOVERY_FAILURE", "Bob 恢复的 Alice identity 不一致")
     if alice_result.peer_identity != bob_result.local_identity:
@@ -476,4 +518,5 @@ def run_lcla_handshake(
         m1_consistency=True,
         m2_consistency=True,
         session_key_consistency=True,
+        distribution_variant=context.distribution_variant,
     )
